@@ -1,0 +1,64 @@
+
+//스프링 이니셜라이저로 사용해도됩니다.
+//프로젝트의 플러그인 의존성 관리를 위한 설정
+//처음에 안됬던게 오류임
+buildscript{
+    //ext : build.grade에서 사용하는 전역변수를 설정.
+    ext {
+        springBootVersion = '2.1.7.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    //스프링 부트 그레이들 플러그인의 2.1.7 Release를 의존성으로 받습니다.
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+
+}
+
+//앞서 선언한 플러그인 의존성들을 적용할 것인지를 결정
+//이 4개의 플러그인은 자바와 스프링 부트 사용을 위한 필수 플러그인
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+//plugins {
+//    id 'java'
+//    id 'eclipse'
+//    id 'org.springframework.boot'
+//    //스프링부트의 의존성들을 관리해주는 플러그인이라 필수 플러그
+//    id 'io.spring.dependency-management'
+//}
+
+group 'org.soccer.reservation'
+version '1.0-SNAPSHOT'
+sourceCompatibility = 1.8
+
+//repositories 는 각종 의존성(라이브러리)들을 어떤 원격저장소에서 받을지 결정
+//mavenCentral과 jceneter() 라이브러리 업로드 간편화 를 동시에 등록해서 사용합니다.
+repositories {
+    mavenCentral()
+//    jcenter()
+}
+
+//dependenceis는 프로젝트 개발에 필요한 의존성(라이브러리)들을 선언
+//https://okky.kr/articles/997902 grade 버전 7에서는 compile testcompile 대신 implementation, testimplementation을 대신사용합니다.
+//https://velog.io/@eigenkyeong/SpringBoot-gradle-%EC%84%A4%EC%A0%95%EC%8B%9C-%EC%98%A4%EB%A5%98-%ED%95%B4%EA%B2%B0
+//처음 설정할떄 도움 받은 사이트입니다.
+dependencies {
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+//    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+//    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+//    compile('org.springframework.boot:spring-boot-starter-web')
+//    testCompile('org.springframework.boot:spring-boot-starter-test')
+//    compileOnly('org.springframework.boot:spring-boot-starter-web')
+//    testCompileOnly('org.springframework.boot:spring-boot-starter-test')
+}
+
+//test {
+//    useJUnitPlatform()
+//}
