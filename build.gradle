@@ -51,6 +51,27 @@ repositories {
 dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation 'junit:junit:4.13.1'
+
+    //lombok, 각 프로젝트마다 lombok은 따로 적용해줘야합니다.[ctrl + shift + A] -> [plugins] -> [lombok]
+    //file - settings - Build - Compiler - Annotaiton Processors -Enable annotation Processing check
+//    implementation('org.projectlombok:lombok:1.18.10')
+//    gradle 버전 5 이상일시 lombok 설정방법 : https://github.com/jojoldu/freelec-springboot2-webservice/issues/78 (이후에 queryDsl 사용시 추가로 수정해야함)
+    annotationProcessor 'org.projectlombok:lombok'
+    implementation 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.projectlombok:lombok'
+
+    //Spring Data JPA 적용
+    //spring-boot-starter-data-jpa : 스프링 부트용 Spring Data Jpa 추상화 라이브러리입니다.
+    //스프링 부트 버전에 맞춰 자동으로 JPA 관련 라이브러리들의 버전을 관리해줍니다.
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa');
+    //h2 : 인메모리 관계형 데이터베이스입니다.
+    //별도의 설치가 필요없이 프로젝트 의존성만으로 관리할 수 있습니다.
+    //메모리에서 실행되기 때문에 애플리케이션을 재시작할때마다 초기화 된다는 점을 이용하여 테스트 용도로 많이 사용됩니다.
+    //JPA의 테스트, 로컬 환경에서의 구동에서 사용할 예정입니다.
+    implementation('com.h2database:h2');
+
 //    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
 //    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 //    compile('org.springframework.boot:spring-boot-starter-web')
@@ -59,6 +80,11 @@ dependencies {
 //    testCompileOnly('org.springframework.boot:spring-boot-starter-test')
 }
 
+configurations {
+    compileOnly{
+        extendsFrom annotationProcessor
+    }
+}
 //test {
 //    useJUnitPlatform()
 //}
