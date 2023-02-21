@@ -72,6 +72,7 @@ dependencies {
     //JPA의 테스트, 로컬 환경에서의 구동에서 사용할 예정입니다.
     implementation('com.h2database:h2');
 
+    implementation('org.springframework.boot:spring-boot-starter-mustache')
 //    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
 //    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 //    compile('org.springframework.boot:spring-boot-starter-web')
