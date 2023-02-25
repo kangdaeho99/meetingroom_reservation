@@ -26,6 +26,13 @@ public class PostApiController {
     public PostsResponseDto findById(@PathVariable Long id){
         return postsService.findById(id);
     }
+
+    @DeleteMapping("/api/v1/posts/{id}")
+    public Long delete(@PathVariable Long id){
+        postsService.delete(id);
+        return id;
+    }
+
 }
 
 
@@ -44,6 +51,16 @@ public class PostApiController {
 자, 이제는 Controller와 Service에서 사용할 Dto 클래스를 생성하겠습니다.
 [src/main/java/com.meetingroom.reservation/web/dto/PostsSaveRequestDto.java]
 
+
+---
+delete() 함수가 완성되엇다면 한번 테스트를 해봅니다.
+좀 전에 수정한 테스트2 게시글의 수정화면에서 삭제버튼을 클릭합니다.
+다음과 같이 삭제 성공메세지를 확인합니다.
+자동으로 메인페이지로 이동하면, 기존 게시글이 삭제되있는지 확인합니다.
+
+수정/삭제 기능까지 완성되었습니다!
+이번 장에서 진행한 화면 개발뿐만 아니라 웹요청에서의 테스트 코드 작성방법은 필수로 익혀가길 바랍니다.
+기본적인 게시판 기능이 완성되었으니 이제 로그인 기능을 만들어보겠습니다.
 
 
  */
