@@ -84,7 +84,7 @@ public enum CommonOAuth2Provider{
             builder.userNameAttributeName(IdTokenClaimNames.SUB);
             builder.clientName("Google");
             return builder;
-        }
+        }123
     },
 
     ...
