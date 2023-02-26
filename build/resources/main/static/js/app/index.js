@@ -73,6 +73,7 @@ REST에서 CRUD 는 다음과 같이 HTTP Method에 매핑됩니다.
         });
     },
 
+    //여기서 update함수 끝나고 ',' 안붙혀서 검색하고 난리가났었습니다. 오타를 잘찾습니다..
     delete : function () {
         var id = $('#id').val();
 
