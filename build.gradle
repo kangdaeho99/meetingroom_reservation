@@ -81,6 +81,10 @@ dependencies {
     */
     implementation('org.springframework.boot:spring-boot-starter-oauth2-client')
 
+    /*
+        세션저장소로 데이터베이스를 사용합니다.
+     */
+    implementation('org.springframework.session:spring-session-jdbc')
 //    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
 //    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 //    compile('org.springframework.boot:spring-boot-starter-web')
