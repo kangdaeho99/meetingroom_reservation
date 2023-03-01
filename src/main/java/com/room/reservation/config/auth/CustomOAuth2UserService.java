@@ -318,7 +318,30 @@ update USER set role = 'USER'
 SessionUser user = (SessionUser) httpSession.getAttribute("user");
 index 메소드 외에 다른 컨트롤러와 메소드에서 세션값이 필요하면 그때마다 직접 세션에서 값을 가져와야합니다. 같은 코드가 계속해서 반복되는것은
 불필요합니다. 그래서 이 부분을 메소드 인자로 세션값을 바로 받을 수 있도록 변경해보겠습니다.
+
+[\src\main\java\com\room\reservation\config\auth\LoginUser.java]
 config.auth 패키지에 다음과 같이 @LoginUser 어노테이션을 생성합니다.
+
+그리고 같은 위치에 LoginUserArgumentResolver를 생성합니다. Login-UserArgumentResolver라는 HandlerMethodArgumentResolver 인터페이스를 구현한 클래스입니다.
+HandlerMethodArgumentResolver는 한가지 기능을 지원합니다. 바로 조건에 맞는 경우 메소드가 있다면 HandlerMethodArgumentResolver의
+구현체가 지정한 값으로 해당 메소드의 파라미터로 넘길 수 있습니다.
+자세한 사용법은 직접 만들면서 배워보겠습니다.
+[\src\main\java\com\room\reservation\config\auth\LoginUserArgumentResolver.java]를 생성합니다.
+
+@LoginUser를 사용하기 위한 환경은 구성되었습니다.
+자 이제 이렇게 생성된 LoginUserArgumentResolver가 스프링에서 인식될수 있도록 WebMvcConfigurer에 추가하겠습니다.
+config패키지에 WebConfig 클래스를 생성하여 다음과 같이 설정을 추가합니다.
+[\src\main\java\com\room\reservation\config\WebConfig.java]
+
+HandlerMethodArgumentResolver는 항상 WebMvcConfigurer의 addArgumentResolvers()를 통해 추가해야합니다.
+다른 Handler-MethodArgumentResolver가 필요하다면 같은 방식으로 추가해주면 됩니다.
+최종적으로 패키지 구조는 다음과 같이 됩니다.
+[config/auth/dto] [config/auth/CustomOAuth2UserService, LoginUser, LoginUserArgumentResolver, SecurityConfig]
+
+모든 설정이 끝났으니 처음 언급한대로 IndexController의 코드에서 반복되는 부분들을 모두 @LoginUser로 개선하겠습니다.
+
+
+
 
 
 

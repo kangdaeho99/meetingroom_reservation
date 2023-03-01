@@ -1,5 +1,6 @@
 package com.room.reservation.web;
 
+import com.room.reservation.config.auth.LoginUser;
 import com.room.reservation.config.auth.dto.SessionUser;
 import com.room.reservation.service.posts.PostsService;
 import com.room.reservation.web.dto.PostsResponseDto;
@@ -18,9 +19,9 @@ public class IndexController {
     private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String index(Model model){
+    public String index(Model model, @LoginUser SessionUser user){
         model.addAttribute("posts", postsService.findAllDesc());
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+//        SessionUser user = (SessionUser) httpSession.getAttribute("user");
         if(user!=null){
             model.addAttribute("loginuserName", user.getName());
         }
@@ -107,6 +108,13 @@ if(user != null)
 다음과 같이 Google Login 버튼이 잘 노출됩니다.
 클릭해보면 평소 다른 서비스에서 볼 수 있던 것처럼 구글 로그인 동의 화면으로 이동합니다.
 
+
+@LgoinUser SessionUser user
+:기존에 (User) httpSession.getAttribute("user")로 가져오던 세션 정보 값이 개선되었습니다.
+:이제는 어느 컨트롤러든지 @LoginUser만 사용하면 세션 정보를 가져올 수 있게 되었습니다.
+//        SessionUser user = (SessionUser) httpSession.getAttribute("user"); 는 삭제되었습니다.
+
+다시 애플리케이션을 실행해 로그인 기능이 정상적으로 작동하는 것을 확인합니다.
 
 
 
