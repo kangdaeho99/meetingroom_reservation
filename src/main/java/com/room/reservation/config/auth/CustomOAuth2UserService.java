@@ -379,6 +379,70 @@ JPA로 인해 세션 테이블이 자동생성되었기 때문에 별도로 해�
 RDS(Relational DatabaseService)를 사용하게 되니 이때부터는 세션이 풀리지 않습니다. 그 기반이 되는 코드를 작성한 것이니 걱정하지말고
 다음 과정을 진행하면 됩니다.
 
+5.6 네이버 로그인
+마지막으로 네이버 로그인을 추가해보겟습니다.
+
+네이버 API 등록
+https://developers.naver.com/apps/#/register?api=nvlogin
+다음과 같이 각 항목을 채웁니다.
+
+[사용API, 애플리케이션이름]
+애플리케이션 이름 : room-reservation-springboot2-webservice
+사용API : 네이버 아이도로 로그인에 회원이름, 이메일, 프로필 사진을 필수로 체크합니다.
+
+회원이름, 이메일, 프로필 사진은 필수이며 추가정보는 필요한 경우 선택할 수 있습니다.
+아래로 내려가서 구글에서와 마찬가지로 URL을 등록하며 됩니다.
+
+[로그인 오픈 API 서비스 환경]
+서비스 환경 : PC 웹
+서비스 URL : http://localhost:8080/
+네이버아디로 로그인 Callback URL(최대 5개) : http://localhost:8080/login/oauth2/code/naver
+
+서비스 URL은 필수입니다. 여기서는 localhost:8080 으로 등록합니다.
+callBack URL은 구글에서 등록한 리디렉션 URL과 같은 역할을 합니다.
+여기서는 /login/oauth2/code/naver로 등록합니다.
+등록을 완료하면 다음과 같이 ClientID와 ClientSecret가 생성됩니다.
+
+[네이버 서비스 등록완료.]
+해당 키값들을 application-oauth.properties에 등록합니다.
+네이버에서는 스프링 시큐리티를 공식 지원하지 않기때문에 그동안 Common-OAuth2Provider에서 해주던 값들도 전부 수동으로 입력해야합니다.
+[\src\main\resources\application-oauth.properties]
+코드 작성은 [https://github.com/jojoldu/freelec-springboot2-webservice/blob/master/src/main/resources/application-oauth.properties]
+레퍼런스에서 복사해왔습니다.
+# user_name_attribute=response : 기준이 되는 user_name이름을 네이버에서는 response로 해야합니다.
+# 이유는 네이버의 회원조회시 반환되는 JSON 형태 떄문입니다.
+
+네이버 오픈 API의 로그인 회원 결과는 다음과 같습니다.
+{
+    "resultcode": "00",
+    "message":"success",
+    "response":{
+        "email": "openapi@naver.com",
+        "nickname": OpenAPI",
+        "profile_image" : "https://ssl.pstatic.net/static/pwe/address/nodata_33x33.gif",
+        "age": "40-49",
+        "gender": "F",
+        "id": "32742776",
+        "name": "오픈API",
+        "birthday" : "10-01"
+    }
+}
+스프링 시큐리티에선 하위필드를 명시할 수 없습니다.
+최상위 필드들만 user_name으로 지정 가능합니다. 하지만 네이버의 응답값 최상위 필드는 resultCode, message, response 입니다.
+이러한 이유로 스프링 시큐리티에서 인식 가능한 필드는 저 3개중에 골라야합니다. 본문에서 담고 있는 response를 user_name으로 지정하고
+이후 자바코드로 response의 id를 user_name으로 지정하겠습니다.
+
+스프링 시큐리티 설정등록
+구글 로그인을 등록하면서 대부분 코드가 확장성 있게 작성되었다 보니 네이버는 쉽게 등록가능합니다.
+OAuthAttributes에 다음과 같이 네이버인지 판단하는 코드와 네이버 생성자만 추가해주면 됩니다.
+[\src\main\java\com\room\reservation\config\auth\dto\OAuthAttributes.java]
+public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes){
+함수에 네이버 관련 정보를 추가하고
+네이버라면
+private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes) {
+를 실행시키도록 합니다.
+
+마지막으로 index.mustache에 네이버 로그인 버튼을 추가합니다.
 
 
 
