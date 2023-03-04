@@ -1,25 +1,33 @@
 package com.room.reservation.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.room.reservation.domain.posts.Posts;
 import com.room.reservation.domain.posts.PostsRepository;
 import com.room.reservation.web.dto.PostsSaveRequestDto;
 import com.room.reservation.web.dto.PostsUpdateRequestDto;
 import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -33,12 +41,27 @@ public class PostsApiControllerTest {
     @Autowired
     private PostsRepository postsRepository;
 
+    @Autowired
+    private WebApplicationContext context;
+
+    private MockMvc mvc;
+
+    //@Before : 매번 테스트가 시작되기 전에 MockMvc 인스턴스를 생성합니다.
+    @Before
+    public void setup(){
+        mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+    }
+
     @After
     public void tearDown() throws Exception{
         postsRepository.deleteAll();
     }
 
     @Test
+//    WithMockUser(roles="USER") : 인증된 모의(가짜)사용자를 만들어서 사용합니다.
+//    : roles에 권한을 추가할 수 있습니다.
+//    : 즉, 이 어노테이션으로 인해 ROLE_USER 권한을 가진 사용자가 API를 요청하는 것과 동일한 효과를 가지게 됩니다.
+    @WithMockUser(roles="USER")
     public void Posts_등록된다() throws Exception{
         //given
         String title = "title";
@@ -53,18 +76,27 @@ public class PostsApiControllerTest {
         String url = "http://localhost:" + port + "/api/v1/posts";
 
         //when
-        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
+//        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
+//        mvc.perform : 생성된 MockMvc를 통해 API를 테스트합니다.
+//        :본문(body) 영역은 문자열로 표현하기 위해 ObjecMapper를 통해 문자열 JSON으로 변환합니다.
+        mvc.perform(post(url).
+                contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(new ObjectMapper().writeValueAsString(requestDto)))
+                .andExpect(status().isOk());
 
         //then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isGreaterThan(0L);
-
+//        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+//        assertThat(responseEntity.getBody()).isGreaterThan(0L);
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(title);
         assertThat(all.get(0).getContent()).isEqualTo(content);
     }
 
     @Test
+//    WithMockUser(roles="USER") : 인증된 모의(가짜)사용자를 만들어서 사용합니다.
+//    : roles에 권한을 추가할 수 있습니다.
+//    : 즉, 이 어노테이션으로 인해 ROLE_USER 권한을 가진 사용자가 API를 요청하는 것과 동일한 효과를 가지게 됩니다.
+    @WithMockUser(roles="USER")
     public void Posts_수정된다() throws Exception{
         //given
         Posts savedPosts = postsRepository.save(Posts.builder()
@@ -87,12 +119,16 @@ public class PostsApiControllerTest {
         HttpEntity<PostsUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
 
         //when
-        ResponseEntity<Long> responseEntity = restTemplate
-                .exchange(url, HttpMethod.PUT, requestEntity, Long.class);
+//        ResponseEntity<Long> responseEntity = restTemplate
+//                .exchange(url, HttpMethod.PUT, requestEntity, Long.class);
+        mvc.perform(put(url)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(new ObjectMapper().writeValueAsString(requestDto)))
+                .andExpect(status().isOk());
 
         //then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+//        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+//        assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(expectedTitle);
@@ -196,5 +232,42 @@ LocalDate와 LocalDateTime이 데이터베이스에 제대로 매핑되지 않�
 스프링부트 1.x 를 쓴다면 별도로 Hibernate 5.2.10 버전 이상을 사용하도록 설정이 필요하지만, 스프링 부트 2.x 버전을 사용하면 기본적으로
 해당 버전을 사용 중이라 별다른 설정없이 바로 적용하면 됩니다.
 domain 패키지에 BaseTimeEntity 클래스를 생성합니다.
+
+--- Spring Security 인증되지 않은 사용자의 요청을 설정 테스트 새로 Test 진행을 위해 추가한 코드들 ---
+    @Autowired
+    private WebApplicationContext context;
+
+    private MockMvc mvc;
+
+    //@Before : 매번 테스트가 시작되기 전에 MockMvc 인스턴스를 생성합니다.
+    @Before
+    public void setup(){
+        mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+    }
+
+Potss_등록된다
+    WithMockUser(roles="USER") : 인증된 모의(가짜)사용자를 만들어서 사용합니다.
+    : roles에 권한을 추가할 수 있습니다.
+    : 즉, 이 어노테이션으로 인해 ROLE_USER 권한을 가진 사용자가 API를 요청하는 것과 동일한 효과를 가지게 됩니다.
+//@WithMockUser(roles="USER")
+//when
+//        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
+//        mvc.perform : 생성된 MockMvc를 통해 API를 테스트합니다.
+//        :본문(body) 영역은 문자열로 표현하기 위해 ObjecMapper를 통해 문자열 JSON으로 변환합니다.
+        mvc.perform(post(url).
+                contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(new ObjectMapper().writeValueAsString(requestDto)))
+                .andExpect(status().isOk());
+
+   Posts_수정된다
+    WithMockUser(roles="USER") : 인증된 모의(가짜)사용자를 만들어서 사용합니다.
+    : roles에 권한을 추가할 수 있습니다.
+    : 즉, 이 어노테이션으로 인해 ROLE_USER 권한을 가진 사용자가 API를 요청하는 것과 동일한 효과를 가지게 됩니다.
+        mvc.perform(put(url)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(new ObjectMapper().writeValueAsString(requestDto)))
+                .andExpect(status().isOk());
+
+----- 위의 코드등릉ㄹ 추가합니다.
 
  */

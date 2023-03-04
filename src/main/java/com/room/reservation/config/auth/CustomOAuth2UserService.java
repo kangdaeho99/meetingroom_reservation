@@ -444,9 +444,108 @@ private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String,
 
 마지막으로 index.mustache에 네이버 로그인 버튼을 추가합니다.
 
+자 이제 메인화면을 확인해보면 네이버 버튼이 활성화 된것을 볼 수 있으며 네이버 로그인 버튼을 누르면 다음과 같이 동의 화면이 등장합니다.
+그럼 다음과 같이 로그인이 성공하는 것을 확인할 수 있습니다.
+네이버 로그인까지 성공했습니다!
 
+5.7 기존 테스트에 시큐리티 적용하기
+마지막으로 기존 테스트에 시큐리티 적용으로 문제가 되는 부분들을 해결해보겠습니다.
+문제가 되는 부분들은 대표적으로 다음과 같은 이유 때문입니다.
+기존에는 바로 API를 호출할 수 있어 테스트 코드 역시 바로 API를 호출하도록 구성하였습니다.
+하지만, 시큐리티 옵션이 활성화되면 인증된 사용자만 API를 호출할 수 있습니다.
+기존의 API 테스트 코드들이 모두 인증에 대한 권한을 받지 못하였으므로, 테스트코드마다 인증한 사용자가 호출한것처럼 작동하도록 수정하겠습니다.
+인텔리제이 오른쪽 위에 [Gradle] 탭을 클릭합니다. [Tasks -> veritification -> test] 를 차례로 선택해서 전체테스트를 수행합니다.
+test를 실행해보면 다음과 같이 롬복을 이용한 테스트 외에 스프링을 이용한 테스트는 모두 실패하는 것을 확인할 수 있습니다.
+그 이유를 하나씩 확인해보겠습니다.
+[문제1. CustomOAuth2UserService를 찾을 수 없음]
+첫번째 실패테스트인 "hello가_리턴되다"의 메세지를 보면
+NoSuchBeanDefinitionException: No qualifying bean of type 'com.room.reservation.config.auth.CustomOAuth2UserService'
+available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+라는 메세지가 등장합니다.
+이는 CustomOAuth2UserService를 생성하는데 필요한 소셜 로그인 관련 설정값들이 없기 때문에 발생합니다.
+그렇다면! 이상합니다. 분명 application-oauth.properties에 설정값들을 추가했는데 왜 설정이 없다고할까요?
+이는 src/main 환경과 src/test 환경의 차이 때문입니다. 둘은 본인만의 환경 구성을 가집니다.
+다만, src/main/resources/application.properties가 테스트코드를 수행할때도 적용되는 이유는 test에 application.properties
+가 없으면 main의 설정을 그대로 가져오기 때문입니다. 다만, 자동으로 가져오는 옵션의 범위는 application.properties 파일까지입니다.
+즉, application-oauth.properties는 test에 파일이 없다고 가져오는 파일은 아니라는 점입니다.
+이 문제를 해결하기 위해 테스트 환경을 위한 application.properties를 만들겠습니다. 실제로 구글연동까지 진행할것은 아니므로
+가짜 설정값을 등록합니다.
+[\src\test\resources\application.properties]에 설정값을 추가합니다.
 
+다시 그레이들로 테스트를 수행해보면 다음과 같이 7개의 실패테스트가 4개로 줄어들었습니다.
+근데 저같은경우 그냥 원래 4개가 성공하고 4개는 실패했어서 변화가 없었습니다.
 
+문제2. 302 Status Code
+두번째로 "Posts_등록된다" 테스트 로그를 확인해봅니다.
+expected:<[200 OK]> but was:<[302 FOUND]>
+필요:200 OK
+실제   :302 FOUND
+
+응답의 결과로 200(정상 응답) Status Code를 원했는데 결과는 302(리다이렉션 응답) Status Code가 와서 실패했습니다.
+이는 스프링 시큐리티 설정 때문에 인증되지 않은 사용자의 요청은 이동시키기 때문입니다.
+그래서 이런 API 요청은 임의로 인증된 사용자를 추가하여 API만 테스트해볼 수 있겠습니다.
+어려운 방법은 아니며, 이미 스프링 시큐리티에서 공식적으로 방법을 지원하고 있으므로 바로 사용해보겠습니다.
+스프링 시큐리티 테스트를 위한 여러 도구를 지원하는 spring-security-test를 build.gradle에 추가합니다.
+[\room_reservation\build.gradle]
+
+그리고 PostApiControllerTest의 2개 테스트 메소드에 다음과 같이 임의 사용자 인증을 추가합니다.
+[\src\test\java\com\room\reservation\web\PostsApiControllerTest.java]
+@WithMockUser(roles="USER") 를 posts_등록된다. Posts_수정된다에 어노테이션으로 추가합니다.
+
+이정도만하면 테스트가 될것같지만, 실제로 작동하진 않습니다.
+@WithMockUser가 MockMvc에서만 작동하기 때문입니다.
+현재 PostsApiControllerTest는 @SpringBootTest로만 되어있으며 MockMvc를 전혀 사용하지 않습니다.
+그래서 @SpringBootTest에서 MockMvc를 사용하는 방법을 소개합니다.  코드를 다음과 같이 변경합니다.
+[\src\test\java\com\room\reservation\web\PostsApiControllerTest.java]에서 수정합니다.
+
+자, 그리고 다시 전체테스트를 수행해보겠습니다.
+이제 Posts테스트도 정상적으로 수행되었습니다!. 마지막으로 남은 테스트들을 정리해보겠습니다.
+
+[문제3 @WebMvcTest에서 CustomOAuth2User를 찾을 수 없음]
+제일 앞에서 발생한 "Hello가 리턴된다" 테스트를 확인해봅니다.
+그럼 첫번째로 해결한 것과 동일한 메세지인  No qualifying bean of type 'com.room.reservation.config.auth.CustomOAuth2UserService'
+가 나옵니다.
+이 문제는 왜 발생했을까요?
+HelloControllerTest는 1번과는 조금 다른점이 있습니다. 바로 @WebMvcTest를 사용한다는 점입니다.
+1번을 통해 스프링 시큐리티 설정은 잘작동했지만, @WebMvcTest는 CustomOAuth2UserService를 스캔하지 않기 때문입니다.
+@WebMvcTest는 WebSecurityConfigurerAdapter, WebMvcConfigurer를 비롯한 @ControllerAdvice, @Controller를 읽습니다.
+즉, @Repository, @Service, @Component는 스캔대상이 아닙니다.
+그러니 SecurityConfig는 읽었지만, SecurityConfig를 생성하기 위해 필요한 CustomOAuth2UserService는 읽을 수가 없어 앞에서와 같이 에러가
+발생한 것입니다. 그래서 이 문제를 해결하기 위해 다음과 같이 스캔 대상에서 SecurityConfig를 제거합니다.
+[\src\test\java\com\room\reservation\web\HelloControllerTests.java]
+
+언제 삭제될지 모르니 사용하지 않으시는걸 추천합니다. 그리고 여기서도 마찬가지로 @WithMockUser를 사용해서
+가짜로 인증된 사용자를 생성합니다.
+[\src\test\java\com\room\reservation\web\HelloControllerTests.java]
+@WithMockUser(roles="USER")
+public void hello가_리턴되다() throws Exception{
+@WithMockUser(roles="USER")
+public void helloDTO가_리턴되다() throws Exception{
+
+이렇게 한뒤 다시 테스트를 돌려보면 다음과 같은 추가 에러가 발생합니다.
+java.lang.IllegalArgumentException: JPA metamodel must not be empty!
+
+이 에러는 @EnableJpaAuditing 으로 인해 발생합니다.
+@EnableJpaAuditing를 사용하기 위해선 최소 하나의 @Entity 클래스가 필요합니다.
+@WebMvcTest이다 보니 당연히 없습니다.
+@EnableJpaAuditing가 @SpringBootApplication와 함께 있다보니 @WebMvcTest에서도 스캔하게 되었습니다.
+그래서 @EnableJpaAuditing과 @SpringBootApplication 둘을 분리하겠습니다.
+Application.java에서 @EnableJpaAuditing을 제거합니다.
+[\src\main\java\com\room\reservation\Application.java]
+
+config패키지에 JpaConfig를 생성하여 @EnableJpaAuditing를 추가합니다.
+[\src\main\java\com\room\reservation\config\JpaConfig.java]
+@WebMvcTest는 일반적인 @Configuration은 스캔하지 않습니다.
+그리고 다시 전체 테스트를 수행해봅니다.
+
+모든 테스트를 통과했습니다!
+앞의 과정을 토대로 스프링 시큐리티 적용으로 깨진 테스트를 적절하게 수정할 수 있게 되엇습니다.
+우리는 앞서 인텔리제이로 스프링 부트 통합 개발환경을 만들고 테스트와 JPA로 데이터를 처리하고 머스테치로 화면을 구성했으며
+시큐리티와 Oauth로 인증과 권한을 배워보며 간단한 게시판을 모두 완성했습니다.
+예전만 하더라도 스프링 시큐리티를 사용하기가 쉽지 않았습니다.
+하지만 계속 버전이 상향되어 최근 버전에서는 확장하기 쉬워졌습니다.
+꼭 필자의 선택인 스프링 부트 시큐리티 2.0을 쓰지 않고 1.5를 사용해도되지만, 언젠가는 업데이트를 해야만 합니다.
+이제 AWS를 이용해 나만의 서비스를 직접 배포하고 운영하는 과정을 진행하겠습니다.
 
 
 

@@ -74,7 +74,6 @@ dependencies {
 
     implementation('org.springframework.boot:spring-boot-starter-mustache')
 
-
     /*스프링 시큐리티 관련 의존성 추가 (spring-boot-starter-oauth2-client)
     : 소셜로그인 등 클라이언트 입장에서 소셜 기능 구현시 필요한 의존성입니다.
     : spring-security-oauth2-client와 spring-security-oauth2-jose를 기본으로 관리해줍니다.
@@ -85,6 +84,10 @@ dependencies {
         세션저장소로 데이터베이스를 사용합니다.
      */
     implementation('org.springframework.session:spring-session-jdbc')
+
+    //임의로 인증된 사용자를 추가하여 API만 테스트해볼 수 있게 도와주는 라이브러리
+    testImplementation("org.springframework.security:spring-security-test")
+
 //    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
 //    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 //    compile('org.springframework.boot:spring-boot-starter-web')
