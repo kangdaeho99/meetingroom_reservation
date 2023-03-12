@@ -363,9 +363,46 @@ nohup java -jar
     -Dspring.profiles.active=real
     $REPOSITORY/$JAR_NAME 2>&1 &
 
+에러사항:[https://github.com/jojoldu/freelec-springboot2-webservice/issues/82]
+Unable to access jarfile application-real-db.properties 라는 에러가 계속해서 발생해서 도저히 이유를 찾을수가없었습니다.
+첫번쨰로 application-real-db에서 db정보를 처음에 room-reservation-webservice인데, room_reservation_webservice라고 써있어서
+해당 이유인가 해서 기대했지만 실패.
+두번째로 \ 를 붙여야하나? 하지만 이건 그냥 한줄로 붙여주는것일뿐이기에 실패
+마지막으로 (저도 같은 오류가 나서 여기 보고 도움 받았습니다!
+      저는 properties 사이에 콤마 다음 공백을 넣었더니 오류가 나더라고요.
+      저처럼 오류 나는 사람들을 위해서 한마디 남깁니다ㅎㅎ)
+콤마 이후에 공백이 있어서 오류메세지를 보면 [Unable to access jarfile application-real-db.properties,] 여기보면 마지막에 "," 이 있다.
+그렇다. 앞에 ", Unable to access jarfile application-real-db.properties," 그러니 오류가났었던것...
+nohup java -jar \
+        -Dspring.config.location=classpath:/application.properties,/home/ec2-user/app/application-oauth.properties,/home/ec2-user/app/application-real-db.properties,classpath:/application-real.properties \
+        -Dspring.profiles.active=real \
+        $REPOSITORY/$JAR_NAME 2>&1 &
+
+또 "\" 를 무조건 붙여야 작동한다... 그냥 책대로 따라해야한다. 문법인것같다. 한글자로 이어주는.
+
+계속해서 curl localhost:8080할시 실패해서 더 찾아봤다.
+
+The following profiles are active: oauth,real
+[https://github.com/jojoldu/freelec-springboot2-webservice/issues/208]
+[https://github.com/jojoldu/freelec-springboot2-webservice/issues/99]
+예시와 달리 나는 The following profiles are active: oauth,real 이렇게만 뜨고, The following profiles are active: real-oauth,oauth,real-db,real
+이렇게 안떳다. 즉, real-oauth와 real-db는 작동하지 않는거엇다.
+ps -ef | grep java 를 통해 확인해도 내가 실행중인 jar파일이 보이지 않았따.
+
 (1)Dspring.profiles.active=real : application-real.properties를 활성화시킵니다.
 :application-real.properties의 spring.profiles.include=oauth,real-db 옵션 때문에 real-db 역시 함께 활성화 대상에 포함됩니다.
 자 이렇게 설정된 후 다시 한번 deploy.sh를 실행해봅니다. nohup.out 파일을 열어 다음과 같이 로그가 보인다면 성공적으로 수행된 것입니다.
+
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.1.7.RELEASE)
+
+2023-03-12 10:02:56.959  INFO 26230 --- [           main] com.room.reservation.Application         : Starting Application on room-reservation-webservice.localdomain with PID 26230 (/home/ec2-user/app/step1/room_reservation-1.0-SNAPSHOT.jar started by ec2-user in /home/ec2-user/app/step1)
+2023-03-12 10:02:56.984  INFO 26230 --- [           main] com.room.reservation.Application         : The following profiles are active: oauth,real
+
 
 
 
