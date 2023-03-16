@@ -1,12 +1,12 @@
 
 
 {{>layout/header}}
-<h1>스프링 부트로 시작하는 웹서비스</h1>
+<h1>스프링 부트로 시작하는 웹서비스, 배포테스트123</h1>
 <div class="col-md-12">
     <!-- 로그인 기능 영역 -->
     <div class="row">
         <div class="col-md-6">
-            <a href="/posts/save" role="buton" class="btn btn-primary">글 등록</a>
+            <a href="/posts/save" role="button" class="btn btn-primary">글 등록</a>
             {{#loginuserName}}
                 Logged in as : <span id="user">{{loginuserName}}</span>
                 <a href="/logout" class="btn btn-info active" role="button">Logout</a>

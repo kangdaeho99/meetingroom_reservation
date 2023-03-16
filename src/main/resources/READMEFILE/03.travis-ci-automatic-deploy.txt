@@ -209,5 +209,51 @@ Done. Your build exited with 0.
 Travis CI를 통해 자동으로 파일이 올려진 것을 확인할 수 있습니다.
 Travis CI와 S3 연동이 완료되었습니다. 이제 CodeDeploy로 배포까지 완료해보겠습니다.
 
+--------------------------------------------
+여기서 문제발생했습니다. Travis CI가 무료요금제를 삭제하고 과곰방식으로 변화함에 따라
+Jenkins를 사용하여 진행해봅니다.
+참고할 블로그
+https://may9noy.tistory.com/365 : AWS JENKINS DOCKER ?? Docker관련내용이 있어서 일단가져왔습니다. Docker를 통해서 진행하기도하는듯
+https://lock.tistory.com/2 : Window에서 Jenkins 사용법,(jdk버전...이 중요했는데 여기에는 그게 안나왔다)
+https://lemontia.tistory.com/945 : [aws] Jenkins + S3 + CodeDeploy 를 이용해 배포하기(수동배포)
+
+
+추가로 Jenkins와 AWS S3, Codedeploy를 사용. 아마 Travis CI와 다를바 없을듯하다.
+Port : 2023
+
+젠킨슨 Windows 설치 과정중 겪은 에러사항들정리
+1. JDK는 JRE를 포함할 뿐만 아니라 컴파일러(javac), javadoc, jar 등 개발에 유용한 도구들을 포함하고 있다.
+ 따라서 자바 프로그램을 개발하기 위해서는 JDK를 다운로드하여야 한다. 결론은 JRE는 자바 실행환경이고, JDK는 자바 개발 도구
+2. Jenkins은 jdk11과 jdk 17만을 지원하고있다. 내가 사용하던거는 1.8로 jdk8 버전이라 안됬었다.
+3. jdk 가 제대로 설치되어쓴지 보려면 java -version, javac, javap 까지 다 실행되야한다.
+
+4. 나는 젠킨스를 윈도우로 설치한상태라 C:\Program Files\Jenkins 에 있는 jenkins.exe를 클릭하면 사용할 수 있으리라 생각햇었다.
+그것은 큰 오산. 그 과정에서 cannot start from debugger가 뜨고 별 난리가 다치길래
+cmd 관리자 권한으로 가서 installutill "C:\Program Files\Jenkins\jenkins.exe" 같은 작업까지 통하여 설치까지 진행했지만 이것이 아니었따.
+즉, 젠킨스는 서버이고 그냥 실행하는거지 윈도우 GUI 프로그램이 아니라, nodejs나 linux같은 서버에서 다루는 일종의 그런 파일인것이다.
+어찌도시든 cmd에서 아래의 command를 실행하고 브라우저러 접속한다.
+[https://stackoverflow.com/questions/14869311/start-stop-and-restart-jenkins-service-on-windows]
+Open Console/Command line --> Go to your Jenkins installation directory. Execute the following commands respectively:
+to stop:
+jenkins.exe stop
+
+to start:
+jenkins.exe start
+
+to restart:
+jenkins.exe restart
+
+cmd에서 C:\Program Files\Jenkins 로 이동하여 아래와 같이 작업한뒤 처음에 설정한 15000 포트로 브라우저로 접속한다.
+http://localhost:15000/
+그러면 패스워드가 존재하는 경로를 알려주는데
+C:\ProgramData\Jenkins\.jenkins\secrets\initialAdminPassword 여길로 이동해서 해당 패스워드를 입력하면된다.
+
+젠킨스, springboot CICD 구축(차이점은 난 localhost에서 젠킨스를 돌린다는것. 여기는 AWS로 돌림)
+[https://velog.io/@haeny01/AWS-Jenkins%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-Docker-x-SpringBoot-CICD-%EA%B5%AC%EC%B6%95]
+
+github webhokk
+[등록시 생긴 에러 : https://stackoverflow.com/questions/59208288/webhook-error-issue-while-integrating-github-with-jenkins]
+http://localhost:15000/github-webhook/  --->>>   http://58.123.161.188:15000/github-webhook/
+
 
 
