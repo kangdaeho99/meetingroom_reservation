@@ -2,6 +2,7 @@
 /.gradle/
 .gradle
 .idea
+READMEFILE/
 
 # application-oauth.properties 제외
 application-oauth.properties
