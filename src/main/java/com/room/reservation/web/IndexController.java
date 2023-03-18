@@ -28,6 +28,14 @@ public class IndexController {
         return "index";
     }
 
+//    @GetMapping("/login")
+//    public String login(Model model, @LoginUser SessionUser user){
+//        if(user!=null){
+//            model.addAttribute("loginuserName", user.getName());
+//        }
+//        return "/routes/Login";
+//    }
+
     @GetMapping("/posts/save")
     public String postsSave(){
         return "posts-save";
