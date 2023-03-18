@@ -1,8 +1,6 @@
 package com.room.reservation.web;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.ResolvableType;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
@@ -20,8 +18,6 @@ public class AuthController {
     private static final String authorizationRequestBaseUri = "oauth2/authorization";
     Map<String, String> oauth2AuthenticationUrls = new HashMap<>();
 
-    //    @Autowired
-//    private ClientRegistrationRepository clientRegistrationRepository;
     private final ClientRegistrationRepository clientRegistrationRepository;
 
     @SuppressWarnings("unchecked")
