@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers( "/", "/login", "/static/**", "/css/**", "/images/**","/js/**","/h2-console/**").permitAll() //해당 페이지들 모두 접근가능
+                .antMatchers( "/", "/**", "/login", "/static/**", "/css/**", "/images/**","/js/**","/h2-console/**").permitAll() //해당 페이지들 모두 접근가능
                 .antMatchers("/api/v1/**").hasRole(Role.USER.name()) //로그인한 사용자만 가능
                 .anyRequest().authenticated() //그 외의 요청은 권한이 있기만 하면 허용
                 .and()

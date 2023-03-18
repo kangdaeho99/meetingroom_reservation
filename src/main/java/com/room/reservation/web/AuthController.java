@@ -13,15 +13,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.HashMap;
 import java.util.Map;
 
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 @Controller
 public class AuthController {
 
     private static final String authorizationRequestBaseUri = "oauth2/authorization";
     Map<String, String> oauth2AuthenticationUrls = new HashMap<>();
-//    private final ClientRegistrationRepository clientRegistrationRepository;
-    @Autowired
-    private ClientRegistrationRepository clientRegistrationRepository;
+
+    //    @Autowired
+//    private ClientRegistrationRepository clientRegistrationRepository;
+    private final ClientRegistrationRepository clientRegistrationRepository;
+
     @SuppressWarnings("unchecked")
     @GetMapping("/login")
     public String getLoginPage(Model model) throws Exception {
