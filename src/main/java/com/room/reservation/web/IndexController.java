@@ -4,6 +4,7 @@ import com.room.reservation.config.auth.LoginUser;
 import com.room.reservation.config.auth.dto.SessionUser;
 import com.room.reservation.service.posts.PostsService;
 import com.room.reservation.web.dto.PostsResponseDto;
+import jdk.nashorn.internal.objects.NativeMath;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user){
+        System.out.println("it's home index!!");
         model.addAttribute("posts", postsService.findAllDesc());
 //        SessionUser user = (SessionUser) httpSession.getAttribute("user");
         if(user!=null){
