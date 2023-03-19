@@ -26,7 +26,7 @@ public class AuthController {
     @SuppressWarnings("unchecked")
     @GetMapping("/login")
     public String getLoginPage(Model model,  @LoginUser SessionUser user ) throws Exception {
-        System.out.println("it's our login PAge!!");
+        System.out.println("... login page");
 
         Iterable<ClientRegistration> clientRegistrations = null;
         ResolvableType type = ResolvableType.forInstance(clientRegistrationRepository)
@@ -41,9 +41,10 @@ public class AuthController {
                         authorizationRequestBaseUri + "/" + registration.getRegistrationId()));
         model.addAttribute("urls", oauth2AuthenticationUrls);
 
-        System.out.println("it's our login PAge!! it is working?"+oauth2AuthenticationUrls);
+        if(user!=null){
+            model.addAttribute("loginuser", user);
+        }
 
-//        return "/routes/Login";
         return "Login";
     }
 }
