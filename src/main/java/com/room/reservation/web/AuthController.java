@@ -1,5 +1,7 @@
 package com.room.reservation.web;
 
+import com.room.reservation.config.auth.LoginUser;
+import com.room.reservation.config.auth.dto.SessionUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ResolvableType;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
@@ -23,7 +25,7 @@ public class AuthController {
 
     @SuppressWarnings("unchecked")
     @GetMapping("/login")
-    public String getLoginPage(Model model) throws Exception {
+    public String getLoginPage(Model model,  @LoginUser SessionUser user ) throws Exception {
         System.out.println("it's our login PAge!!");
 
         Iterable<ClientRegistration> clientRegistrations = null;
