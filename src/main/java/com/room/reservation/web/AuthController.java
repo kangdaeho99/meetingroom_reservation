@@ -43,6 +43,7 @@ public class AuthController {
 
         System.out.println("it's our login PAge!! it is working?"+oauth2AuthenticationUrls);
 
-        return "/routes/Login";
+//        return "/routes/Login";
+        return "Login";
     }
 }
