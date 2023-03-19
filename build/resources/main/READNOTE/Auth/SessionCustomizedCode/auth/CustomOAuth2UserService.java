@@ -5,7 +5,6 @@ import com.room.reservation.config.auth.dto.OAuthAttributes;
 import com.room.reservation.config.auth.dto.SessionUser;
 import com.room.reservation.domain.user.User;
 import com.room.reservation.domain.user.UserRepository;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
