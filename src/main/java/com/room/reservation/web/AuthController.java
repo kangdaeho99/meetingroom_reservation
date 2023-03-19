@@ -41,7 +41,8 @@ public class AuthController {
                         authorizationRequestBaseUri + "/" + registration.getRegistrationId()));
         model.addAttribute("urls", oauth2AuthenticationUrls);
 
-        System.out.println("it's our login PAge!! it is working?");
+        System.out.println("it's our login PAge!! it is working?"+oauth2AuthenticationUrls);
+
         return "/routes/Login";
     }
 }
