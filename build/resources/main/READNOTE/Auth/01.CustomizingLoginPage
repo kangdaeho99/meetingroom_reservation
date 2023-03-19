@@ -1,2 +1,7 @@
 http://yoonbumtae.com/?p=2872
 를 그대로 참고하면됩니다.
+
+현재 로컬에서는 /login page로 잘 작동되는데 aws에 배포했을시에는 잘 작동되지않는다.
+[oauth2 loginpage 404 whitelabel]
+[Spring Boot Azure Multiple HttpSecurity, ]
+https://stackoverflow.com/questions/72139036/spring-boot-azure-multiple-httpsecurity

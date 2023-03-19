@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated() //그 외의 요청은 권한이 있기만 하면 허용
                 .and()
                 .oauth2Login()
-                .loginPage("/login").permitAll()
+//                .loginPage("/login").permitAll()
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")
