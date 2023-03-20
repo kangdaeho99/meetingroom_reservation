@@ -1,0 +1,16 @@
+
+스프링 부트 3 을 사용하면서 H2를 계속사용하려고하니
+Syntax error in SQL statement "\000d\000a 계속해서 해당 오류가 나왔다.
+다른 오류는 쉽게 해결했었는데 위와 같이 "\000d 같은 에러는 잘작동하지 않았다.
+ [ https://blog.naver.com/tjdwns4537/222725200427] 이 글로 해결했다.
+신기하게 h2에서 mysql을 사용하게하기 위해 MYSQLDialect를 사용하는것이 맞는줄알았는데 아래와 같이 H2Dialect로 사용해야 작동한다.
+#spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect
+
+좀 찾아보니 h2 database를 사용했기 떄문에 h2 driver와  db dialect는 H2로 사용하는게 맞다는데 그렇다면 이전에는 어떻게 해결한것인가?
+
+h2dialect와 mysqldialect 라는 검색어로 찾아보니 자세하게 나와있습니다. '우연히' 버전이 맞았던 것인것같습니다.
+내가 만약에 Mysql 로 데이터베이스를 사용한다면 당연히 mysqldialect를 사용하는것이고,
+h2 데이터베이스이기에 h2dialect로 사용해야 자동으로 h2 데이터베이스에 맞는 query로 실행하는것입니다.
+아래 글에서도 어디서 막 설정파일을 가져오면 안된다고 말하고있습니다.
+[https://2dongdong.tistory.com/66]

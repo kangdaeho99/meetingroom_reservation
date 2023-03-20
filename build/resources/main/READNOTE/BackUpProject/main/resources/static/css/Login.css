@@ -1,0 +1,30 @@
+/* white space gone */
+html { height: 100%;  }
+body { min-height: 100%;
+	background: lightgray;
+	}
+
+.main_wrapper{
+	background: lightgray;
+	height:100%;
+	overflow: hidden;
+}
+
+.main_main{
+
+	width: 100%;
+	min-height: 650px;
+	flex-grow: 1;
+	padding-top:100px;
+}
+
+form{
+	width:300px;
+	margin:0 auto;
+	padding:5px ;
+	border:1px solid gray;
+	border-radius: 10px 10px 10px 10px;
+}
+button{
+	margin-top:5px;
+}

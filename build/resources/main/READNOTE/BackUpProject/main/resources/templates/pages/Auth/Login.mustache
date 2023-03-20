@@ -1,0 +1,33 @@
+<!--<link rel="stylesheet" href="../css/Home.css">-->
+<!--<link rel="stylesheet" href="../css/Login.css">-->
+    <div class="main_main">
+        <div class="text-center">
+            <main class="form-signin w-100 m-auto">
+                <form>
+                    <br/>
+                    <h1>회의실 <br/>예약서비스</h1>
+                    <br/>
+                    <br/>
+                    <h3 class="h3 pb-1 fw-normal" style="border-bottom:3px solid gray; margin-bottom:0px; ">소셜로그인</h3>
+
+
+
+                    {{#loginuserName}}
+                        Logged in as : <span id="user">{{loginuserName}}</span>
+                        <a href="/logout" class="btn btn-info active" role="button">Logout</a>
+                    {{/loginuserName}}
+                    {{^loginuserName}}
+                        <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+                        <a href="/oauth2/authorization/naver" class="btn btn-secondary active" role="button">Naver Login</a>
+<!--                    <button class="w-100 mt-3 btn btn-lg btn-primary" type="submit" style="background-color:green; border:1px solid white"><img src="navericon.webp" width="20px" height="20px"/> 네이버로 시작</button>-->
+<!--                    <button class="w-100 btn btn-lg btn-primary" type="submit" style="background-color:lightgray; border:1px solid white"><img src="googleicon.png" width="20px" height="20px" />&nbsp 구글로 시작</button>-->
+                    {{/loginuserName}}
+
+
+                    <p class="mt-5 mb-3 text-muted">&copy; 2023-2028</p>
+
+                </form>
+            </main>
+        </div>
+    </div>
+</div>
