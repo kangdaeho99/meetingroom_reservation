@@ -1,3 +1,47 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.4'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.room'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'com.h2database:h2';
+    testImplementation 'junit:junit:4.13.1'
+
+
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+
+
+/*
 
 //스프링 이니셜라이저로 사용해도됩니다.
 //프로젝트의 플러그인 의존성 관리를 위한 설정
@@ -5,7 +49,7 @@
 buildscript{
     //ext : build.grade에서 사용하는 전역변수를 설정.
     ext {
-        springBootVersion = '2.1.7.RELEASE'
+        springBootVersion = '2.3.4.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -78,18 +122,18 @@ dependencies {
     : 소셜로그인 등 클라이언트 입장에서 소셜 기능 구현시 필요한 의존성입니다.
     : spring-security-oauth2-client와 spring-security-oauth2-jose를 기본으로 관리해줍니다.
     */
-    implementation('org.springframework.boot:spring-boot-starter-oauth2-client')
-
-    /*
-        세션저장소로 데이터베이스를 사용합니다.
-     */
-    implementation('org.springframework.session:spring-session-jdbc')
-
-    //임의로 인증된 사용자를 추가하여 API만 테스트해볼 수 있게 도와주는 라이브러리
-    testImplementation("org.springframework.security:spring-security-test")
-
-    //MariaDB 드라이버
-    implementation("org.mariadb.jdbc:mariadb-java-client")
+//    implementation('org.springframework.boot:spring-boot-starter-oauth2-client')
+//
+//    /*
+//        세션저장소로 데이터베이스를 사용합니다.
+//     */
+//    implementation('org.springframework.session:spring-session-jdbc')
+//
+//    //임의로 인증된 사용자를 추가하여 API만 테스트해볼 수 있게 도와주는 라이브러리
+//    testImplementation("org.springframework.security:spring-security-test")
+//
+//    //MariaDB 드라이버
+//    implementation("org.mariadb.jdbc:mariadb-java-client")
 
 
 //    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
@@ -98,13 +142,13 @@ dependencies {
 //    testCompile('org.springframework.boot:spring-boot-starter-test')
 //    compileOnly('org.springframework.boot:spring-boot-starter-web')
 //    testCompileOnly('org.springframework.boot:spring-boot-starter-test')
-}
+//}
 
-configurations {
-    compileOnly{
-        extendsFrom annotationProcessor
-    }
-}
+//configurations {
+//    compileOnly{
+//        extendsFrom annotationProcessor
+//    }
+//}
 //test {
 //    useJUnitPlatform()
 //}
