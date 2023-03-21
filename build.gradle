@@ -8,6 +8,9 @@ group = 'com.room'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
+jar {
+    enabled = false
+}
 
 configurations {
     compileOnly {
