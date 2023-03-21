@@ -14,3 +14,20 @@ h2dialect와 mysqldialect 라는 검색어로 찾아보니 자세하게 나와�
 h2 데이터베이스이기에 h2dialect로 사용해야 자동으로 h2 데이터베이스에 맞는 query로 실행하는것입니다.
 아래 글에서도 어디서 막 설정파일을 가져오면 안된다고 말하고있습니다.
 [https://2dongdong.tistory.com/66]
+
+
+
+
+--------------------------
+
+아무리 찾아봐도 오류를 못찾았었다.
+처음에 import org.junit.Test.*; 로 되어있을때는 오류가 매우 간단하게 나왓었다. 아래처럼
+java.lang.NullPointerException: Cannot invoke "Object.getClass()" 아무리해도 해당 오류가 났었고
+
+jupiter로 바꾸자 로그가 매우 디테일해졌고,
+import org.junit.jupiter.api.Test;
+Unable to resolve name [org.hibernate.dialect.MySQL5InnoDBDialect] as strategy [org.hibernate.dialect.Dialect] 오류가나왔다.
+내가 까먹은것은 테스트를 할때도 application.properties가 존재한다는점이다... ㄷㄷ..
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect 와 같이 변경해주었다.
+
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect XXXXXXXXXXX

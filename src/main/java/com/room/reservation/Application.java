@@ -2,8 +2,6 @@ package com.room.reservation;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-
 
 //@EnableJpaAuditing : JPA Auditing을 활성화시킵니다.
 //@EnableJpaAuditing 를 삭제시킵니다. 이유는 @EnableJpaAuditing을 사용하기 위해서는 최소 하나의 @entity 클래스가 필요한데,
