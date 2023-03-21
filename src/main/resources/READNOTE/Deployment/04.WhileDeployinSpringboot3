@@ -1,0 +1,11 @@
+
+SpringBoot가 2개의 jar을 만들면서 일반 jar, plain jar이 생성되었다. 나는 일반 jar을 사용하려고했기에
+
+검색어 : no main manifest attribute,
+[https://dongjuppp.tistory.com/87]
+jar {
+    enabled = false
+}
+설정을 통해 성공햇다. 그리고 ./gradlew clean build를 통해 이전의 빌드들을 초기화시켜주어야만한다.
+
+
