@@ -1,10 +1,20 @@
 package com.room.reservation.repository;
 
 import com.room.reservation.entity.Memo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 public interface MemoRepository extends JpaRepository<Memo, Long> {
 
+    /* Query Methods, 이름 자체가 질의조건을 만듭니다. mno를 기준으로 하여 between구문을 사용, orderby가 wjrdydehlqslek.*/
+    List<Memo> findByMnoBetweenOrderByMnoDesc(Long from, Long to);
+
+    Page<Memo> findByMnoBetween(Long from, Long to, Pageable pageable);
+
+    void deleteMemoByMnoLessThan(Long num);
 }
 /*
 MemoRepository는 특이하게도 인터페이스 자체.
