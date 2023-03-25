@@ -1,4 +1,14 @@
 <!--<link rel="stylesheet" href="css/Home.css">-->
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/index}">
+
+<!-- Content -->
+<div layout:fragment="content">
+
+<!--<div th:fragment="Home" xmlns:th="http://www.w3.org/1999/xhtml">-->
+<!--    <th:block th:replace="~{../../index :: setContent(~{this::content})}">-->
+
 <main>
     <div class="main_main album py-5 bg-light">
         <section class="py-5 text-center container">
@@ -67,3 +77,7 @@
 </main>
 
 </div>
+<!--</th:block>-->
+</html>
+
+<!--</div>-->
