@@ -1,9 +1,0 @@
-Thymeleaf를 진행하여 Layout을 잡는과정을 하는데
-
-정말 어이없는 일이 발생.
-
-나는 처음에 /pages/Home/Home.html에 layout:content를 설정할 생각으로 진행
-그리고 그것을 띠우기 위해 indexcontroller에서 /pages/home/home.html을 진행했는데
-계속 에러가 나길래 thymeleaf인줄알고 계속고생하다가 알고보니
-Controller에서 경로를 못잡아준것임.
-그리고 처음에 이해를 잘못하여 index.html에서 레이아웃을 그냥 보여주고 content를 바꿔주는것임.
