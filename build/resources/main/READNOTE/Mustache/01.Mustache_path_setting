@@ -1,0 +1,8 @@
+
+무스타치를 설정하며
+
+<link rel="stylesheet" href="../css/Home.css">
+<link rel="stylesheet" href="../css/Login.css">
+
+이런식으로 진행했었습니다.
+이떄, 무조건 static 위치에서 진행되는줄알고 css/Login.css 로 했지만, templates 기준에서 경로를 계산합니다.
