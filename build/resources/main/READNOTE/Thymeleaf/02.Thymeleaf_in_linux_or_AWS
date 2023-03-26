@@ -24,6 +24,7 @@ spring.thymeleaf.suffix=.html
 근데 웃긴게 IndexController만 되고 RoomController는 안됬었는데 해결방안은 RoomController
         return "/room/list"; 가 아니라 return "room/list"; 이다. 맨앞의 "/"를 뺴준다.
 
+
 @Controller
 @RequestMapping("/")
 @Log4j2
@@ -45,3 +46,9 @@ public class RoomController {
         return "room/list";
     }
 }
+
+
+네번쨰, 또 웃긴게 localhost:8080/, localhost:8080/room/, localhost:8080/room,
+이렇게 다 되게할려면 아래처럼 "", "/" 이렇게 설정해줘야한다.
+
+@GetMapping({"","/","/list"})
