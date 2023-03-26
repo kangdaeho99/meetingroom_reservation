@@ -2,6 +2,7 @@ package com.room.reservation;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 //@EnableJpaAuditing : JPA Auditing을 활성화시킵니다.
 //@EnableJpaAuditing 를 삭제시킵니다. 이유는 @EnableJpaAuditing을 사용하기 위해서는 최소 하나의 @entity 클래스가 필요한데,
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //@SpringBootApplication : 스프링부트의 자동설정, 스프링 Bean 읽기와 생성
 //SpringBootApplication이 있는 위치부터 설정을 읽어가기 때문에 이 클래스는 항상 프로젝트의 최상단에 위치해야합니다.
 @SpringBootApplication
+@EnableJpaAuditing
 public class Application {
     public static void main(String[] args) {
 //        Main 메소드의 SpringApplication.run으로 내장 WAS를 실행

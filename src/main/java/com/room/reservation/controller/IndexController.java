@@ -9,8 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 @Log4j2
 public class IndexController {
-    @GetMapping({"/index"})
-    public void index(){
+//    @GetMapping({"/"})
+//    public void index(){
+//        log.info("index..............");
+//    }
+
+    @GetMapping({"/"})
+    public String indexlist(){
         log.info("index..............");
+        return "room/list";
     }
 }
