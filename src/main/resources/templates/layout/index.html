@@ -21,13 +21,13 @@
 
     <div class="main_container container">
 
-        <div th:replace="fragments/header::header"></div>
+        <div th:replace="~{fragments/header::header}"></div>
 
 
         <div class="main_section">
 
 
-            <div th:replace="fragments/leftsidebar::leftsidebar"></div>
+            <div th:replace="~{fragments/leftsidebar::leftsidebar}"></div>
 
 <!--            <div th:replace="pages/Home/Home::Home"></div>-->
             <div layout:fragment="content"></div>
@@ -38,7 +38,7 @@
 
         </div>
 
-<div th:replace="fragments/footer::footer"></div>
+<div th:replace="~{fragments/footer::footer}"></div>
 
 
     </div>

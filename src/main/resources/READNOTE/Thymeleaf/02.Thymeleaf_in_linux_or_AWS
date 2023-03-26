@@ -1,0 +1,47 @@
+[AWS] ec2 환경에서 thymleaf 오류 잡기(template might not exist or might not be accessible by any of the configured Template Resolvers...)
+[https://wonin.tistory.com/503]
+
+[Spring] Spring Boot 시작하기 (2) - Thymeleaf 뷰 템플릿 사용
+thymleaf layout:decorate 폴더 인식
+[https://dev-overload.tistory.com/25]
+
+계속해서 Spring local에서는 잘작동하지만 AMI2 에서 배포할시 Thymeleaf를 인식하지 못하는 문제가 있었음.
+
+우선 첫번째.
+[C:\Users\user\IdeaProjects\room_reservation\src\main\resources\application.properties]에 추가.
+# 정적 리소스에 변화가 있을 때 바로 반영한다.
+spring.devtools.livereload.enabled=true
+# thymeleaf 참조 경로
+spring.thymeleaf.prefix=classpath:/templates/
+spring.thymeleaf.suffix=.html
+
+
+두번쨰,
+      layout:decorate="~{/../layout/index}">
+여기서 경로가 이상하게 ~{/layout/index}로 해도된다; 머냐 근데 정석적으로 해야겠지. 위에처럼한다.
+
+세번쨰, ec2 환경에서 "localhost:8080/","localhost:8080/room", "localhost:8080/room/list", 이렇게 3가지일떄 같이 list.html을 보이게했다.
+근데 웃긴게 IndexController만 되고 RoomController는 안됬었는데 해결방안은 RoomController
+        return "/room/list"; 가 아니라 return "room/list"; 이다. 맨앞의 "/"를 뺴준다.
+
+@Controller
+@RequestMapping("/")
+@Log4j2
+public class IndexController {
+    @GetMapping({"/"})
+    public String indexlist(){
+        log.info("index..............");
+        return "room/list";
+    }
+}
+
+@Controller
+@RequestMapping("/room")
+@Log4j2
+public class RoomController {
+    @GetMapping({"/","/list"})
+    public String list(){
+        log.info("list.............");
+        return "room/list";
+    }
+}

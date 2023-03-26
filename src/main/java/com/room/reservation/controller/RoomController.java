@@ -13,6 +13,6 @@ public class RoomController {
     @GetMapping({"/","/list"})
     public String list(){
         log.info("list.............");
-        return "/room/list";
+        return "room/list";
     }
 }
