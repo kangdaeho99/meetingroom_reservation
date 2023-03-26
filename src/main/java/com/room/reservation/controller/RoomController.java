@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/room")
 @Log4j2
 public class RoomController {
-    @GetMapping({"/","/list"})
+    @GetMapping({"","/","/list"})
     public String list(){
         log.info("list.............");
         return "room/list";
