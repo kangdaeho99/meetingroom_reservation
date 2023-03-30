@@ -19,17 +19,18 @@ public class RoomController {
     private final RoomService service; //final 로 선언
 
 //    @GetMapping({"","/","/list"})
-    @GetMapping({"","/"})
-    public String index(){
-        log.info("list.............");
-//        return "room/list";
-        return "redirect:/room/list";
-    }
+//    @GetMapping({"","/"})
+//    public String index(){
+//        log.info("list.............");
+////        return "room/list";
+//        return "redirect:/room/list";
+//    }
 
-    @GetMapping("/list")
+    @GetMapping({"","/","/list"})
     public void list(PageRequestDTO pageRequestDTO, Model model){
         log.info("list..............." + pageRequestDTO);
         model.addAttribute("result", service.getList(pageRequestDTO));
+        System.out.println("result:::::::::::::::::"+ model.getAttribute("result"));
     }
 
 
