@@ -17,8 +17,7 @@ public class ApplicationStartUpRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        System.out.println("helloworld~~~");
-        IntStream.rangeClosed(1, 55).forEach(i ->{
+        IntStream.rangeClosed(1, 24).forEach(i ->{
             Room room = Room.builder()
                     .title("Title...."+i)
                     .content("Content...."+i)

@@ -71,6 +71,16 @@ body { min-height: 100%;
 
 
 
+.pagination_nav{
+	margin-top:170px;
+	/*padding-top:170px;*/
+	display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+
+
 
 /* This is for Album CSS*/
 .bd-placeholder-img {

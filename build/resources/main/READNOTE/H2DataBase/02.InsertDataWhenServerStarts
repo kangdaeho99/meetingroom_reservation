@@ -1,0 +1,22 @@
+[Spring Boot 의 ApplicationRunner, Spring 애플리케이션 시작 시 실행되는 로직 작성하기]
+https://sgc109.github.io/2020/07/09/spring-running-startup-logic/
+
+[만약 h2-database에서 data.sql 을 안쓰고 Applicationm Runner를 사용한다면??]
+https://stackoverflow.com/questions/38040572/spring-boot-loading-initial-data
+
+[h2-database에서 import.sql말고 data.sql을 사용하니 작동되었다.]
+INSERT INTO ROOM (GNO, MODDATE, REGDATE, CONTENT, TITLE, WRITER) VALUES (DEFAULT, NOW(), NOW(), 'content_value', 'title_value', 'writer_value');
+INSERT INTO ROOM (GNO, MODDATE, REGDATE, CONTENT, TITLE, WRITER)
+VALUES (DEFAULT, '2022-03-30 10:30:00', '2022-03-30 10:30:00', '내용', '제목', '작성자');
+
+
+이건 application.properties에 넣엇는데 아래처럼 주석처리햇다.
+이유는 schema.sql은 테이블생성인데 그걸해주고싶진않음.,
+spring.jpa.defer-datasource-initialization=true
+#spring.sql.init.data-locations=classpath:/data.sql;   //데이터 관련
+#spring.sql.init.schema-locations=classpath:schema.sql; // 테이블 생성 관련
+
+나는 ApplicationRunner를 활용하여 save를 하는방식에 대해 알아볼려고한다.
+
+public class ApplicationStartUpRunner implements ApplicationRunner { 를 활용하여 진행
+
