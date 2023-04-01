@@ -1,0 +1,126 @@
+
+p.184 ~ p.185 modal(모달) 부분 안되는 분들을 위해
+[https://cafe.naver.com/gugucoding/7391]
+
+<div class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Modal body text goes here.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script th:inline="javascript">
+      const msg = [[${msg}]];
+      console.log(msg);
+
+      const modal = new bootstrap.Modal(document.querySelector(".modal"));
+      if (msg){
+        modal.show();
+      }
+    </script>
+
+이것처럼 사용. 이전에는 jquery로 관리
+<script th:inline="javascript">
+      var msg = [[${msg}]];
+      console.log(msg);
+      if (msg){
+        modal.show();
+      }
+</script>
+
+관련정보는 찾기 살짝 힘들다고 생각
+https://getbootstrap.com/docs/5.3/components/modal/#via-javascript (여기서 아래링크도 들어가봐야함)
+https://getbootstrap.com/docs/5.3/getting-started/javascript/#asynchronous-functions-and-transitions
+const myModal = document.querySelector('#myModal')
+myModal.hide() // it is asynchronous
+
+
+이후에도 내가 이런 문서를 볼일이 많을 것같아 남겨봅니다.
+
+Modal본뒤 Javascript 사용하기 라는 탭이 있습니다.
+JavaScript 한 줄로 모달을 생성합니다:
+var myModal = new bootstrap.Modal(document.getElementById('myModal'), options) 가 있습니다.
+여기서 var 말고 const도 가능하고, options 덕분에 살짝 헷갈릴 수 잇는데,
+여기서 실제로 options를 쓰는것이 아니라
+var myModal = new bootstrap.Modal(document.getElementById('myModal'), {
+  keyboard: false
+})
+이것처럼 사용하라는것이다.
+
+만약 option  없이 사용하고 싶다면
+var myModal = new bootstrap.Modal(document.getElementById('myModal')); 로 그냥 사용
+
+getInstance : DOM 요소와 연관된 모달 인스턴스를 취득하는 Static 메소드 입니다.
+var myModalEl = document.getElementById('myModal')
+var modal = bootstrap.Modal.getInstance(myModalEl) // Returns a Bootstrap modal instance
+
+const myModal = new bootstrap.Modal(document.getElementById('myModal'), options)
+// or
+const myModalAlternative = new bootstrap.Modal('#myModal', options)
+
+
+
+getOrCreateInstance " Static method which allows you to get the modal instance associated with a DOM element, or create a new one in case it wasn’t initialised
+var myModalEl = document.querySelector('#myModal')
+var modal = bootstrap.Modal.getOrCreateInstance(myModalEl) // Returns a Bootstrap modal instance
+
+어쩃든 저것처럼 한뒤
+Passing options
+모달로서 콘텐츠를 활성화 합니다. 옵션의 object를 받습니다.
+
+Copy
+var myModal = new bootstrap.Modal(document.getElementById('myModal'), {
+  keyboard: false
+})
+toggle
+모달을 수동으로 바꿉니다. 모달이 실제로 표시 또는 숨기기 전에 호출한 곳으로 돌아갑니다 (즉, shown.bs.modal 또는 hidden.bs.modal 이벤트가 발생하기 전).
+
+Copy
+myModal.toggle()
+show
+모달을 수동으로 엽니다. 모달이 실제로 표시되기 전에 호출한 곳으로 돌아갑니다 (즉, shown.bs.modal 이벤트가 발생하기 전).
+
+Copy
+myModal.show()
+또한, 모달 이벤트로 받을 수 있는 DOM 요소를 인수로 건네줄 수도 있습니다.(relatedTarget 속성으로서).
+
+Copy
+var modalToggle = document.getElementById('toggleMyModal') // relatedTarget
+myModal.show(modalToggle)
+hide
+수동으로 모달을 숨깁니다. 모달이 실제로 숨겨지기 전에 호출한 곳으로 돌아갑니다 (즉, hidden.bs.modal 이벤트가 발생하기 전).
+
+Copy
+myModal.hide()
+handleUpdate
+열려 있는 동안에 모달의 높이가 바뀌었을 경우, 모달의 위치를 수동으로 재조정합니다 (즉, 스크롤 바가 표시되어 있는 경우 등).
+
+Copy
+myModal.handleUpdate()
+dispose
+모달의 요소를 없앱니다.(DOM 요소에 저장되어 있는 데이터를 삭제합니다)
+
+Copy
+myModal.dispose()
+
+아래의 상태가 있습니다.
+
+5.2에서는 그냥 함수표로 나와있는데 그것도 그냥 읽으면서 뒤에 myModal.함수명() 글 읽으면서 사용하면 됩니다.
+
+
+또 보면 내가 보는것은 특정
+https://getbootstrap.com/docs/5.0/components/modal/ 5.0버전에는 좀더 자세한 설명이 있고,
+https://getbootstrap.com/docs/5.2/components/modal/ 5.2 에는 latest? 라 그런지 설명이 이상하게 생략되어있다..
+지금 보니 생략된게 아니라 그냥 그거대로 읽고 하면됩니다.
+
