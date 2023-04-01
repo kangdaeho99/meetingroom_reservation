@@ -107,10 +107,10 @@
   </div>
 
   <script th:inline="javascript">
-      var msg = [[${msg}]];
+      const msg = [[${msg}]];
       console.log(msg);
 
-      var modal = new bootstrap.Modal(document.querySelector(".modal"));
+      const modal = new bootstrap.Modal(document.querySelector(".modal"));
       if (msg){
         modal.show();
       }
