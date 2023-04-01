@@ -10,6 +10,8 @@ public interface RoomService {
 
     PageResultDTO<RoomDTO, Room> getList(PageRequestDTO requestDTO);
 
+    void initRoomDataBase();
+
     default Room dtoToEntity(RoomDTO dto){
         Room entity = Room.builder()
                 .gno(dto.getGno())

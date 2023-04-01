@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;
+import java.util.stream.IntStream;
 
 @Service
 @Log4j2
@@ -46,6 +47,18 @@ public class RoomServiceImpl implements RoomService{
         Function<Room, RoomDTO> fn = (entity -> entityToDto(entity));
         return new PageResultDTO<>(result, fn);
 
+    }
+
+    @Override
+    public void initRoomDataBase(){
+        IntStream.rangeClosed(1, 24).forEach(i ->{
+            Room room = Room.builder()
+                    .title("Title...."+i)
+                    .content("Content...."+i)
+                    .writer("user..."+i)
+                    .build();
+            repository.save(room);
+        });
     }
 
 

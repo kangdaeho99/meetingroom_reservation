@@ -20,3 +20,50 @@ spring.jpa.defer-datasource-initialization=true
 
 public class ApplicationStartUpRunner implements ApplicationRunner { 를 활용하여 진행
 
+
+@Component
+@DependsOn("RoomRepository")
+public class ApplicationStartUpRunner implements ApplicationRunner {
+
+    @Autowired
+    private RoomRepository roomRepository;
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        IntStream.rangeClosed(1, 24).forEach(i ->{
+            Room room = Room.builder()
+                    .title("Title...."+i)
+                    .content("Content...."+i)
+                    .writer("user..."+i)
+                    .build();
+            roomRepository.save(room);
+        });
+
+    }
+}
+
+
+해당 코드로 진행했는데 ApplicationRunner가 RoomRepository Bean이 생성되지 않았는데 실행되어 오류발생.
+chatgpt에게 물어봐서 @DependsOn("RoomRepository") 을 통해 RoomRepository라는 bean이 생성된 이후에 작업하도록 의존성을 설정해주었다.
+---------->>>>>>>>>>>>>>> 이거 작동안됨 이렇게 할시 그냥 프로젝트 끝나는 에러있음.
+[[스프링] Context의 등록되는 빈의 순서를 정하자 - @DependsOn] 이렇게 할려면 component에 이름을 지어주어야합니다.
+https://heavenly-appear.tistory.com/265
+
+
+좋은 방안이 있다. RoomService는 애초에 RoomRepository의 빈이 다 생성되고 작동하니 사용하기에 안전하다.
+그러므로 Service를 사용해서 바꿉니다.
+
+@Component
+public class ApplicationStartUpRunner implements ApplicationRunner {
+
+
+    @Autowired
+    private RoomService roomService;
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+
+        roomService.initRoomDataBase();
+
+    }
+}
