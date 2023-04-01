@@ -2,11 +2,13 @@
 <html xmlns:th="http//www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/../layout/index}">
-
+<head>
+  <link rel="stylesheet" th:href="@{/css/Home.css}">
+</head>
 <!-- Content -->
-<div layout:fragment="content">
+<th:block layout:fragment="content">
 
-  <main>
+  <main class="main_wrapper">
     <div class="main_main album py-5 bg-light">
       <section class="py-5 text-center container">
         <div class="row py-lg-5">
@@ -64,17 +66,20 @@
 
       <nav class="pagination_nav" aria-label="...">
         <ul class="pagination">
-          <li class="page-item disabled">
-            <a class="page-link">Previous</a>
+
+          <li class="page-item disabled" th:if="${result.prev}">
+            <a class="page-link" th:href="@{/room/list(page = ${result.start - 1})}" tabindex="-1">Previous</a>
           </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item active" aria-current="page">
-            <a class="page-link" href="#">2</a>
+
+          <li class=" ' page-item ' + ${result.page == page? 'active':''} " th:each="page : ${result.pageList}">
+            <a class="page-link" th:href="@{/room/list(page = ${page})}">[[${page}]]</a>
+<!--            <a class="page-link" th:href="@{/room/list(page = ${page}, size=${result.size})}">[[${page}]]</a>-->
           </li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">Next</a>
+
+          <li class="page-item" th:if="${result.next}">
+            <a class="page-link" href="@{/room/list(page = ${result.end + 1})}">Next</a>
           </li>
+
         </ul>
       </nav>
 
@@ -82,7 +87,7 @@
     </div>
   </main>
 
-</div>
+</th:block>
 <!--</th:block>-->
 </html>
 

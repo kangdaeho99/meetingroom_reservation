@@ -5,14 +5,14 @@
 
 /* white space gone */
 html { height: 100%;  }
-body { min-height: 100%;
+/*body { min-height: 100%;
 	background: lightgray;
-	}
+	}*/
 
-.main_wrapper{
+/*.main_wrapper{
 	background: lightgray;
 	overflow: hidden
-}
+}*/
 .main_container{
 	/*height:100%;*/
 	background: white;
@@ -51,11 +51,14 @@ body { min-height: 100%;
 	/*border:1px solid gray;*/
 }
 
+.main_wrapper{
+	width:100%;
+}
 
 .main_main{
 	/*height:100px;*/
-/*	width: 100%;
-	overflow:hidden;*/
+	/*width: 100%;*/
+	/*overflow:hidden;*/
 	/*background:lightgray;*/
 	/*border:1px solid gray;*/
 	/*height:500px;*/
@@ -78,7 +81,6 @@ body { min-height: 100%;
     justify-content: space-evenly;
     align-items: center;
 }
-
 
 
 

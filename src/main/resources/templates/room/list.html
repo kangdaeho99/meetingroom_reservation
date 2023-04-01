@@ -2,11 +2,13 @@
 <html xmlns:th="http//www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/../layout/index}">
-
+<head>
+  <link rel="stylesheet" th:href="@{/css/Home.css}">
+</head>
 <!-- Content -->
-<div layout:fragment="content">
+<th:block layout:fragment="content">
 
-  <main>
+  <main class="main_wrapper">
     <div class="main_main album py-5 bg-light">
       <section class="py-5 text-center container">
         <div class="row py-lg-5">
@@ -85,7 +87,7 @@
     </div>
   </main>
 
-</div>
+</th:block>
 <!--</th:block>-->
 </html>
 
