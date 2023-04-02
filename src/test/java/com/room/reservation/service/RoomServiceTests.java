@@ -86,4 +86,46 @@ public class RoomServiceTests {
 
 
     }
+
+    /**
+     * Descrip : 검색 관련 테스트 함수입니다.
+     *
+     * '제목(t)이나 내용(c)에 '한글' 이라는 키워드가 있는 글을 검색합니다.
+     *
+     */
+    @Test
+    public void testSearch(){
+
+        IntStream.rangeClosed(1, 34).forEach(i ->{
+            Room room = Room.builder()
+                    .title("Title..."+i)
+                    .content("Content..."+i)
+                    .writer("Writer...."+i)
+                    .build();
+            roomRepository.save(room);
+        });
+
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .page(1)
+                .size(10)
+                .type("tc")
+                .keyword("32")
+                .build();
+
+        PageResultDTO<RoomDTO, Room> resultDTO = service.getList(pageRequestDTO);
+
+        System.out.println("PREV: " + resultDTO.isPrev());
+        System.out.println("NEXT: " + resultDTO.isNext());
+        System.out.println("TOTAL: " + resultDTO.getTotalPage());
+
+        System.out.println("===========================================");
+        for(RoomDTO roomDTO : resultDTO.getDtoList()){
+            System.out.println(roomDTO);
+        }
+
+        System.out.println("===========================================");
+        resultDTO.getPageList().forEach(i -> System.out.println(i));
+
+
+    }
 }

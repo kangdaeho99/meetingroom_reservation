@@ -73,6 +73,8 @@ public class RoomController {
         log.info("dto: "+dto);
         service.modify(dto);
         redirectAttributes.addAttribute("page", requestDTO.getPage());
+        redirectAttributes.addAttribute("type", requestDTO.getType());
+        redirectAttributes.addAttribute("keyword", requestDTO.getKeyword());
         redirectAttributes.addAttribute("gno", dto.getGno());
         return "redirect:/room/read";
     }

@@ -1,8 +1,11 @@
 package com.room.reservation.service;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.room.reservation.dto.PageRequestDTO;
 import com.room.reservation.dto.PageResultDTO;
 import com.room.reservation.dto.RoomDTO;
+import com.room.reservation.entity.QRoom;
 import com.room.reservation.entity.Room;
 import com.room.reservation.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
@@ -67,7 +70,8 @@ public class RoomServiceImpl implements RoomService{
     @Override
     public PageResultDTO<RoomDTO, Room> getList(PageRequestDTO requestDTO){
         Pageable pageable = requestDTO.getPageable(Sort.by("gno").descending());
-        Page<Room> result = repository.findAll(pageable);
+        BooleanBuilder booleanBuilder = getSearch(requestDTO); //검색 조건 처리
+        Page<Room> result = repository.findAll(booleanBuilder, pageable); //query dsl 사용
         Function<Room, RoomDTO> fn = (entity -> entityToDto(entity));
         return new PageResultDTO<>(result, fn);
 
@@ -114,5 +118,51 @@ public class RoomServiceImpl implements RoomService{
         }
     }
 
+    /**
+     * Description : 서비스 계층의 검색 구현
+     * 동적으로 검색 조건이 처리되는 경우의 실제 코딩은 Querydsl을 통해서 BooleanBuilder를 작성하고,
+     * RoomRepository는 Querydsl로 작성된 BooleanBuilder를 findAll() 처리하는 용도로 사용합니다.
+     * BooleanBuilder 작성은 별도의 클래스 등을 작성해서 처리할 수 있지만 간단히 하려면 RoomServiceImpl 내에 메서드를 작성해서 처리합니다.
+     * PageRequestDTO를 파라미터로 받아서 검색조건(type)이 있는 경우에는 conditionBuilder 변수를 생성해서 각 검색 조건을 'or'로 연결
+     * 반면에 검색조건이 없다면 'gno > 0'으로만 생성됩니다.
+     * RoomServiceImpl에서 목록을 조회할때 사용하는 getList()는 기존의 코드를 수정합니다.
+     *
+     * BooleanBuilder booleanBuilder = getSearch(requestDTO); //검색 조건 처리
+     * Page<Room> result = repository.findAll(booleanBuilder, pageable); //query dsl 사용
+     *
+     * @param requestDTO
+     * @return
+     */
+    private BooleanBuilder getSearch(PageRequestDTO requestDTO){
+        String type = requestDTO.getType();
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        QRoom qRoom = QRoom.room;
+        String keyword = requestDTO.getKeyword();
+        BooleanExpression expression = qRoom.gno.gt(0L); //gno > 0 조건만 생성
+        booleanBuilder.and(expression);
+
+        if(type == null || type.trim().length() == 0){
+            return booleanBuilder;
+        }
+
+        //검색조건을 작성하기
+        BooleanBuilder conditionBuilder = new BooleanBuilder();
+
+        if(type.contains("t")){
+            conditionBuilder.or(qRoom.title.contains(keyword));
+        }
+        if(type.contains("c")){
+            conditionBuilder.or(qRoom.content.contains(keyword));
+        }
+        if(type.contains("w")){
+            conditionBuilder.or(qRoom.writer.contains(keyword));
+        }
+
+        //모든 조건 통합
+        booleanBuilder.and(conditionBuilder);
+
+        return booleanBuilder;
+
+    }
 
 }

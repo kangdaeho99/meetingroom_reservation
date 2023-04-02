@@ -85,7 +85,14 @@ html { height: 100%;  }
     align-items: center;
 }
 
+.searchForm{
+	margin: 0 auto;
+	width:70%;
+}
 
+.form-select{
+	max-width:220px;
+}
 
 /* This is for Album CSS*/
 .bd-placeholder-img {
