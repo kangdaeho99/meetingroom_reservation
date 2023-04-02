@@ -13,6 +13,9 @@ public interface RoomService {
 
     RoomDTO read(Long gno);
 
+    void remove(Long gno);
+    void modify(RoomDTO dto);
+
 
     default Room dtoToEntity(RoomDTO dto){
         Room entity = Room.builder()

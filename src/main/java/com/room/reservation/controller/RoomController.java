@@ -52,12 +52,29 @@ public class RoomController {
         return "redirect:/room/list";
     }
 
-    @GetMapping("/read")
+    @GetMapping({"/read", "/modify"})
     public void read(long gno, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model){
         log.info("gno: "+gno);
         RoomDTO dto = service.read(gno);
         model.addAttribute("dto", dto);
+    }
 
+    @PostMapping("/remove")
+    public String remove(long gno, RedirectAttributes redirectAttributes){
+        log.info("gno : "+ gno);
+        service.remove(gno);
+        redirectAttributes.addFlashAttribute("msg", gno);
+        return "redirect:/room/list";
+    }
+
+    @PostMapping("/modify")
+    public String modify(RoomDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirectAttributes){
+        log.info("post modify .......................");
+        log.info("dto: "+dto);
+        service.modify(dto);
+        redirectAttributes.addAttribute("page", requestDTO.getPage());
+        redirectAttributes.addAttribute("gno", dto.getGno());
+        return "redirect:/room/read";
     }
 
 

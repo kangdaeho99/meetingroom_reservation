@@ -95,5 +95,24 @@ public class RoomServiceImpl implements RoomService{
         return result.isPresent() ? entityToDto(result.get()) : null;
     }
 
+    @Override
+    public void remove(Long gno) {
+        repository.deleteById(gno);
+    }
+
+    @Override
+    public void modify(RoomDTO dto) {
+        Optional<Room> result = repository.findById(dto.getGno());
+
+        if(result.isPresent()){
+            Room entity = result.get();
+
+            entity.changeTitle(dto.getTitle());
+            entity.changeContent(dto.getContent());
+
+            repository.save(entity);
+        }
+    }
+
 
 }
