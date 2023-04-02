@@ -6,11 +6,13 @@ import com.room.reservation.dto.RoomDTO;
 import com.room.reservation.entity.Room;
 
 public interface RoomService {
+    void initRoomDataBase();
     Long register(RoomDTO dto);
 
     PageResultDTO<RoomDTO, Room> getList(PageRequestDTO requestDTO);
 
-    void initRoomDataBase();
+    RoomDTO read(Long gno);
+
 
     default Room dtoToEntity(RoomDTO dto){
         Room entity = Room.builder()

@@ -72,7 +72,10 @@ html { height: 100%;  }
 	/*border:1px solid gray;*/
 }
 
+.register_container{
+ justify-content: flex-end;
 
+}
 
 .pagination_nav{
 	margin-top:170px;
