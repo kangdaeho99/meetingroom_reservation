@@ -12,7 +12,13 @@
         <div class="main_register_container">
             <h1 class="mt-4">Room Modify Page</h1>
             <form th:action="@{/room/modify}" th:method="post">
+
+                <input type="hidden" name="page" th:value="${requestDTO.page}">
+                <input type="hidden" name="type" th:value="${requestDTO.type}">
+                <input type="hidden" name="keyword" th:value="${requestDTO.keyword}">
                 <input type="hidden" name="gno" th:value="${dto.gno}"/>
+
+
                 <div class="form-group">
                     <label>Title</label>
                     <input type="text" class="form-control" name="title" placeholder="Enter Title" width="100px" th:value = "${dto.title}">
@@ -66,13 +72,22 @@
     });
 
     $(".listBtn").click(function(){
-        var pageInfo = $("input[name='page']");
+<!--        var pageInfo = $("input[name='page']");-->
+        var page = $("input[name='page']");
+        var type = $("input[name='type']");
+        var keyword = $("input[name='keyword']");
 
         actionForm.empty();
-        actionForm.append(pageInfo);
+
+        actionForm.append(page);
+        actionForm.append(type);
+        actionForm.append(keyword);
+
         actionForm.attr("action", "/room/list")
                     .attr("method","get");
-        console.log(actionForm.html());
+
+<!--        console.log(actionForm.html());-->
+
         actionForm.submit();
     });
     </script>
