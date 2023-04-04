@@ -1,6 +1,7 @@
 package com.room.reservation.repository;
 
+import com.room.reservation.entity.Board;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BoardRepository extends JpaRepository<BoardRepository, Long> {
+public interface BoardRepository extends JpaRepository<Board, Long> {
 }

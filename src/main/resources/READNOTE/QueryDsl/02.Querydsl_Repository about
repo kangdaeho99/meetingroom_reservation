@@ -1,0 +1,8 @@
+
+
+내가 Board, Member, Reply Entity를 만들고 실행하면 서버가 잘작동하며 DDL이 처리된다.
+
+그렇지만, BoardReposityry, MemberRepository, ReplyRepository로 JPA를 상속받고 실행하면 오류가 난다.
+일단 알아두자.
+처음에 내가 ammend commit을 하면서 merge를 햇었는데 그것이 원인인줄 알았으나 그것이 아니라 repository가 아직 연결이 안되어서 그런것같다.
+일단 테스트진행하고 확인.
