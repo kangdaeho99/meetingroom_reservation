@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - MemberRepositoryTests</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>MemberRepositoryTests</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.room.reservation.repository.html">com.room.reservation.repository</a> &gt; MemberRepositoryTests</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.305s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">insertMembers()</td>
+<td class="success">0.305s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>06:23:16.581 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [MemberRepositoryTests]: using SpringBootContextLoader
+06:23:16.586 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.room.reservation.repository.MemberRepositoryTests]: no resource found for suffixes {-context.xml, Context.groovy}.
+06:23:16.586 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.room.reservation.repository.MemberRepositoryTests]: MemberRepositoryTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+06:23:16.606 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using ContextCustomizers for test class [MemberRepositoryTests]: [DisableObservabilityContextCustomizer, PropertyMappingContextCustomizer, Customizer, ExcludeFilterContextCustomizer, DuplicateJsonObjectContextCustomizer, MockitoContextCustomizer, TestRestTemplateContextCustomizer]
+06:23:16.673 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [C:\Users\user\IdeaProjects\room_reservation\build\classes\java\main\com\room\reservation\Application.class]
+06:23:16.674 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.room.reservation.Application for test class com.room.reservation.repository.MemberRepositoryTests
+06:23:16.756 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners for test class [MemberRepositoryTests]: [ServletTestExecutionListener, DirtiesContextBeforeModesTestExecutionListener, ApplicationEventsTestExecutionListener, MockitoTestExecutionListener, DependencyInjectionTestExecutionListener, DirtiesContextTestExecutionListener, TransactionalTestExecutionListener, SqlScriptsTestExecutionListener, EventPublishingTestExecutionListener, RestDocsTestExecutionListener, MockRestServiceServerResetTestExecutionListener, MockMvcPrintOnlyOnFailureTestExecutionListener, WebDriverTestExecutionListener, MockWebServiceServerTestExecutionListener, ResetMocksTestExecutionListener]
+06:23:16.757 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: class [MemberRepositoryTests], class annotated with @DirtiesContext [false] with mode [null]
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.0.4)
+
+2023-04-05T06:23:16.965+09:00  INFO 1760 --- [    Test worker] c.r.r.repository.MemberRepositoryTests   : Starting MemberRepositoryTests using Java 17.0.6 with PID 1760 (started by user in C:\Users\user\IdeaProjects\room_reservation)
+2023-04-05T06:23:16.966+09:00  INFO 1760 --- [    Test worker] c.r.r.repository.MemberRepositoryTests   : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2023-04-05T06:23:17.596+09:00  INFO 1760 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-04-05T06:23:17.659+09:00  INFO 1760 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 56 ms. Found 5 JPA repository interfaces.
+2023-04-05T06:23:17.979+09:00  INFO 1760 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-04-05T06:23:18.134+09:00  INFO 1760 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:600b4e63-b806-4f3f-b80d-5f018298589a user=SA
+2023-04-05T06:23:18.137+09:00  INFO 1760 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-04-05T06:23:18.176+09:00  INFO 1760 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-04-05T06:23:18.222+09:00  INFO 1760 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.7.Final
+2023-04-05T06:23:18.508+09:00  INFO 1760 --- [    Test worker] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+Hibernate: drop table if exists board cascade 
+Hibernate: drop table if exists member cascade 
+Hibernate: drop table if exists reply cascade 
+Hibernate: drop table if exists room cascade 
+Hibernate: drop table if exists tbl_memo cascade 
+Hibernate: create table board (bno bigint generated by default as identity, moddate timestamp(6), regdate timestamp(6), content varchar(255), title varchar(255), writer_email varchar(255), primary key (bno))
+Hibernate: create table member (email varchar(255) not null, moddate timestamp(6), regdate timestamp(6), name varchar(255), password varchar(255), primary key (email))
+Hibernate: create table reply (rno bigint generated by default as identity, moddate timestamp(6), regdate timestamp(6), replyer varchar(255), text varchar(255), board_bno bigint, primary key (rno))
+Hibernate: create table room (gno bigint generated by default as identity, moddate timestamp(6), regdate timestamp(6), content varchar(1500) not null, title varchar(100) not null, writer varchar(50) not null, primary key (gno))
+Hibernate: create table tbl_memo (mno bigint generated by default as identity, memo_text varchar(200) not null, primary key (mno))
+Hibernate: alter table if exists board add constraint FK1iu8rhoim4thb0y12cpt01oiu foreign key (writer_email) references member
+Hibernate: alter table if exists reply add constraint FKr1bmblqir7dalmh47ngwo7mcs foreign key (board_bno) references board
+2023-04-05T06:23:19.162+09:00  INFO 1760 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-04-05T06:23:19.169+09:00  INFO 1760 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-04-05T06:23:19.595+09:00  WARN 1760 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-04-05T06:23:20.091+09:00  INFO 1760 --- [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:600b4e63-b806-4f3f-b80d-5f018298589a'
+2023-04-05T06:23:20.130+09:00  INFO 1760 --- [    Test worker] c.r.r.repository.MemberRepositoryTests   : Started MemberRepositoryTests in 3.338 seconds (process running for 4.252)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: insert into room (gno, content, moddate, regdate, title, writer) values (default, ?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+Hibernate: select m1_0.email,m1_0.moddate,m1_0.name,m1_0.password,m1_0.regdate from member m1_0 where m1_0.email=?
+Hibernate: insert into member (moddate, name, password, regdate, email) values (?, ?, ?, ?, ?)
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 7.5.1</a> at 2023. 4. 5. 오전 6:23:21</p>
+</div>
+</div>
+</body>
+</html>
