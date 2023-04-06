@@ -1,6 +1,8 @@
 package com.room.reservation.repository;
 
 import com.room.reservation.entity.Board;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -57,4 +59,28 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
      */
     @Query("SELECT b, r FROM Board b LEFT JOIN Reply r ON r.board = b where b.bno = :bno")
     List<Object[]> getBoardWithReply(@Param("bno") Long bno);
+
+    /**
+     *
+     * 게시물(Board) : 게시물의 번호, 제목, 게시물의 작성시간
+     * 회원(Member) : 회원의 이름/이메일
+     * 댓글(Reply) : 해당 게시물의 댓글수
+     *
+     * 위 3개의 엔티티 중에서 가장 많은 데이터를 가져오는 쪽은 Board이므로 Board를 중심으로 조인관계를 작성
+     * Member는 Board 내에 Writer라는 필드로 연관관계를 맺고있고,
+     * Reply는 연관관계가 없는 상황입니다.
+     * 조인 후에는 Board를 기준으로 'GROUP BY' 처리를 해서 하나의 게시물 당 하나의 라인이 될 수 있도록 처리합니다.
+     * (JPQL을 이용하면 SQL에 사용하는 많은 함수를 적용할 수 있습니다.)
+     * Pageable을 파라미터, Page<Object[]> 리턴타입의 getBoardWithReplyCount를 만듭니다.
+     *
+     * @param pageable
+     * @return
+     */
+    @Query(value = "SELECT b, w, count(r) FROM Board b LEFT JOIN b.writer w LEFT JOIN Reply r ON r.board = b GROUP By b",
+    countQuery = "SELECT count(b) FROM Board b")
+    Page<Object[]> getBoardwithReplyCount(Pageable pageable);
+
+
+    @Query("SELECT b, w, count(r) FROM Board b LEFT JOIN b.writer w LEFT OUTER JOIN Reply r ON r.board = b where b.bno = :bno")
+    Object getBoardByBno(@Param("bno") Long bno);
 }
