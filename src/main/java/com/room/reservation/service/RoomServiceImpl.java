@@ -32,7 +32,7 @@ public class RoomServiceImpl implements RoomService{
      */
     @Override
     public void initRoomDataBase(){
-        IntStream.rangeClosed(1, 24).forEach(i ->{
+        IntStream.rangeClosed(1, 8).forEach(i ->{
             Room room = Room.builder()
                     .title("Title...."+i)
                     .content("Content...."+i)

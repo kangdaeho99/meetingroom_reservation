@@ -38,8 +38,8 @@ public class ReplyRepositoryTests {
         });
 
         IntStream.rangeClosed(1, 33).forEach(i ->{
-//            long bno = (long)(Math.random() * 33 ) + 1;
-            long bno = i;
+            long bno = (long)(Math.random() * 8 ) + 1;
+//            long bno = i;
             Board board = Board.builder().bno(bno).build();
             Reply reply = Reply.builder()
                     .text("Reply...."+i)
@@ -71,9 +71,7 @@ public class ReplyRepositoryTests {
 
     @Test
     public void readReply1(){
-        insertReply();
-
-        Optional<Reply> result = replyRepository.findById(25L);
+        Optional<Reply> result = replyRepository.findById(5L);
         if(result.isPresent()){
             Reply reply = result.get();
             System.out.println(reply);

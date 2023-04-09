@@ -117,10 +117,22 @@ public class BoardRepositoryTests {
 
     @Test
     public void testRead3(){
-        Object result = boardRepository.getBoardByBno(12L);
+        Object result = boardRepository.getBoardByBno(5L);
         Object[] arr = (Object[]) result;
         System.out.println(Arrays.toString(arr));
 
+    }
+
+    /**
+     * Description :
+     * SQL을 실행하지는 않으니
+     * search1 ------------------ 와 같은 로그가 실행되는지 확인합니다.
+     *
+     * 실행되는 로그를 보면
+     */
+    @Test
+    public void testSearch1(){
+        boardRepository.search1();
     }
 
 }
