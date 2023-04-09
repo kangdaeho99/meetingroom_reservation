@@ -135,4 +135,17 @@ public class BoardRepositoryTests {
         boardRepository.search1();
     }
 
+    /**
+     * Description :
+     * 테스트 코드에서 고의적으로 중첩되는 Sort 조건을 만들었습니다.
+     * 실행결과를 보면 order by 조건, 목록을 위한 SQL과 count 처리를 위한 SQL이 실행된것을 확인가능
+     */
+    @Test
+    public void testSearchPage(){
+        Pageable pageable = PageRequest.of(0,10,
+                Sort.by("bno").descending()
+                        .and(Sort.by("title").ascending()));
+        Page<Object[]> result = boardRepository.searchPage("t","1",pageable);
+    }
+
 }
