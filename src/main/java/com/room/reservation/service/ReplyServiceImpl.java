@@ -1,5 +1,6 @@
 package com.room.reservation.service;
 
+import com.room.reservation.dto.ReplyDTO;
 import com.room.reservation.entity.Board;
 import com.room.reservation.entity.Reply;
 import com.room.reservation.repository.ReplyRepository;
@@ -7,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -23,12 +26,12 @@ import java.util.stream.IntStream;
 @RequiredArgsConstructor
 public class ReplyServiceImpl implements ReplyService{
 
-    private final ReplyRepository repository;
+    private final ReplyRepository replyRepository;
 
     @Override
     public void initReplyDataBase() {
-        IntStream.rangeClosed(1, 10).forEach(i ->{
-            long bno = (long)(Math.random() * 8 ) + 1;
+        IntStream.rangeClosed(1, 15).forEach(i ->{
+            long bno = (long)(Math.random() * 12 ) + 1;
 //            long bno = i;
             Board board = Board.builder().bno(bno).build();
             Reply reply = Reply.builder()
@@ -37,8 +40,32 @@ public class ReplyServiceImpl implements ReplyService{
                     .replyer("guest")
                     .build();
 
-            repository.save(reply);
+            replyRepository.save(reply);
 
         });
+    }
+
+    @Override
+    public Long register(ReplyDTO replyDTO) {
+        Reply reply = dtoToEntity(replyDTO);
+        replyRepository.save(reply);
+        return reply.getRno();
+    }
+
+    @Override
+    public List<ReplyDTO> getList(Long bno) {
+        List<Reply> result = replyRepository.getRepliesByBoardOrderByRno(Board.builder().bno(bno).build());
+        return result.stream().map(reply -> entityToDTO(reply)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void modify(ReplyDTO replyDTO) {
+        Reply reply = dtoToEntity(replyDTO);
+        replyRepository.save(reply);
+    }
+
+    @Override
+    public void remove(Long rno) {
+        replyRepository.deleteById(rno);
     }
 }
