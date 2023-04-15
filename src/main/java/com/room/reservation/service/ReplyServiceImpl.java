@@ -30,7 +30,7 @@ public class ReplyServiceImpl implements ReplyService{
 
     @Override
     public void initReplyDataBase() {
-        IntStream.rangeClosed(1, 15).forEach(i ->{
+        IntStream.rangeClosed(1, 30).forEach(i ->{
             long bno = (long)(Math.random() * 12 ) + 1;
 //            long bno = i;
             Board board = Board.builder().bno(bno).build();
