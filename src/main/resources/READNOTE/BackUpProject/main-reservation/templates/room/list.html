@@ -1,0 +1,164 @@
+<!--<link rel="stylesheet" href="css/Home.css">-->
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/../layout/index}">
+<head>
+  <link rel="stylesheet" th:href="@{/css/Home.css}">
+</head>
+<!-- Content -->
+<th:block layout:fragment="content">
+
+  <main class="main_wrapper">
+    <div class="main_main album py-5 bg-light">
+      <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+          <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">Album example recompiletest</h1>
+            <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+            <p>
+              <a href="#" class="btn btn-primary my-2">Main call to action</a>
+              <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+            </p>
+          </div>
+        </div>
+      </section>
+
+
+      <div class="container">
+
+        <span class="d-flex register_container mb-3">
+            <a th:href="@{/room/register}">
+              <button type="button" class="btn btn-outline-primary">Register</button>
+            </a>
+        </span>
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+          <div class="col" th:each="dto : ${result.dtoList}">
+            <a th:href="@{/room/read(gno = ${dto.gno}, page= ${result.page}, type=${pageRequestDTO.type}, keyword = ${pageRequestDTO.keyword})}">
+              <div class="card shadow-sm">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">[[${dto.title}]]</text></svg>
+                <div class="card-body">
+                  <p class="card-text">[[${dto.content}]]</p>
+  <!--                <p class="card-text">123</p>-->
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    </div>
+                    <small class="text-muted">9 mins</small>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+<!--          <div class="col">-->
+<!--            <div class="card shadow-sm">-->
+<!--              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>-->
+<!--              <div class="card-body">-->
+<!--                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
+<!--                <div class="d-flex justify-content-between align-items-center">-->
+<!--                  <div class="btn-group">-->
+<!--                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>-->
+<!--                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
+<!--                  </div>-->
+<!--                  <small class="text-muted">9 mins</small>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+
+
+        </div>
+      </div>
+
+
+      <nav class="pagination_nav" aria-label="...">
+        <ul class="pagination">
+
+          <li class="page-item disabled" th:if="${result.prev}">
+            <a class="page-link" th:href="@{/room/list(page = ${result.start - 1}, type=${pageRequestDTO.type}, keyword = ${pageRequestDTO.keyword})}" tabindex="-1">Previous</a>
+          </li>
+
+          <li class=" ' page-item ' + ${result.page == page? 'active':''} " th:each="page : ${result.pageList}">
+            <a class="page-link" th:href="@{/room/list(page = ${page}, type=${pageRequestDTO.type}, keyword = ${pageRequestDTO.keyword})}">[[${page}]]</a>
+<!--            <a class="page-link" th:href="@{/room/list(page = ${page}, size=${result.size})}">[[${page}]]</a>-->
+          </li>
+
+          <li class="page-item" th:if="${result.next}">
+            <a class="page-link" href="@{/room/list(page = ${result.end + 1}, type=${pageRequestDTO.type}, keyword = ${pageRequestDTO.keyword})}">Next</a>
+          </li>
+
+        </ul>
+      </nav>
+
+
+      <form action="/room/list" method="get" id="searchForm" class="searchForm">
+        <div class="input-group">
+          <input type="hidden" name="page" value = "1">
+          <div class="input-group-prepend me-2">
+            <select class="form-select" name="type">
+<!--              <option th:selected="${pageRequestDTO.type == null}">-&#45;&#45;&#45;&#45;&#45;&#45;</option>-->
+              <option value="t" th:selected="${pageRequestDTO.type =='t'}" >제목</option>
+              <option value="c" th:selected="${pageRequestDTO.type =='c'}"  >내용</option>
+              <option value="w"  th:selected="${pageRequestDTO.type =='w'}" >작성자</option>
+              <option value="tc"  th:selected="${pageRequestDTO.type =='tc'}" >제목 + 내용</option>
+              <option value="tcw"  th:selected="${pageRequestDTO.type =='tcw'}" >제목 + 내용 + 작성자</option>
+            </select>
+          </div>
+          <input class="form-control me-2" name="keyword" th:value="${pageRequestDTO.keyword}">
+          <div class="input-group-append" id="button-addon4">
+            <button class="btn btn-outline-secondary btn-search" type="button">Search</button>
+            <button class="btn btn-outline-secondary btn-clear" type="button">Clear</button>
+          </div>
+        </div>
+      </form>
+
+
+    </div>
+  </main>
+
+
+  <div class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script th:inline="javascript">
+      const msg = [[${msg}]];
+      console.log(msg);
+
+      const modal = new bootstrap.Modal(document.querySelector(".modal"));
+      if (msg){
+        modal.show();
+      }
+
+      const searchForm = $("#searchForm");
+      $('.btn-search').click(function(e){
+        searchForm.submit();
+      });
+
+      $('.btn-clear').click(function(e){
+        searchForm.empty().submit();
+      });
+  </script>
+
+</th:block>
+<!--</th:block>-->
+</html>
+
+<!--</div>-->

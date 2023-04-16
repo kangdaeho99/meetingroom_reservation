@@ -36,7 +36,7 @@ ll
 
 그리고 코드들이 잘 수행되는지 테스트로 검증하겠습니다.
 
-./gradlew test
+./gradlew room
 
 
 5장의 '기존 테스트에 Security 적용하기' 까지 잘 적용했다면 정상적으로 테스트를 통과합니다.
@@ -53,7 +53,7 @@ chmod +x ./gradlew
 
 깃을 통해 프로젝트를 클론과 풀까지 잘 진행되었습니다.
 이제 이 프로젝트의 테스트, 빌드, 실행까지 진행하겠습니다.
-현재 EC2엔 그레이들(Gradle)을 설치하지 않았습니다. 하지만, Gradle Task(ex:test)를 수행할 수 있습니다.
+현재 EC2엔 그레이들(Gradle)을 설치하지 않았습니다. 하지만, Gradle Task(ex:room)를 수행할 수 있습니다.
 이는 프로젝트 내부에 포함된 gradlew 파일 때문입니다.
 그레이들이 설치되지 않은 환경 혹은 버전이 다른 상황에서도 해당 프로젝트에 한해서 그레이들을 쓸 수 있도록 지원하는 Wrapper 파일입니다.
 해당 파일을 직접 이용하기 때문에 별도로 설치할 필요가없습니다.
@@ -391,9 +391,9 @@ ps -ef | grep java 를 통해 확인해도 내가 실행중인 jar파일이 보�
 
 이유를 알아냈다...
 The following profiles are active: oauth,real-db,real 이제 이렇게 바뀌엇는데 처음에 안됫었떤 이유는
-이거 내가 test.html 뭐뭐시기해서 커밋하도록 정하지 않은 변경사항 그 오류 떳었는데 신경안쓰고 그냥하다가 오류난것입니다.
+이거 내가 room.html 뭐뭐시기해서 커밋하도록 정하지 않은 변경사항 그 오류 떳었는데 신경안쓰고 그냥하다가 오류난것입니다.
 즉, 그 과정에서 내가 올린 application-oauth,real 같은 properties가 올라가지 않아서 그랬습니다..
-intellij에서 gitstash와 같은 과정을 다 진행, ec2 재시작하고, putty에 다시 clone받고, ./gradlew test 하고 deploy하니 성공..
+intellij에서 gitstash와 같은 과정을 다 진행, ec2 재시작하고, putty에 다시 clone받고, ./gradlew room 하고 deploy하니 성공..
 [해당 오류 : git(stash) 새로 git clone https://github.com/jojoldu/freelec-springboot2-webservice/issues/473]
 (1)Dspring.profiles.active=real : application-real.properties를 활성화시킵니다.
 :application-real.properties의 spring.profiles.include=oauth,real-db 옵션 때문에 real-db 역시 함께 활성화 대상에 포함됩니다.

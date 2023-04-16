@@ -464,20 +464,20 @@ RDS 파라미터 그룹이 잘 적용되어 한국 시간으로 된것을 확인
 웬만하면 테이블은 모든 설정이 끝난 후 생성하시는 것이 좋습니다.
 
 다음 쿼리를 차례로 실행해봅니다.
-CREATE TABLE test (
+CREATE TABLE room (
     id bigint(20) NOT NULL AUTO_INCREMENT,
     content varchar(255) DEFAULT NULL,
     PRIMARY KEY (id)
 ) ENGINE=INNODB;
 
-insert into test(content) values ('테스트');
+insert into room(content) values ('테스트');
 
-select * from test;
+select * from room;
 
 다음과 같이 한글 데이터도 잘 등록되는 것이 확인됩니다.
 
 [그림 7-39 한글 데이터 등록 확인]
-select * from test;
+select * from room;
 
 RDS에 대한 모든 설정이 끝났습니다!
 이제 이렇게 설정된 RDS가 EC2와 잘 연동되는지 확인해보겠습니다.
