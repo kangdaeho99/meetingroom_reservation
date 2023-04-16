@@ -1,6 +1,5 @@
 package com.room.reservation.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,13 +8,13 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
-public class RoomDTO {
-    private Long gno;
-    private String title;
-    private String content;
-    private String writer;
+public class ReplyDTO {
+    private Long rno;
+    private String text;
+    private String replyer;
+    private Long bno;
     private LocalDateTime regDate, modDate;
 }
