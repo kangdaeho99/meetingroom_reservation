@@ -18,7 +18,7 @@ import java.util.stream.IntStream;
 @Log4j2
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
-    private final MemberRepository repository;
+//    private final MemberRepository repository;
 
     @Override
     public void initMemberDataBase() {
