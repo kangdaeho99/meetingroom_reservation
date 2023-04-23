@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -35,5 +36,21 @@ public class ReviewRepositoryTests {
 
             reviewRepository.save(roomReview);
         });
+    }
+    @Test
+    public void testGetRoomReviews(){
+        Room room = Room.builder().rno(5L).build();
+
+        List<Review> result = reviewRepository.findByRoom(room);
+
+        result.forEach(roomReview ->{
+           System.out.println(roomReview.getReviewnum());
+            System.out.println(roomReview.getGrade());
+            System.out.println(roomReview.getText());
+            System.out.println(roomReview.getMember().getEmail());
+            System.out.println("----------------------");
+
+        });
+
     }
 }
