@@ -1,5 +1,6 @@
 QueryDSL 을 사용하여 한 모습 : https://cafe.naver.com/gugucoding/7391
 
+pg305, pg372
 /**
  * Mysql 특징으로 RoomImage를 사용할시 에러. QueryDSL으로 대체
  */

@@ -10,10 +10,13 @@ import com.room.reservation.entity.QRoomImage;
 import com.room.reservation.entity.Room;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.querydsl.jpa.JPAExpressions.select;
 
@@ -61,11 +64,17 @@ public class RoomQueryDslRepositoryImpl extends QuerydslRepositorySupport implem
         log.info("---------------");
         this.getQuerydsl().applyPagination(pageable, tuple);
         List<Tuple> result = tuple.fetch();
-//        log.info(result);
-        for(int i=0;i<result.size();i++){
-            System.out.println(result.get(i));
-        }
-        return null;
+        long count = tuple.fetchCount();
+        List<Object[]> collect = result.stream().map(t ->{
+            Object[] arr = t.toArray();
+            log.info(Arrays.toString(arr));
+            return arr;
+        }).collect(Collectors.toList());
+
+//        for(int i=0;i<result.size();i++){
+//            System.out.println(result.get(i));
+//        }
+        return new PageImpl<>(collect, pageable, count);
 
     }
 }

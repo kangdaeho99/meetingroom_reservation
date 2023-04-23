@@ -5,35 +5,23 @@ import com.room.reservation.repository.room.RoomQueryDslRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 
 public interface RoomRepository extends JpaRepository<Room, Long>, RoomQueryDslRepository {
     /**
      * Mysql 특징으로 RoomImage를 사용할시 에러. QueryDSL으로 대체
      */
-//        @Query("select room, roomImage.uuid, avg(coalesce(review.grade, 0)), count(distinct review) from Room room" +
-//                " left outer join RoomImage roomImage on roomImage.room = room" +
-//                " left outer join Review review on review.room = room group by room, roomImage.imgName")
-//        Page<Object[]> getListPage(Pageable pageable);
+    Page<Object[]> getListPage(Pageable pageable);
 
-//        @Query("")
-//        Page<Object[]> getListPage(Pageable pageable);
-
-    //        @Query("select room, roomImage.uuid, avg(coalesce(review.grade, 0)), count(distinct review) from Room room" +
-//                " left outer join RoomImage roomImage on roomImage.room = room" +
-//                " left outer join Review review on review.room = room group by room, roomImage.imgName")
-//        Page<Object[]> getListPage(Pageable pageable);
-
-
-//    @Query("SELECT room, roomImage FROM Room room" +
-//            "LEFT OUTER JOIN ( SELECT roomImage1 FROM RoomImage roomImage1 where roomImage1.inum = (" +
-//            "SELECT MIN(roomImage2.inum) FROM RoomImage roomImage2 WHERE roomImage2.rno = roomImage1.rno)" +
-//            ") roomImage1 ON room.rno = roomImage1.rno" +
-//            " GROUP BY room.rno, roomImage1.inum")
-//    List<Object[]> getListPage(Pageable pageable);
-
-//        @Query("select room, roomImage.uuid from Room room" +
-//                "left outer join RoomImage roomImage on roomImage.room = room")
-        Page<Object[]> getListPage(Pageable pageable);
+    @Query("SELECT r, ri, avg(coalesce(rv.grade,0)), count(distinct rv)" +
+            " from Room r " +
+            " left outer join RoomImage ri on ri.room = r" +
+            " left outer join Review rv on rv.room = r" +
+            " where r.rno = :rno" +
+            " group by ri")
+    List<Object[]> getRoomWithAll(Long rno);
 
 
 }
