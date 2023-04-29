@@ -2,6 +2,7 @@ package com.room.reservation.repository;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.room.reservation.entity.Member;
 import com.room.reservation.entity.QRoom;
 import com.room.reservation.entity.Room;
 import com.room.reservation.entity.RoomImage;
@@ -35,9 +36,12 @@ public class RoomRepositoryTests {
     @Test
     public void insertRooms(){
         IntStream.rangeClosed(1, 15).forEach(i -> {
+            Member member = Member.builder().mid((long) i).build();
+
             Room room = Room.builder()
                     .title("Title..."+i)
                     .content("Content..."+i)
+                    .writer(member)
                     .build();
             roomRepository.save(room);
 
@@ -116,4 +120,14 @@ public class RoomRepositoryTests {
             System.out.println(room);
         });
     }
+
+    @Transactional
+    @Test
+    public void testRead1(){
+        Optional<Room> result = roomRepository.findById(5L);
+        Room room = result.get();
+        System.out.println(room);
+        System.out.println(room.getWriter());
+    }
+
 }

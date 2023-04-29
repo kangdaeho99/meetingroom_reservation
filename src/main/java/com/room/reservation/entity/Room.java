@@ -21,7 +21,7 @@ public class Room extends BaseEntity{
     @Column(length = 1500, nullable = false)
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Member writer;
 
     public void changeTitle(String title){

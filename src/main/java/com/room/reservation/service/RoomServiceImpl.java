@@ -5,6 +5,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.room.reservation.dto.PageRequestDTO;
 import com.room.reservation.dto.PageResultDTO;
 import com.room.reservation.dto.RoomDTO;
+import com.room.reservation.entity.Member;
 import com.room.reservation.entity.QRoom;
 import com.room.reservation.entity.Room;
 import com.room.reservation.entity.RoomImage;
@@ -36,9 +37,12 @@ public class RoomServiceImpl implements RoomService{
     @Override
     public void initDataBase() {
         IntStream.rangeClosed(1, 15).forEach(i -> {
+            Member member = Member.builder().mid((long) i).build();
+
             Room room = Room.builder()
                     .title("Title..."+i)
                     .content("Content..."+i)
+                    .writer(member)
                     .build();
             roomRepository.save(room);
 
