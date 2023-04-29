@@ -11,20 +11,18 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QRoom is a Querydsl query type for Room
+ * QReply is a Querydsl query type for Reply
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QRoom extends EntityPathBase<Room> {
+public class QReply extends EntityPathBase<Reply> {
 
-    private static final long serialVersionUID = -121135554L;
+    private static final long serialVersionUID = 539468263L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QRoom room = new QRoom("room");
+    public static final QReply reply = new QReply("reply");
 
     public final QBaseEntity _super = new QBaseEntity(this);
-
-    public final StringPath content = createString("content");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modDate = _super.modDate;
@@ -32,31 +30,33 @@ public class QRoom extends EntityPathBase<Room> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
 
+    public final StringPath replyer = createString("replyer");
+
     public final NumberPath<Long> rno = createNumber("rno", Long.class);
 
-    public final StringPath title = createString("title");
+    public final QRoom room;
 
-    public final QMember writer;
+    public final StringPath text = createString("text");
 
-    public QRoom(String variable) {
-        this(Room.class, forVariable(variable), INITS);
+    public QReply(String variable) {
+        this(Reply.class, forVariable(variable), INITS);
     }
 
-    public QRoom(Path<? extends Room> path) {
+    public QReply(Path<? extends Reply> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QRoom(PathMetadata metadata) {
+    public QReply(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QRoom(PathMetadata metadata, PathInits inits) {
-        this(Room.class, metadata, inits);
+    public QReply(PathMetadata metadata, PathInits inits) {
+        this(Reply.class, metadata, inits);
     }
 
-    public QRoom(Class<? extends Room> type, PathMetadata metadata, PathInits inits) {
+    public QReply(Class<? extends Reply> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.writer = inits.isInitialized("writer") ? new QMember(forProperty("writer")) : null;
+        this.room = inits.isInitialized("room") ? new QRoom(forProperty("room"), inits.get("room")) : null;
     }
 
 }

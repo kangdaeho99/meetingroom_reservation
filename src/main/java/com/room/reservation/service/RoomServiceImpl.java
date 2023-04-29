@@ -1,14 +1,27 @@
 package com.room.reservation.service;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.room.reservation.dto.PageRequestDTO;
+import com.room.reservation.dto.PageResultDTO;
+import com.room.reservation.dto.RoomDTO;
+import com.room.reservation.entity.QRoom;
 import com.room.reservation.entity.Room;
 import com.room.reservation.entity.RoomImage;
+import com.room.reservation.repository.ReviewRepository;
 import com.room.reservation.repository.RoomImageRepository;
 import com.room.reservation.repository.RoomRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Function;
 import java.util.stream.IntStream;
 
 @Service
@@ -19,6 +32,7 @@ public class RoomServiceImpl implements RoomService{
 
     private final RoomImageRepository imageRepository;
 
+    private final ReviewRepository reviewRepository;
     @Override
     public void initDataBase() {
         IntStream.rangeClosed(1, 15).forEach(i -> {
@@ -38,5 +52,84 @@ public class RoomServiceImpl implements RoomService{
             imageRepository.save(roomImage);
             }
         });
+    }
+
+    @Override
+    public Long register(RoomDTO dto){
+        log.info("DTO-----------");
+        log.info(dto);
+        Room entity = dtoToEntity(dto);
+        log.info(entity);
+        roomRepository.save(entity);
+        return entity.getRno();
+    }
+
+    /**
+     * Description :
+     * entityToDto()를 이용해서 java.util.Function을 생성하고 이를 PageResultDTO로 구성
+     * PageResultDTO에는 JPA의 처리결과인 Page<Entity>와 Function을 전달해서 엔티티 객체들을
+     * DTO의 리스트로 변환하여 화면에 페이지처리와 필요한값들을 생성
+     */
+    @Override
+    public PageResultDTO<RoomDTO, Room> getList(PageRequestDTO requestDTO){
+        Pageable pageable = requestDTO.getPageable(Sort.by("rno").descending());
+        BooleanBuilder booleanBuilder = getSearch(requestDTO); //검색 조건 처리
+        Page<Room> result = roomRepository.findAll(booleanBuilder, pageable); //querydsl 사용
+        Function<Room, RoomDTO> fn = (entity -> entityToDto(entity));
+        return new PageResultDTO<>(result, fn);
+    }
+
+    @Override
+    public RoomDTO read(Long rno){
+        Optional<Room> result = roomRepository.findById(rno);
+        return result.isPresent() ? entityToDto(result.get()) : null;
+    }
+
+    /**
+     * TODO : Room, Review, Member 연관관계 고려하여 삭제처리 다시 하기
+     * 고려해야할 것들
+     */
+    @Transactional
+    @Override
+    public void remove(Long rno){
+        roomRepository.deleteById(rno);
+    }
+
+    @Override
+    public void modify(RoomDTO dto){
+        Optional<Room> result = roomRepository.findById(dto.getRno());
+        if(result.isPresent()){
+            Room entity = result.get();
+            entity.changeTitle(dto.getTitle());
+            entity.changeContent(dto.getContent());
+            roomRepository.save(entity);
+        }
+    }
+
+    private BooleanBuilder getSearch(PageRequestDTO requestDTO){ //querydsl 처리
+        String type = requestDTO.getType();
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        QRoom qRoom = QRoom.room;
+        String keyword = requestDTO.getKeyword();
+        BooleanExpression expression = qRoom.rno.gt(0L);
+        booleanBuilder.and(expression);
+        if(type == null || type.trim().length() == 0){ //검색 조건이 없는 경우
+            return booleanBuilder;
+        }
+        //검색조건을 작성하기
+        BooleanBuilder conditionBuilder = new BooleanBuilder();
+
+        if(type.contains("t")){
+            conditionBuilder.or(qRoom.title.contains(keyword));
+        }
+        if(type.contains("c")){
+            conditionBuilder.or(qRoom.content.contains(keyword));
+        }
+
+        //모든 조건 통합
+        booleanBuilder.and(conditionBuilder);
+
+        return booleanBuilder;
+
     }
 }

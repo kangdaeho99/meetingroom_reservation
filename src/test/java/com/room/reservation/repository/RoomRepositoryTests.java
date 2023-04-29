@@ -1,5 +1,8 @@
 package com.room.reservation.repository;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.room.reservation.entity.QRoom;
 import com.room.reservation.entity.Room;
 import com.room.reservation.entity.RoomImage;
 import jakarta.transaction.Transactional;
@@ -8,11 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Commit;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
@@ -66,5 +71,49 @@ public class RoomRepositoryTests {
         for(Object[] arr : result){
             System.out.println(Arrays.toString(arr));
         }
+    }
+
+    @Test
+    public void updateTest(){
+        Optional<Room> result = roomRepository.findById(3L);
+        if(result.isPresent()){
+            Room room = result.get();
+
+            room.changeTitle("Change Title..");
+            room.changeContent("Change Content..");
+
+            roomRepository.save(room);
+        }
+    }
+
+    @Test
+    public void testSearchQuery1(){
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("rno").descending());
+        QRoom qRoom = QRoom.room;
+        String keyword= "1";
+        BooleanBuilder builder = new BooleanBuilder();
+        BooleanExpression expression = qRoom.title.contains(keyword);
+        builder.and(expression);
+        Page<Room> result = roomRepository.findAll(builder, pageable);
+        result.stream().forEach(room->{
+            System.out.println(room);
+        });
+    }
+
+    @Test
+    public void testSearchQuery2(){
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("rno").descending());
+        QRoom qRoom = QRoom.room;
+        String keyword = "1";
+        BooleanBuilder builder = new BooleanBuilder();
+        BooleanExpression exTitle = qRoom.title.contains(keyword);
+        BooleanExpression exContent = qRoom.content.contains(keyword);
+        BooleanExpression exAll = exTitle.or(exContent);
+        builder.and(exAll);
+        builder.and(qRoom.rno.gt(0L));
+        Page<Room> result = roomRepository.findAll(builder, pageable);
+        result.stream().forEach(room -> {
+            System.out.println(room);
+        });
     }
 }

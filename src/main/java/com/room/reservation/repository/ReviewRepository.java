@@ -28,4 +28,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Modifying
     @Query("delete from Review rv where rv.member = :member")
     void deleteByMember(Member member);
+
+    @Modifying
+    @Query("delete from Review rv where rv.room.rno =:rno")
+    void deleteByRno(Long rno);
 }

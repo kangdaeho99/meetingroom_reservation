@@ -24,7 +24,7 @@
 
                 <div class="form-group mt-3">
                     <label>Writer</label>
-                    <input type="text" class="form-control" name="writer" placeholder="Enter Writer" th:value = "${dto.writer}" readonly>
+                    <input type="text" class="form-control" name="writer" placeholder="Enter Writer" th:value = "empty" readonly>
                 </div>
 
                 <div class="form-group mt-3">
@@ -37,7 +37,7 @@
                     <input type="text" class="form-control" name="modDate" placeholder="Enter Writer" th:value = "${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
                 </div>
 
-                <a th:href="@{/room/modify(gno = ${dto.gno}, page = ${requestDTO.page}, type = ${requestDTO.type}, keyword = ${requestDTO.keyword})}"><button type="button" class="btn btn-primary mt-3 mb-5">Modify</button></a>
+                <a th:href="@{/room/modify(rno = ${dto.rno}, page = ${requestDTO.page}, type = ${requestDTO.type}, keyword = ${requestDTO.keyword})}"><button type="button" class="btn btn-primary mt-3 mb-5">Modify</button></a>
                 <a th:href="@{/room/list(page=${requestDTO.page} , type = ${requestDTO.type}, keyword = ${requestDTO.keyword} )}"><button type="button" class="btn btn-primary mt-3 mb-5">List</button></a>
             </form>
         </div>

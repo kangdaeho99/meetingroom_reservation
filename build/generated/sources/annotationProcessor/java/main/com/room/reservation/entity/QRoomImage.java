@@ -50,7 +50,7 @@ public class QRoomImage extends EntityPathBase<RoomImage> {
 
     public QRoomImage(Class<? extends RoomImage> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.room = inits.isInitialized("room") ? new QRoom(forProperty("room")) : null;
+        this.room = inits.isInitialized("room") ? new QRoom(forProperty("room"), inits.get("room")) : null;
     }
 
 }
