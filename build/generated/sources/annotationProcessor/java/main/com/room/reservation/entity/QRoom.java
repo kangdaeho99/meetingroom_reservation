@@ -32,6 +32,8 @@ public class QRoom extends EntityPathBase<Room> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> regDate = _super.regDate;
 
+    public final NumberPath<Integer> replyCount = createNumber("replyCount", Integer.class);
+
     public final NumberPath<Long> rno = createNumber("rno", Long.class);
 
     public final StringPath title = createString("title");

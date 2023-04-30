@@ -36,7 +36,7 @@ public class RoomRepositoryTests {
     @Test
     public void insertRooms(){
         IntStream.rangeClosed(1, 15).forEach(i -> {
-            Member member = Member.builder().mid((long) i).build();
+            Member member = Member.builder().mno((long) i).build();
 
             Room room = Room.builder()
                     .title("Title..."+i)
@@ -128,6 +128,53 @@ public class RoomRepositoryTests {
         Room room = result.get();
         System.out.println(room);
         System.out.println(room.getWriter());
+    }
+
+    @Test
+    public void testReadWithWriter(){
+        Object result = roomRepository.getRoomWithWriter(5L);
+        Object[] arr = (Object[]) result;
+        System.out.println("--------------");
+        System.out.println(Arrays.toString(arr));
+    }
+
+    @Test
+    public void testGetBoardWithReply(){
+        List<Object[]> result = roomRepository.getRoomWithReply(5L);
+        for(Object[] arr : result){
+            System.out.println(Arrays.toString(arr));
+        }
+    }
+
+    @Test
+    public void testWithReplyCount(){
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("rno").descending());
+        Page<Object[]> result = roomRepository.getBoardWithReplyCount(pageable);
+        result.get().forEach(row -> {
+            Object[] arr = (Object[]) row;
+            System.out.println(Arrays.toString(arr));
+        });
+
+    }
+
+    @Test
+    public void testRead3(){
+        Object result = roomRepository.getRoomByRno(5L);
+        Object[] arr = (Object[]) result;
+        System.out.println(Arrays.toString(arr));
+    }
+
+    @Test
+    public void testSearch1(){
+        roomRepository.search1();
+    }
+
+    @Test
+    public void testSearchPage(){
+//        Pageable pageable = PageRequest.of(0, 10, Sort.by("rno").descending());
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("rno").descending()
+                .and(Sort.by("title").ascending()));
+        Page<Object[]> result = roomRepository.searchPage("t", "1", pageable);
     }
 
 }

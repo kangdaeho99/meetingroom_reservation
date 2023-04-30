@@ -32,7 +32,7 @@ public class QReply extends EntityPathBase<Reply> {
 
     public final StringPath replyer = createString("replyer");
 
-    public final NumberPath<Long> rno = createNumber("rno", Long.class);
+    public final NumberPath<Long> replyno = createNumber("replyno", Long.class);
 
     public final QRoom room;
 

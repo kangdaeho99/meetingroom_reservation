@@ -24,8 +24,8 @@ public class ReviewServiceImpl implements ReviewService{
             Long rno = (long)(Math.random()*15) + 1;
 
             //리뷰어 번호
-            Long mid = ((long)(Math.random() * 15) + 1);
-            Member member = Member.builder().mid(mid).build();
+            Long mno = ((long)(Math.random() * 15) + 1);
+            Member member = Member.builder().mno(mno).build();
 
             Review roomReview = Review.builder()
                     .member(member)

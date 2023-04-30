@@ -23,7 +23,7 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath email = createString("email");
 
-    public final NumberPath<Long> mid = createNumber("mid", Long.class);
+    public final NumberPath<Long> mno = createNumber("mno", Long.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modDate = _super.modDate;

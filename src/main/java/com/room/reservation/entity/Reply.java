@@ -9,10 +9,10 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @ToString(exclude = "room")
-public class Reply  extends BaseEntity{
+public class Reply extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long rno;
+    private Long replyno;
 
     private String text;
 

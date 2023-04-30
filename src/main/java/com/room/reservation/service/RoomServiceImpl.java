@@ -9,6 +9,7 @@ import com.room.reservation.entity.Member;
 import com.room.reservation.entity.QRoom;
 import com.room.reservation.entity.Room;
 import com.room.reservation.entity.RoomImage;
+import com.room.reservation.repository.ReplyRepository;
 import com.room.reservation.repository.ReviewRepository;
 import com.room.reservation.repository.RoomImageRepository;
 import com.room.reservation.repository.RoomRepository;
@@ -16,7 +17,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -34,10 +34,12 @@ public class RoomServiceImpl implements RoomService{
     private final RoomImageRepository imageRepository;
 
     private final ReviewRepository reviewRepository;
+
+    private final ReplyRepository replyRepository;
     @Override
     public void initDataBase() {
         IntStream.rangeClosed(1, 15).forEach(i -> {
-            Member member = Member.builder().mid((long) i).build();
+            Member member = Member.builder().mno((long) i).build();
 
             Room room = Room.builder()
                     .title("Title..."+i)
@@ -75,18 +77,27 @@ public class RoomServiceImpl implements RoomService{
      * DTO의 리스트로 변환하여 화면에 페이지처리와 필요한값들을 생성
      */
     @Override
-    public PageResultDTO<RoomDTO, Room> getList(PageRequestDTO requestDTO){
-        Pageable pageable = requestDTO.getPageable(Sort.by("rno").descending());
-        BooleanBuilder booleanBuilder = getSearch(requestDTO); //검색 조건 처리
-        Page<Room> result = roomRepository.findAll(booleanBuilder, pageable); //querydsl 사용
-        Function<Room, RoomDTO> fn = (entity -> entityToDto(entity));
+    public PageResultDTO<RoomDTO, Object[]> getList(PageRequestDTO pageRequestDTO){
+        log.info(pageRequestDTO);
+        Function<Object[], RoomDTO> fn = (en -> entityToDto( (Room) en[0], (Member) en[1], (Long) en[2]));
+//        Page<Object[]> result = roomRepository.getBoardWithReplyCount(pageRequestDTO.getPageable(Sort.by("rno").descending()));
+        Page<Object[]> result = roomRepository.searchPage(
+                pageRequestDTO.getType(),
+                pageRequestDTO.getKeyword(),
+                pageRequestDTO.getPageable(Sort.by("rno").descending()));
+
+//        Pageable pageable = pageRequestDTO.getPageable(Sort.by("rno").descending());
+//        BooleanBuilder booleanBuilder = getSearch(pageRequestDTO); //검색 조건 처리
+//        Page<Room> result = roomRepository.findAll(booleanBuilder, pageable); //querydsl 사용
+//        Function<Room, RoomDTO> fn = (entity -> entityToDto(entity));
         return new PageResultDTO<>(result, fn);
     }
 
     @Override
-    public RoomDTO read(Long rno){
-        Optional<Room> result = roomRepository.findById(rno);
-        return result.isPresent() ? entityToDto(result.get()) : null;
+    public RoomDTO get(Long rno){
+        Object result = roomRepository.getRoomByRno(rno);
+        Object[] arr = (Object[]) result;
+        return entityToDto((Room)arr[0], (Member) arr[1], (Long) arr[2]);
     }
 
     /**
@@ -96,6 +107,13 @@ public class RoomServiceImpl implements RoomService{
     @Transactional
     @Override
     public void remove(Long rno){
+        roomRepository.deleteById(rno);
+    }
+
+    @Transactional
+    @Override
+    public void removeWithReplies(Long rno){
+        replyRepository.deleteByRno(rno);
         roomRepository.deleteById(rno);
     }
 

@@ -32,7 +32,7 @@ public class Room extends BaseEntity{
         this.content = content;
     }
 
-
+    private int replyCount;
 
 
 }

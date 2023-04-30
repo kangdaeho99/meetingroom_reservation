@@ -17,8 +17,15 @@ public class RoomDTO {
 
     private String content;
 
+    private Long writerMno;
+    private String writerEmail;
+
+    private String writerName;
+
     private LocalDateTime regDate;
 
     private LocalDateTime modDate;
+
+    private int replyCount;
 
 }
