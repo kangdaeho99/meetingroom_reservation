@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.room.reservation.repository.RoomRepositoryTests" tests="13" skipped="0" failures="0" errors="0" timestamp="2023-05-01T12:59:03" hostname="DESKTOP-G32OBQ8" time="0.455">
+  <properties/>
+  <testcase name="testGetBoardWithReply()" classname="com.room.reservation.repository.RoomRepositoryTests" time="0.018"/>
+  <testcase name="testSearchPage()" classname="com.room.reservation.repository.RoomRepositoryTests" time="0.113"/>
+  <testcase name="testRead1()" classname="com.room.reservation.repository.RoomRepositoryTests" time="0.019"/>
+  <testcase name="testRead3()" classname="com.room.reservation.repository.RoomRepositoryTests" time="0.008"/>
+  <testcase name="testWithReplyCount()" classname="com.room.reservation.repository.RoomRepositoryTests" time="0.017"/>
+  <testcase name="updateTest()" classname="com.room.reservation.repository.RoomRepositoryTests" time="0.018"/>
+  <testcase name="insertRooms()" classname="com.room.reservation.repository.RoomRepositoryTests" time="0.032"/>
+  <testcase name="testSearchQuery1()" classname="com.room.reservation.repository.RoomRepositoryTests" time="0.014"/>
+  <testcase name="testSearchQuery2()" classname="com.room.reservation.repository.RoomRepositoryTests" time="0.034"/>
+  <testcase name="testGetMovieWithAll()" classname="com.room.reservation.repository.RoomRepositoryTests" time="0.013"/>
+  <testcase name="testSearch1()" classname="com.room.reservation.repository.RoomRepositoryTests" time="0.019"/>
+  <testcase name="testReadWithWriter()" classname="com.room.reservation.repository.RoomRepositoryTests" time="0.007"/>
+  <testcase name="testListPage()" classname="com.room.reservation.repository.RoomRepositoryTests" time="0.131"/>
+  <system-out><![CDATA[2023-05-01T21:59:03.935+09:00  INFO 25236 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.room.reservation.repository.RoomRepositoryTests]: RoomRepositoryTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-05-01T21:59:03.937+09:00  INFO 25236 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.room.reservation.Application for test class com.room.reservation.repository.RoomRepositoryTests
+Hibernate: select r1_0.rno,r1_0.content,r1_0.moddate,r1_0.regdate,r1_0.reply_count,r1_0.title,r1_0.writer_mno,r2_0.replyno,r2_0.moddate,r2_0.regdate,r2_0.replyer,r2_0.room_rno,r2_0.text from room r1_0 left join reply r2_0 on r2_0.room_rno=r1_0.rno where r1_0.rno=?
+[Room(rno=5, title=Title...5, content=Content...5, replyCount=0), Reply(replyno=9, text=Reply....9, replyer=Guest)]
+[Room(rno=5, title=Title...5, content=Content...5, replyCount=0), Reply(replyno=23, text=Reply....3, replyer=Guest)]
+[Room(rno=5, title=Title...5, content=Content...5, replyCount=0), Reply(replyno=25, text=Reply....5, replyer=Guest)]
+2023-05-01T21:59:03.964+09:00  INFO 25236 --- [    Test worker] c.r.r.r.room.RoomQueryDslRepositoryImpl  : searchPage..........
+Hibernate: select r1_0.rno,r1_0.content,r1_0.moddate,r1_0.regdate,r1_0.reply_count,r1_0.title,r1_0.writer_mno,m1_0.mno,m1_0.email,m1_0.moddate,m1_0.nickname,m1_0.pw,m1_0.regdate,count(r2_0.replyno) from room r1_0 left join member m1_0 on r1_0.writer_mno=m1_0.mno left join reply r2_0 on r2_0.room_rno=r1_0.rno where r1_0.rno>? and r1_0.title like ? escape '!' group by r1_0.rno,r1_0.content,r1_0.moddate,r1_0.regdate,r1_0.reply_count,r1_0.title,r1_0.writer_mno order by r1_0.rno desc,r1_0.title asc offset ? rows fetch first ? rows only
+2023-05-01T21:59:04.057+09:00  INFO 25236 --- [    Test worker] c.r.r.r.room.RoomQueryDslRepositoryImpl  : [[Room(rno=15, title=Title...15, content=Content...15, replyCount=0), Member(mno=15, email=r15@hello.com, pw=1111, nickname=reviewer15), 2], [Room(rno=14, title=Title...14, content=Content...14, replyCount=0), Member(mno=14, email=r14@hello.com, pw=1111, nickname=reviewer14), 2], [Room(rno=13, title=Title...13, content=Content...13, replyCount=0), Member(mno=13, email=r13@hello.com, pw=1111, nickname=reviewer13), 3], [Room(rno=12, title=Title...12, content=Content...12, replyCount=0), Member(mno=12, email=r12@hello.com, pw=1111, nickname=reviewer12), 4], [Room(rno=11, title=Title...11, content=Content...11, replyCount=0), Member(mno=11, email=r11@hello.com, pw=1111, nickname=reviewer11), 1], [Room(rno=10, title=Title...10, content=Content...10, replyCount=0), Member(mno=10, email=r10@hello.com, pw=1111, nickname=reviewer10), 1], [Room(rno=1, title=Title...1, content=Content...1, replyCount=0), Member(mno=1, email=r1@hello.com, pw=1111, nickname=reviewer1), 1]]
+Hibernate: select count(distinct r1_0.rno) from room r1_0 left join member m1_0 on r1_0.writer_mno=m1_0.mno left join reply r2_0 on r2_0.room_rno=r1_0.rno where r1_0.rno>? and r1_0.title like ? escape '!'
+2023-05-01T21:59:04.066+09:00  INFO 25236 --- [    Test worker] c.r.r.r.room.RoomQueryDslRepositoryImpl  : COUNT: 7
+Hibernate: select r1_0.rno,r1_0.content,r1_0.moddate,r1_0.regdate,r1_0.reply_count,r1_0.title,r1_0.writer_mno from room r1_0 where r1_0.rno=?
+Room(rno=5, title=Title...5, content=Content...5, replyCount=0)
+Hibernate: select m1_0.mno,m1_0.email,m1_0.moddate,m1_0.nickname,m1_0.pw,m1_0.regdate from member m1_0 where m1_0.mno=?
+Member(mno=5, email=r5@hello.com, pw=1111, nickname=reviewer5)
+Hibernate: select r1_0.rno,r1_0.content,r1_0.moddate,r1_0.regdate,r1_0.reply_count,r1_0.title,r1_0.writer_mno,w1_0.mno,w1_0.email,w1_0.moddate,w1_0.nickname,w1_0.pw,w1_0.regdate,count(r2_0.replyno) from room r1_0 left join member w1_0 on w1_0.mno=r1_0.writer_mno left join reply r2_0 on r2_0.room_rno=r1_0.rno where r1_0.rno=?
+[Room(rno=5, title=Title...5, content=Content...5, replyCount=0), Member(mno=5, email=r5@hello.com, pw=1111, nickname=reviewer5), 3]
+Hibernate: select r1_0.rno,r1_0.content,r1_0.moddate,r1_0.regdate,r1_0.reply_count,r1_0.title,r1_0.writer_mno,w1_0.mno,w1_0.email,w1_0.moddate,w1_0.nickname,w1_0.pw,w1_0.regdate,count(r1_0.rno) from room r1_0 left join member w1_0 on w1_0.mno=r1_0.writer_mno left join reply r2_0 on r2_0.room_rno=r1_0.rno group by r1_0.rno,r1_0.content,r1_0.moddate,r1_0.regdate,r1_0.reply_count,r1_0.title,r1_0.writer_mno order by r1_0.rno desc offset ? rows fetch first ? rows only
+Hibernate: select count(r1_0.rno) from room r1_0
+[Room(rno=15, title=Title...15, content=Content...15, replyCount=0), Member(mno=15, email=r15@hello.com, pw=1111, nickname=reviewer15), 2]
+[Room(rno=14, title=Title...14, content=Content...14, replyCount=0), Member(mno=14, email=r14@hello.com, pw=1111, nickname=reviewer14), 2]
+[Room(rno=13, title=Title...13, content=Content...13, replyCount=0), Member(mno=13, email=r13@hello.com, pw=1111, nickname=reviewer13), 3]
+[Room(rno=12, title=Title...12, content=Content...12, replyCount=0), Member(mno=12, email=r12@hello.com, pw=1111, nickname=reviewer12), 4]
+[Room(rno=11, title=Title...11, content=Content...11, replyCount=0), Member(mno=11, email=r11@hello.com, pw=1111, nickname=reviewer11), 1]
+[Room(rno=10, title=Title...10, content=Content...10, replyCount=0), Member(mno=10, email=r10@hello.com, pw=1111, nickname=reviewer10), 1]
+[Room(rno=9, title=Title...9, content=Content...9, replyCount=0), Member(mno=9, email=r9@hello.com, pw=1111, nickname=reviewer9), 2]
+[Room(rno=8, title=Title...8, content=Content...8, replyCount=0), Member(mno=8, email=r8@hello.com, pw=1111, nickname=reviewer8), 3]
+[Room(rno=7, title=Title...7, content=Content...7, replyCount=0), Member(mno=7, email=r7@hello.com, pw=1111, nickname=reviewer7), 2]
+[Room(rno=6, title=Title...6, content=Content...6, replyCount=0), Member(mno=6, email=r6@hello.com, pw=1111, nickname=reviewer6), 2]
+Hibernate: select r1_0.rno,r1_0.content,r1_0.moddate,r1_0.regdate,r1_0.reply_count,r1_0.title,r1_0.writer_mno from room r1_0 where r1_0.rno=?
+Hibernate: select r1_0.rno,r1_0.content,r1_0.moddate,r1_0.regdate,r1_0.reply_count,r1_0.title,r1_0.writer_mno from room r1_0 where r1_0.rno=?
+Hibernate: update room set content=?, moddate=?, reply_count=?, title=?, writer_mno=? where rno=?
+Hibernate: insert into room (rno, content, moddate, regdate, reply_count, title, writer_mno) values (default, ?, ?, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room (rno, content, moddate, regdate, reply_count, title, writer_mno) values (default, ?, ?, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room (rno, content, moddate, regdate, reply_count, title, writer_mno) values (default, ?, ?, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room (rno, content, moddate, regdate, reply_count, title, writer_mno) values (default, ?, ?, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room (rno, content, moddate, regdate, reply_count, title, writer_mno) values (default, ?, ?, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room (rno, content, moddate, regdate, reply_count, title, writer_mno) values (default, ?, ?, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room (rno, content, moddate, regdate, reply_count, title, writer_mno) values (default, ?, ?, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room (rno, content, moddate, regdate, reply_count, title, writer_mno) values (default, ?, ?, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room (rno, content, moddate, regdate, reply_count, title, writer_mno) values (default, ?, ?, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room (rno, content, moddate, regdate, reply_count, title, writer_mno) values (default, ?, ?, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room (rno, content, moddate, regdate, reply_count, title, writer_mno) values (default, ?, ?, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room (rno, content, moddate, regdate, reply_count, title, writer_mno) values (default, ?, ?, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room (rno, content, moddate, regdate, reply_count, title, writer_mno) values (default, ?, ?, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room (rno, content, moddate, regdate, reply_count, title, writer_mno) values (default, ?, ?, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room (rno, content, moddate, regdate, reply_count, title, writer_mno) values (default, ?, ?, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: insert into room_image (inum, img_name, path, room_rno, uuid) values (default, ?, ?, ?, ?)
+Hibernate: select r1_0.rno,r1_0.content,r1_0.moddate,r1_0.regdate,r1_0.reply_count,r1_0.title,r1_0.writer_mno from room r1_0 where r1_0.title like ? escape '!' order by r1_0.rno desc offset ? rows fetch first ? rows only
+Hibernate: select count(r1_0.rno) from room r1_0 where r1_0.title like ? escape '!'
+Room(rno=30, title=Title...15, content=Content...15, replyCount=0)
+Room(rno=29, title=Title...14, content=Content...14, replyCount=0)
+Room(rno=28, title=Title...13, content=Content...13, replyCount=0)
+Room(rno=27, title=Title...12, content=Content...12, replyCount=0)
+Room(rno=26, title=Title...11, content=Content...11, replyCount=0)
+Room(rno=25, title=Title...10, content=Content...10, replyCount=0)
+Room(rno=16, title=Title...1, content=Content...1, replyCount=0)
+Room(rno=15, title=Title...15, content=Content...15, replyCount=0)
+Room(rno=14, title=Title...14, content=Content...14, replyCount=0)
+Room(rno=13, title=Title...13, content=Content...13, replyCount=0)
+Hibernate: select r1_0.rno,r1_0.content,r1_0.moddate,r1_0.regdate,r1_0.reply_count,r1_0.title,r1_0.writer_mno from room r1_0 where (r1_0.title like ? escape '!' or r1_0.content like ? escape '!') and r1_0.rno>? order by r1_0.rno desc offset ? rows fetch first ? rows only
+Hibernate: select count(r1_0.rno) from room r1_0 where (r1_0.title like ? escape '!' or r1_0.content like ? escape '!') and r1_0.rno>?
+Room(rno=30, title=Title...15, content=Content...15, replyCount=0)
+Room(rno=29, title=Title...14, content=Content...14, replyCount=0)
+Room(rno=28, title=Title...13, content=Content...13, replyCount=0)
+Room(rno=27, title=Title...12, content=Content...12, replyCount=0)
+Room(rno=26, title=Title...11, content=Content...11, replyCount=0)
+Room(rno=25, title=Title...10, content=Content...10, replyCount=0)
+Room(rno=16, title=Title...1, content=Content...1, replyCount=0)
+Room(rno=15, title=Title...15, content=Content...15, replyCount=0)
+Room(rno=14, title=Title...14, content=Content...14, replyCount=0)
+Room(rno=13, title=Title...13, content=Content...13, replyCount=0)
+Hibernate: select r1_0.rno,r1_0.content,r1_0.moddate,r1_0.regdate,r1_0.reply_count,r1_0.title,r1_0.writer_mno,r2_0.inum,r2_0.img_name,r2_0.path,r2_0.room_rno,r2_0.uuid,avg(cast(coalesce(r4_0.grade,0) as float(53))),count(distinct r4_0.reviewnum) from room r1_0 left join room_image r2_0 on r2_0.room_rno=r1_0.rno left join review r4_0 on r4_0.room_rno=r1_0.rno where r1_0.rno=? group by r2_0.inum,r2_0.img_name,r2_0.path,r2_0.room_rno,r2_0.uuid
+[[Ljava.lang.Object;@531245fe, [Ljava.lang.Object;@6d7298be, [Ljava.lang.Object;@2c289a9e]
+[Room(rno=5, title=Title...5, content=Content...5, replyCount=0), RoomImage(inum=10, uuid=aa6d46eb-41eb-4fc6-a75f-d4c9f4f238ec, imgName=test0.jpg, path=null), 4.0, 2]
+[Room(rno=5, title=Title...5, content=Content...5, replyCount=0), RoomImage(inum=11, uuid=ccd0a2ec-14ae-41ac-8f40-b255d16080ad, imgName=test1.jpg, path=null), 4.0, 2]
+[Room(rno=5, title=Title...5, content=Content...5, replyCount=0), RoomImage(inum=12, uuid=9f376bca-af09-42c7-9419-c9963c7153bc, imgName=test2.jpg, path=null), 4.0, 2]
+2023-05-01T21:59:04.237+09:00  INFO 25236 --- [    Test worker] c.r.r.r.room.RoomQueryDslRepositoryImpl  : search1...........
+2023-05-01T21:59:04.238+09:00  INFO 25236 --- [    Test worker] c.r.r.r.room.RoomQueryDslRepositoryImpl  : --------------
+2023-05-01T21:59:04.238+09:00  INFO 25236 --- [    Test worker] c.r.r.r.room.RoomQueryDslRepositoryImpl  : select room, member1, count(reply)
+from Room room
+  left join Member member1 with room.writer = member1
+  left join Reply reply with reply.room = room
+group by room
+2023-05-01T21:59:04.238+09:00  INFO 25236 --- [    Test worker] c.r.r.r.room.RoomQueryDslRepositoryImpl  : --------------
+Hibernate: select r1_0.rno,r1_0.content,r1_0.moddate,r1_0.regdate,r1_0.reply_count,r1_0.title,r1_0.writer_mno,m1_0.mno,m1_0.email,m1_0.moddate,m1_0.nickname,m1_0.pw,m1_0.regdate,count(r2_0.replyno) from room r1_0 left join member m1_0 on r1_0.writer_mno=m1_0.mno left join reply r2_0 on r2_0.room_rno=r1_0.rno group by r1_0.rno,r1_0.content,r1_0.moddate,r1_0.regdate,r1_0.reply_count,r1_0.title,r1_0.writer_mno
+2023-05-01T21:59:04.252+09:00  INFO 25236 --- [    Test worker] c.r.r.r.room.RoomQueryDslRepositoryImpl  : [[Room(rno=1, title=Title...1, content=Content...1, replyCount=0), Member(mno=1, email=r1@hello.com, pw=1111, nickname=reviewer1), 1], [Room(rno=2, title=Title...2, content=Content...2, replyCount=0), Member(mno=2, email=r2@hello.com, pw=1111, nickname=reviewer2), 4], [Room(rno=3, title=Change Title.., content=Change Content.., replyCount=0), Member(mno=3, email=r3@hello.com, pw=1111, nickname=reviewer3), 3], [Room(rno=4, title=Title...4, content=Content...4, replyCount=0), Member(mno=4, email=r4@hello.com, pw=1111, nickname=reviewer4), 2], [Room(rno=5, title=Title...5, content=Content...5, replyCount=0), Member(mno=5, email=r5@hello.com, pw=1111, nickname=reviewer5), 3], [Room(rno=6, title=Title...6, content=Content...6, replyCount=0), Member(mno=6, email=r6@hello.com, pw=1111, nickname=reviewer6), 2], [Room(rno=7, title=Title...7, content=Content...7, replyCount=0), Member(mno=7, email=r7@hello.com, pw=1111, nickname=reviewer7), 2], [Room(rno=8, title=Title...8, content=Content...8, replyCount=0), Member(mno=8, email=r8@hello.com, pw=1111, nickname=reviewer8), 3], [Room(rno=9, title=Title...9, content=Content...9, replyCount=0), Member(mno=9, email=r9@hello.com, pw=1111, nickname=reviewer9), 2], [Room(rno=10, title=Title...10, content=Content...10, replyCount=0), Member(mno=10, email=r10@hello.com, pw=1111, nickname=reviewer10), 1], [Room(rno=11, title=Title...11, content=Content...11, replyCount=0), Member(mno=11, email=r11@hello.com, pw=1111, nickname=reviewer11), 1], [Room(rno=12, title=Title...12, content=Content...12, replyCount=0), Member(mno=12, email=r12@hello.com, pw=1111, nickname=reviewer12), 4], [Room(rno=13, title=Title...13, content=Content...13, replyCount=0), Member(mno=13, email=r13@hello.com, pw=1111, nickname=reviewer13), 3], [Room(rno=14, title=Title...14, content=Content...14, replyCount=0), Member(mno=14, email=r14@hello.com, pw=1111, nickname=reviewer14), 2], [Room(rno=15, title=Title...15, content=Content...15, replyCount=0), Member(mno=15, email=r15@hello.com, pw=1111, nickname=reviewer15), 2], [Room(rno=16, title=Title...1, content=Content...1, replyCount=0), Member(mno=1, email=r1@hello.com, pw=1111, nickname=reviewer1), 0], [Room(rno=17, title=Title...2, content=Content...2, replyCount=0), Member(mno=2, email=r2@hello.com, pw=1111, nickname=reviewer2), 0], [Room(rno=18, title=Title...3, content=Content...3, replyCount=0), Member(mno=3, email=r3@hello.com, pw=1111, nickname=reviewer3), 0], [Room(rno=19, title=Title...4, content=Content...4, replyCount=0), Member(mno=4, email=r4@hello.com, pw=1111, nickname=reviewer4), 0], [Room(rno=20, title=Title...5, content=Content...5, replyCount=0), Member(mno=5, email=r5@hello.com, pw=1111, nickname=reviewer5), 0], [Room(rno=21, title=Title...6, content=Content...6, replyCount=0), Member(mno=6, email=r6@hello.com, pw=1111, nickname=reviewer6), 0], [Room(rno=22, title=Title...7, content=Content...7, replyCount=0), Member(mno=7, email=r7@hello.com, pw=1111, nickname=reviewer7), 0], [Room(rno=23, title=Title...8, content=Content...8, replyCount=0), Member(mno=8, email=r8@hello.com, pw=1111, nickname=reviewer8), 0], [Room(rno=24, title=Title...9, content=Content...9, replyCount=0), Member(mno=9, email=r9@hello.com, pw=1111, nickname=reviewer9), 0], [Room(rno=25, title=Title...10, content=Content...10, replyCount=0), Member(mno=10, email=r10@hello.com, pw=1111, nickname=reviewer10), 0], [Room(rno=26, title=Title...11, content=Content...11, replyCount=0), Member(mno=11, email=r11@hello.com, pw=1111, nickname=reviewer11), 0], [Room(rno=27, title=Title...12, content=Content...12, replyCount=0), Member(mno=12, email=r12@hello.com, pw=1111, nickname=reviewer12), 0], [Room(rno=28, title=Title...13, content=Content...13, replyCount=0), Member(mno=13, email=r13@hello.com, pw=1111, nickname=reviewer13), 0], [Room(rno=29, title=Title...14, content=Content...14, replyCount=0), Member(mno=14, email=r14@hello.com, pw=1111, nickname=reviewer14), 0], [Room(rno=30, title=Title...15, content=Content...15, replyCount=0), Member(mno=15, email=r15@hello.com, pw=1111, nickname=reviewer15), 0]]
+Hibernate: select r1_0.rno,r1_0.content,r1_0.moddate,r1_0.regdate,r1_0.reply_count,r1_0.title,r1_0.writer_mno,w1_0.mno,w1_0.email,w1_0.moddate,w1_0.nickname,w1_0.pw,w1_0.regdate from room r1_0 left join member w1_0 on w1_0.mno=r1_0.writer_mno where r1_0.rno=?
+--------------
+[Room(rno=5, title=Title...5, content=Content...5, replyCount=0), Member(mno=5, email=r5@hello.com, pw=1111, nickname=reviewer5)]
+2023-05-01T21:59:04.282+09:00  INFO 25236 --- [    Test worker] c.r.r.r.room.RoomQueryDslRepositoryImpl  : ---------------
+2023-05-01T21:59:04.282+09:00  INFO 25236 --- [    Test worker] c.r.r.r.room.RoomQueryDslRepositoryImpl  : select room, roomImage, case when (avg(review.grade) is null) then ?1 else avg(review.grade) end, count(distinct review)
+from Room room
+  left join RoomImage roomImage with room = roomImage.room
+  left join Review review with room = review.room
+where roomImage.inum = (select min(roomImage2.inum)
+from RoomImage roomImage2
+where room = roomImage2.room) or roomImage is null
+group by room
+2023-05-01T21:59:04.282+09:00  INFO 25236 --- [    Test worker] c.r.r.r.room.RoomQueryDslRepositoryImpl  : ---------------
+Hibernate: select r1_0.rno,r1_0.content,r1_0.moddate,r1_0.regdate,r1_0.reply_count,r1_0.title,r1_0.writer_mno,r2_0.inum,r2_0.img_name,r2_0.path,r2_0.room_rno,r2_0.uuid,case when (avg(cast(r4_0.grade as float(53))) is null) then cast(? as float(53)) else avg(cast(r4_0.grade as float(53))) end,count(distinct r4_0.reviewnum) from room r1_0 left join room_image r2_0 on r1_0.rno=r2_0.room_rno left join review r4_0 on r1_0.rno=r4_0.room_rno where r2_0.inum=(select min(r6_0.inum) from room_image r6_0 where r1_0.rno=r6_0.room_rno) or r2_0.inum is null group by r1_0.rno,r1_0.content,r1_0.moddate,r1_0.regdate,r1_0.reply_count,r1_0.title,r1_0.writer_mno order by r1_0.rno desc offset ? rows fetch first ? rows only
+Hibernate: select count(distinct r1_0.rno) from room r1_0 left join room_image r2_0 on r1_0.rno=r2_0.room_rno left join review r4_0 on r1_0.rno=r4_0.room_rno where r2_0.inum=(select min(r6_0.inum) from room_image r6_0 where r1_0.rno=r6_0.room_rno) or r2_0.inum is null
+2023-05-01T21:59:04.385+09:00  INFO 25236 --- [    Test worker] c.r.r.r.room.RoomQueryDslRepositoryImpl  : [Room(rno=30, title=Title...15, content=Content...15, replyCount=0), RoomImage(inum=79, uuid=af1ceb16-0f49-4c03-8f76-8078984984de, imgName=test0.jpg, path=null), 0.0, 0]
+2023-05-01T21:59:04.386+09:00  INFO 25236 --- [    Test worker] c.r.r.r.room.RoomQueryDslRepositoryImpl  : [Room(rno=29, title=Title...14, content=Content...14, replyCount=0), RoomImage(inum=76, uuid=7f851d48-a505-4769-b875-49db2b30fc47, imgName=test0.jpg, path=null), 0.0, 0]
+2023-05-01T21:59:04.386+09:00  INFO 25236 --- [    Test worker] c.r.r.r.room.RoomQueryDslRepositoryImpl  : [Room(rno=28, title=Title...13, content=Content...13, replyCount=0), RoomImage(inum=74, uuid=0eb33850-ffe4-4d48-a407-5fb186529e1e, imgName=test0.jpg, path=null), 0.0, 0]
+2023-05-01T21:59:04.386+09:00  INFO 25236 --- [    Test worker] c.r.r.r.room.RoomQueryDslRepositoryImpl  : [Room(rno=27, title=Title...12, content=Content...12, replyCount=0), RoomImage(inum=72, uuid=0cf0e0bd-77a5-449e-b373-072ed94635cb, imgName=test0.jpg, path=null), 0.0, 0]
+2023-05-01T21:59:04.386+09:00  INFO 25236 --- [    Test worker] c.r.r.r.room.RoomQueryDslRepositoryImpl  : [Room(rno=26, title=Title...11, content=Content...11, replyCount=0), RoomImage(inum=68, uuid=ad0042e8-fb2d-4ef7-89c5-f7794866a1f0, imgName=test0.jpg, path=null), 0.0, 0]
+2023-05-01T21:59:04.386+09:00  INFO 25236 --- [    Test worker] c.r.r.r.room.RoomQueryDslRepositoryImpl  : [Room(rno=25, title=Title...10, content=Content...10, replyCount=0), RoomImage(inum=65, uuid=1dd9262b-b945-47b9-8f24-3a013df3f94f, imgName=test0.jpg, path=null), 0.0, 0]
+2023-05-01T21:59:04.386+09:00  INFO 25236 --- [    Test worker] c.r.r.r.room.RoomQueryDslRepositoryImpl  : [Room(rno=24, title=Title...9, content=Content...9, replyCount=0), RoomImage(inum=61, uuid=bfec1e0d-7276-4d0a-b29e-84cea059249f, imgName=test0.jpg, path=null), 0.0, 0]
+2023-05-01T21:59:04.386+09:00  INFO 25236 --- [    Test worker] c.r.r.r.room.RoomQueryDslRepositoryImpl  : [Room(rno=23, title=Title...8, content=Content...8, replyCount=0), RoomImage(inum=56, uuid=1e8826d1-14c3-4a41-957e-94dafb2c89d4, imgName=test0.jpg, path=null), 0.0, 0]
+2023-05-01T21:59:04.386+09:00  INFO 25236 --- [    Test worker] c.r.r.r.room.RoomQueryDslRepositoryImpl  : [Room(rno=22, title=Title...7, content=Content...7, replyCount=0), RoomImage(inum=54, uuid=fbc24aac-33df-4a07-9c0b-d18f0506b636, imgName=test0.jpg, path=null), 0.0, 0]
+2023-05-01T21:59:04.386+09:00  INFO 25236 --- [    Test worker] c.r.r.r.room.RoomQueryDslRepositoryImpl  : [Room(rno=21, title=Title...6, content=Content...6, replyCount=0), RoomImage(inum=53, uuid=0fcd06a6-90ff-412c-a286-9047e3434ead, imgName=test0.jpg, path=null), 0.0, 0]
+[Room(rno=30, title=Title...15, content=Content...15, replyCount=0), RoomImage(inum=79, uuid=af1ceb16-0f49-4c03-8f76-8078984984de, imgName=test0.jpg, path=null), 0.0, 0]
+[Room(rno=29, title=Title...14, content=Content...14, replyCount=0), RoomImage(inum=76, uuid=7f851d48-a505-4769-b875-49db2b30fc47, imgName=test0.jpg, path=null), 0.0, 0]
+[Room(rno=28, title=Title...13, content=Content...13, replyCount=0), RoomImage(inum=74, uuid=0eb33850-ffe4-4d48-a407-5fb186529e1e, imgName=test0.jpg, path=null), 0.0, 0]
+[Room(rno=27, title=Title...12, content=Content...12, replyCount=0), RoomImage(inum=72, uuid=0cf0e0bd-77a5-449e-b373-072ed94635cb, imgName=test0.jpg, path=null), 0.0, 0]
+[Room(rno=26, title=Title...11, content=Content...11, replyCount=0), RoomImage(inum=68, uuid=ad0042e8-fb2d-4ef7-89c5-f7794866a1f0, imgName=test0.jpg, path=null), 0.0, 0]
+[Room(rno=25, title=Title...10, content=Content...10, replyCount=0), RoomImage(inum=65, uuid=1dd9262b-b945-47b9-8f24-3a013df3f94f, imgName=test0.jpg, path=null), 0.0, 0]
+[Room(rno=24, title=Title...9, content=Content...9, replyCount=0), RoomImage(inum=61, uuid=bfec1e0d-7276-4d0a-b29e-84cea059249f, imgName=test0.jpg, path=null), 0.0, 0]
+[Room(rno=23, title=Title...8, content=Content...8, replyCount=0), RoomImage(inum=56, uuid=1e8826d1-14c3-4a41-957e-94dafb2c89d4, imgName=test0.jpg, path=null), 0.0, 0]
+[Room(rno=22, title=Title...7, content=Content...7, replyCount=0), RoomImage(inum=54, uuid=fbc24aac-33df-4a07-9c0b-d18f0506b636, imgName=test0.jpg, path=null), 0.0, 0]
+[Room(rno=21, title=Title...6, content=Content...6, replyCount=0), RoomImage(inum=53, uuid=0fcd06a6-90ff-412c-a286-9047e3434ead, imgName=test0.jpg, path=null), 0.0, 0]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

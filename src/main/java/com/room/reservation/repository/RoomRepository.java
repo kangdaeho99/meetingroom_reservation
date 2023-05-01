@@ -55,7 +55,7 @@ public interface RoomRepository extends JpaRepository<Room, Long>, RoomQueryDslR
     countQuery = "SELECT count(r) FROM Room r")
     Page<Object[]> getBoardWithReplyCount(Pageable pageable);
 
-    @Query("SELECT r, w, count(r) " +
+    @Query("SELECT r, w, count(rp) " +
             " FROM Room r LEFT JOIN r.writer w " +
             " LEFT OUTER JOIN Reply rp ON rp.room = r" +
             " WHERE r.rno = :rno" )

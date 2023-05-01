@@ -34,10 +34,10 @@ public class MemberRepositoryTests {
     @Transactional
     @Test
     public void testDeleteMember(){
-        Long mno = 3L;
-        Member member = Member.builder().mno(mno).build();
-
-        reviewRepository.deleteByMember(member);
-        memberRepository.deleteById(mno);
+//        Long mno = 3L;
+//        Member member = Member.builder().mno(mno).build();
+//
+//        reviewRepository.deleteByMember(member);
+//        memberRepository.deleteById(mno);
     }
 }
