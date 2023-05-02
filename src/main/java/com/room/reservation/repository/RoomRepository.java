@@ -15,7 +15,7 @@ public interface RoomRepository extends JpaRepository<Room, Long>, RoomQueryDslR
     /**
      * Mysql 특징으로 RoomImage를 사용할시 에러. QueryDSL으로 대체
      */
-    Page<Object[]> getListPage(Pageable pageable);
+//    Page<Object[]> getListPage(Pageable pageable);
 
     @Query("SELECT r, ri, avg(coalesce(rv.grade,0)), count(distinct rv)" +
             " from Room r " +

@@ -24,6 +24,7 @@ public class ApplicationStartUpRunner implements ApplicationRunner {
     @Autowired
     private ReplyService replyService;
 
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         memberService.initDataBase();

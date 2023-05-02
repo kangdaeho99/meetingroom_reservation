@@ -7,10 +7,14 @@ import org.springframework.data.domain.Pageable;
 public interface RoomQueryDslRepository {
 
 
-    Page<Object[]> getListPage(Pageable pageable);
+    Page<Object[]> getListPageWithReview(Pageable pageable);
+
+    Page<Object[]> getListPageWithReply(Pageable pageable);
 
     Room search1();
 
     Page<Object[]> searchPage(String type, String keyword, Pageable pageable);
+
+
 
 }

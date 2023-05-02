@@ -29,7 +29,7 @@ public class RoomQueryDslRepositoryImpl extends QuerydslRepositorySupport implem
     }
 
     @Override
-    public Page<Object[]> getListPage(Pageable pageable) {
+    public Page<Object[]> getListPageWithReview(Pageable pageable) {
             QRoom room = QRoom.room;
             QRoomImage roomImage = QRoomImage.roomImage;
             QRoomImage roomImage2 = new QRoomImage("roomImage2");
@@ -76,6 +76,64 @@ public class RoomQueryDslRepositoryImpl extends QuerydslRepositorySupport implem
 //        }
         return new PageImpl<>(collect, pageable, count);
 
+    }
+
+    @Override
+    public Page<Object[]> getListPageWithReply(Pageable pageable) {
+        QRoom room = QRoom.room;
+        QRoomImage roomImage = QRoomImage.roomImage;
+        QRoomImage roomImage2 = new QRoomImage("roomImage2");
+        QReply reply = QReply.reply;
+        QReview review = QReview.review;
+
+//        JPQLQuery<Tuple> jpqlQuery = new JPAQuery<>(getEntityManager());
+
+        JPQLQuery<Room> jpqlQuery = from(room);
+        jpqlQuery.leftJoin(roomImage).on(room.eq(roomImage.room));
+        jpqlQuery.leftJoin(reply).on(room.eq(reply.room));
+        jpqlQuery.leftJoin(review).on(room.eq(review.room));
+        jpqlQuery.where(roomImage.inum.eq(
+                select(roomImage2.inum.min()).from(roomImage2).where(room.eq(roomImage2.room))
+                ).or(roomImage.isNull())
+        ).groupBy(room);
+
+        JPQLQuery<Tuple> tuple = jpqlQuery.select(room,
+                roomImage,
+                reply.countDistinct(),
+                new CaseBuilder()
+                        .when(review.grade.avg().isNull()).then(0.0)
+                        .otherwise(review.grade.avg()),
+                review.countDistinct());
+
+//        jpqlQuery.select(room, roomImage, reply.countDistinct());
+//
+//        JPQLQuery<Tuple> tuple = jpqlQuery.select(
+//                room,
+//                roomImage,
+//                reply.countDistinct()
+//        ).from(room)
+//        .leftJoin(roomImage).on(room.eq(roomImage.room))
+//        .leftJoin(reply).on(room.eq(reply.room))
+//        .where(
+//                roomImage.inum.eq(
+//                        select(roomImage2.inum.min()).from(roomImage2).where(room.eq(roomImage2.room))
+//                ).or(roomImage.isNull())
+//        ).groupBy(room);
+
+
+        log.info("-------------");
+        log.info(tuple);
+        log.info("-------------");
+        this.getQuerydsl().applyPagination(pageable, tuple);
+        List<Tuple> result = tuple.fetch();
+        long count = tuple.fetchCount();
+        List<Object[]> collect = result.stream().map(t -> {
+            Object[] arr = t.toArray();
+            log.info(Arrays.toString(arr));
+            return arr;
+        }).collect(Collectors.toList());
+
+        return new PageImpl<>(collect, pageable, count);
     }
 
     @Override

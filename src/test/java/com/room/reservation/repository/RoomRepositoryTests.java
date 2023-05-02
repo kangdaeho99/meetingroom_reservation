@@ -29,7 +29,8 @@ public class RoomRepositoryTests {
     private RoomRepository roomRepository;
 
     @Autowired
-    private RoomImageRepository imageRepository;
+    private RoomImageRepository roomImageRepository;
+
 
     @Commit
     @Transactional
@@ -52,7 +53,7 @@ public class RoomRepositoryTests {
                         .imgName("test"+j+".jpg")
                         .room(room)
                         .build();
-                imageRepository.save(roomImage);
+                roomImageRepository.save(roomImage);
             }
         });
     }
@@ -61,7 +62,7 @@ public class RoomRepositoryTests {
     public void testListPage(){
         PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "rno"));
 
-        Page<Object[]> result = roomRepository.getListPage(pageRequest);
+        Page<Object[]> result = roomRepository.getListPageWithReply(pageRequest);
 
         for(Object[] objects : result){
             System.out.println(Arrays.toString(objects));
@@ -175,6 +176,29 @@ public class RoomRepositoryTests {
         Pageable pageable = PageRequest.of(0, 10, Sort.by("rno").descending()
                 .and(Sort.by("title").ascending()));
         Page<Object[]> result = roomRepository.searchPage("t", "1", pageable);
+    }
+
+    @Commit
+    @Transactional
+    @Test
+    public void insertMovies(){
+        IntStream.rangeClosed(1, 15).forEach( i -> {
+            Room room = Room.builder()
+                    .title("Room..."+i)
+                    .content("Content..."+i)
+                    .build();
+            System.out.println("-----------------------");
+            roomRepository.save(room);
+            int count = (int)(Math.random() * 3) + 1;
+            for(int j=0;j<count;j++){
+                RoomImage roomImage = RoomImage.builder()
+                        .uuid(UUID.randomUUID().toString())
+                        .room(room)
+                        .imgName("Test"+j+".jpg").build();
+
+                roomImageRepository.save(roomImage);
+            }
+        });
     }
 
 }
