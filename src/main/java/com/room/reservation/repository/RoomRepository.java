@@ -60,4 +60,8 @@ public interface RoomRepository extends JpaRepository<Room, Long>, RoomQueryDslR
             " LEFT OUTER JOIN Reply rp ON rp.room = r" +
             " WHERE r.rno = :rno" )
     Object getRoomByRno(@Param("rno") Long rno);
+
+    /**
+     * Description : Room 조회할시 RoomImage, Reply, Review를 모두 Join하여 가져오는 Query입니다.
+     */
 }

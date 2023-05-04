@@ -201,4 +201,13 @@ public class RoomRepositoryTests {
         });
     }
 
+    @Test
+    public void testGetRoomWithAll(){
+        List<Object[]> result = roomRepository.getRoomWithAll(5L);
+        System.out.println(result);
+        for(Object[] arr : result){
+            System.out.println(Arrays.toString(arr));
+        }
+    }
+
 }
