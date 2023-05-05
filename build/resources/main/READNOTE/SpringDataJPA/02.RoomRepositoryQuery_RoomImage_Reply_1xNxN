@@ -43,3 +43,8 @@ LEFT OUTER JOIN Review rv ON rv.room = r
 그런 다음 Room과 Review 테이블과 조인하면서 이 임시 테이블들을 참조합니다.
 이 방법으로 RoomImage와 Reply를 각각 그룹화할 수 있으므로 중복된 값이 발생하지 않습니다.
 
+--------------------------
+위처럼 Room, Review, Reply, RoomImage 모두를 한번에 가져오려했지만
+API를 따로 가져와서 하기로했습니다.
+Room RoomImage Review 끼리 작성하고
+Reply는 따로 가져옵니다
