@@ -30,6 +30,11 @@ public class MemberRepositoryTests {
         });
     }
 
+    /**
+     * Description : Member 삭제할시 review와 함께 삭제할예정이었으나
+     * Room의 writer가 member의 forgein key로 되어있어서
+     * del_yn으로 처리할예정
+     */
     @Commit
     @Transactional
     @Test
