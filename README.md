@@ -11,6 +11,7 @@ Spring Boot를 통해 회의실 예약 사이트입니다. -->
 ![Untitled](https://user-images.githubusercontent.com/48047377/236640580-e7d8149a-ec1d-4a7c-be5e-9ae6b03ce141.png)
 
 
+
 - 프로젝트 설명 : 회의실 예약 사이트입니다.
 - 백엔드 기술스택 : Spring Boot ( JPA & QueryDSL)
 - 개발목표 : Spring Boot, Spring Security, Spring Batch(Batch), JPA & Query(ORM), Redis (Cache), Rabbit MQ(Message Broker), AWS(Infra), Docker(Infra), Jenkins & CodeDeploy(CI/CD) 에 대해 알아보는것
