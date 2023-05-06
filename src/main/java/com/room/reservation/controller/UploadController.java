@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -103,6 +104,28 @@ public class UploadController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return result;
+    }
+
+    /**
+     * Description : 업로드된 파일의 삭제를 파일의 URL로 처리합니다.
+     * 파일의 URL 자체가 '년/월/일/uuid_파일명' 으로 구성되어 있으므로 이를 이용해서 삭제할 파일의 위치를 찾아서 삭제할 수 있습니다.
+     * 경로와 UUID가 포함된 파일이름을 파라미터로 받아 삭제 결과를 Boolean 타입으로 만들어서 반환합니다.
+     */
+    @PostMapping("/removeFile")
+    public ResponseEntity<Boolean> removeFile(String fileName){
+        String srcFileName = null;
+        try{
+            srcFileName = URLDecoder.decode(fileName, "UTF-8");
+            File file = new File(uploadPath + File.separator + srcFileName);
+            boolean result = file.delete();
+
+            File thumbnail = new File(file.getParent(), "s_" + file.getName());
+            result = thumbnail.delete();
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     private String makeFolder(){
