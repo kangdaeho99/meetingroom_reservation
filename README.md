@@ -4,7 +4,7 @@ Spring Boot를 통해 회의실 예약 사이트입니다.
 
 ### **🤝 회의실 예약 프로그램( Room-Reservation Service )   — (진행중)**
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f4907062-efba-4bdb-9afe-39d86fbfc39c/Untitled.png)
+![Untitled]((https://user-images.githubusercontent.com/48047377/236640580-e7d8149a-ec1d-4a7c-be5e-9ae6b03ce141.png)
 
 - **링크 :** [http://ec2-15-164-137-161.ap-northeast-2.compute.amazonaws.com:8080/room/list](http://ec2-15-164-137-161.ap-northeast-2.compute.amazonaws.com:8080/room/list)  ****
 - **깃허브 README & 소스코드 :**
