@@ -14,9 +14,9 @@ public class IndexController {
 //        log.info("index..............");
 //    }
 
-    @GetMapping({"/"})
-    public String indexlist(){
+    @GetMapping({"", "/"})
+    public String index(){
         log.info("index..............");
-        return "room/list";
+        return "redirect:/room/list";
     }
 }
