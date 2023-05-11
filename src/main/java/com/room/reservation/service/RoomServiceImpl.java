@@ -20,6 +20,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
@@ -31,7 +33,7 @@ import java.util.stream.IntStream;
 public class RoomServiceImpl implements RoomService{
     private final RoomRepository roomRepository;
 
-    private final RoomImageRepository imageRepository;
+    private final RoomImageRepository roomImageRepository;
 
     private final ReviewRepository reviewRepository;
 
@@ -55,7 +57,7 @@ public class RoomServiceImpl implements RoomService{
                         .imgName("test"+j+".jpg")
                         .room(room)
                         .build();
-            imageRepository.save(roomImage);
+            roomImageRepository.save(roomImage);
             }
         });
     }
@@ -68,6 +70,24 @@ public class RoomServiceImpl implements RoomService{
         log.info(entity);
         roomRepository.save(entity);
         return entity.getRno();
+    }
+
+    @Transactional
+    @Override
+    public Long registerWithRoomImage(RoomDTO roomDTO){
+        Map<String, Object> entityMap = dtoToEntityWithRoomImage(roomDTO);
+        Room room = (Room) entityMap.get("room");
+        List<RoomImage> roomImageList = (List<RoomImage>) entityMap.get("roomImgList");
+
+        roomRepository.save(room);
+        if(roomImageList != null){
+            roomImageList.forEach(roomImage ->{
+                roomImageRepository.save(roomImage);
+            });
+        }
+
+
+        return room.getRno();
     }
 
     /**

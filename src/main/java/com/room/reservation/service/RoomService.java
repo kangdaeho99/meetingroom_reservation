@@ -3,13 +3,22 @@ package com.room.reservation.service;
 import com.room.reservation.dto.PageRequestDTO;
 import com.room.reservation.dto.PageResultDTO;
 import com.room.reservation.dto.RoomDTO;
+import com.room.reservation.dto.RoomImageDTO;
 import com.room.reservation.entity.Member;
 import com.room.reservation.entity.Room;
+import com.room.reservation.entity.RoomImage;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public interface RoomService {
     void initDataBase();
 
     Long register(RoomDTO dto);
+
+    Long registerWithRoomImage(RoomDTO dto);
 
     PageResultDTO<RoomDTO, Object[]> getList(PageRequestDTO requestDTO);
 
@@ -31,6 +40,42 @@ public interface RoomService {
                 .writer(member)
                 .build();
         return entity;
+    }
+
+    /**
+     * Description : Roomm RoomImage을 JPA로 처리하기 위해 RoomDTO를 Room객체, RoomImage로 변환합니다.
+     * 한번에 두가지 종류의 객체를 반환하므로 Map타입을 이용해 반환합니다.
+     */
+    default Map<String, Object> dtoToEntityWithRoomImage(RoomDTO roomDTO){
+        Member member = Member.builder().mno(roomDTO.getWriterMno()).build();
+        Map<String, Object> entityMap = new HashMap<>();
+
+        Room room = Room.builder()
+                .rno(roomDTO.getRno())
+                .title(roomDTO.getTitle())
+                .content(roomDTO.getContent())
+                .writer(member)
+                .build();
+
+        entityMap.put("room", room);
+        List<RoomImageDTO> roomImageDTOList = roomDTO.getRoomImageDTOList();
+
+        //RoomImageDTO 처리
+        if(roomImageDTOList != null && roomImageDTOList.size() > 0){
+            List<RoomImage> roomImageList = roomImageDTOList.stream().map(roomImageDTO -> {
+                RoomImage roomImage = RoomImage.builder()
+                        .path(roomImageDTO.getPath())
+                        .imgName(roomImageDTO.getImgName())
+                        .uuid(roomImageDTO.getUuid())
+                        .room(room)
+                        .build();
+                return roomImage;
+            }).collect(Collectors.toList());
+
+            entityMap.put("roomImgList", roomImageList);
+        }
+        return entityMap;
+
     }
 
     /**
@@ -58,5 +103,7 @@ public interface RoomService {
 
         return dto;
     }
+
+
 
 }

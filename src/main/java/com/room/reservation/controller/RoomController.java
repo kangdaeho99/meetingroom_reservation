@@ -35,7 +35,7 @@ public class RoomController {
     public String registerPost(RoomDTO dto, RedirectAttributes redirectAttributes){
         log.info("rno ... "+ dto);
         //새로 추가된 엔티티의 번호
-        Long rno = roomService.register(dto);
+        Long rno = roomService.registerWithRoomImage(dto);
         redirectAttributes.addFlashAttribute("msg", rno);
         return "redirect:/room/list";
     }
