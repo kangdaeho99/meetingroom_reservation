@@ -222,4 +222,92 @@ public class RoomQueryDslRepositoryImpl extends QuerydslRepositorySupport implem
                 pageable,
                 count);
     }
+
+    @Override
+    public Page<Object[]> searchPageWithImageReplyReview(String type, String keyword, Pageable pageable) {
+        log.info("searchPage..........");
+        QRoom room = QRoom.room;
+        QMember member = QMember.member;
+        QRoomImage roomImage = QRoomImage.roomImage;
+        QRoomImage roomImage2 = new QRoomImage("roomImage2");
+        QReply reply = QReply.reply;
+        QReview review = QReview.review;
+
+        JPQLQuery<Room> jpqlQuery = from(room);
+        jpqlQuery.leftJoin(member).on(room.writer.eq(member));
+        jpqlQuery.leftJoin(roomImage).on(room.eq(roomImage.room));
+        jpqlQuery.leftJoin(reply).on(reply.room.eq(room));
+        jpqlQuery.leftJoin(review).on(room.eq(review.room));
+        jpqlQuery.where(roomImage.inum.eq(
+                select(roomImage2.inum.min()).from(roomImage2).where(room.eq(roomImage2.room))
+                ).or(roomImage.isNull())
+        ).groupBy(room);
+
+        JPQLQuery<Tuple> tuple = jpqlQuery.select(room,
+                member,
+                roomImage,
+                reply.count(),
+                new CaseBuilder()
+                        .when(review.grade.avg().isNull()).then(0.0)
+                        .otherwise(review.grade.avg()),
+                review.countDistinct()
+        );
+
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        BooleanExpression expression = room.rno.gt(0L);
+
+        booleanBuilder.and(expression);
+
+        if(type!=null){
+            String[] typeArr = type.split("");
+            BooleanBuilder conditionBuilder = new BooleanBuilder();
+            for(String t:typeArr){
+                switch(t){
+                    case "t":
+                        conditionBuilder.or(room.title.contains(keyword));
+                        break;
+                    case "w":
+                        conditionBuilder.or(member.email.contains(keyword));
+                        break;
+                    case "c":
+                        conditionBuilder.or(room.content.contains(keyword));
+                        break;
+                }
+            }
+            booleanBuilder.and(conditionBuilder);
+        }
+        tuple.where(booleanBuilder);
+
+//        Sort sort = pageable.getSort();
+//        sort.stream().forEach(order -> {
+//            Order direction = order.isAscending() ? Order.ASC : Order.DESC;
+//            String prop = order.getProperty();
+//
+//            PathBuilder orderByExpression = new PathBuilder(Room.class, "room");
+//            tuple.orderBy(new OrderSpecifier<>(direction, orderByExpression.get(prop)));
+//        });
+//        tuple.groupBy(room);
+//
+//        //page 처리
+//        tuple.offset(pageable.getOffset());
+//        tuple.limit(pageable.getPageSize());
+
+//        tuple.groupBy(room);
+        Objects.requireNonNull(this.getQuerydsl()).applyPagination(pageable, tuple);
+        List<Tuple> result = tuple.fetch();
+        log.info(result);
+        long count = tuple.fetchCount();
+        log.info("COUNT: " +count);
+        List<Object[]> collect = result.stream().map(t ->{
+            Object[] arr = t.toArray();
+            log.info(Arrays.toString(arr));
+            return arr;
+        }).collect(Collectors.toList());
+        return new PageImpl<Object[]>(
+                collect,
+                pageable,
+                count);
+    }
+
+
 }

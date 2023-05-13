@@ -34,4 +34,9 @@ public class RoomDTO {
 
     private int replyCount;
 
+    private double avg;
+
+    private int reviewCount;
+
+
 }

@@ -104,6 +104,38 @@ public interface RoomService {
         return dto;
     }
 
+    /**
+     * Description : JPA를 통해 나오는 엔티티 객체들을 roomDTO로 변환시킵니다.
+     *
+     */
+    default RoomDTO entitiesToDTO(Room room, Member member, List<RoomImage> roomImages,  Long replyCount, Double avg, Long reviewCount){
+        RoomDTO roomDTO = RoomDTO.builder()
+                .rno(room.getRno())
+                .title(room.getTitle())
+                .content(room.getContent())
+                .regDate(room.getRegDate())
+                .modDate(room.getModDate())
+                .writerMno(member.getMno())
+                .writerEmail(member.getEmail())
+                .writerName(member.getNickname())
+                .replyCount(replyCount.intValue())
+                .build();
+
+        List<RoomImageDTO> roomImageDTOList = roomImages.stream().map(roomImage ->{
+            return RoomImageDTO.builder().imgName(roomImage.getImgName())
+                    .path(roomImage.getPath())
+                    .uuid(roomImage.getUuid())
+                    .build();
+        }).collect(Collectors.toList());
+
+        roomDTO.setRoomImageDTOList(roomImageDTOList);
+        roomDTO.setAvg(avg);
+        roomDTO.setReviewCount(reviewCount.intValue());
+
+        return roomDTO;
+    }
+
+
 
 
 }

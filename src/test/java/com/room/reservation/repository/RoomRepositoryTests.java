@@ -122,6 +122,7 @@ public class RoomRepositoryTests {
         });
     }
 
+
     @Transactional
     @Test
     public void testRead1(){
@@ -210,4 +211,13 @@ public class RoomRepositoryTests {
         }
     }
 
+    @Test
+    public void testSearchPageWithImageReplyReview(){
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("rno").descending());
+        Page<Object[]> result = roomRepository.searchPageWithImageReplyReview("t", "1", pageable);
+
+        result.stream().forEach(room -> {
+            System.out.println(room);
+        });
+    }
 }

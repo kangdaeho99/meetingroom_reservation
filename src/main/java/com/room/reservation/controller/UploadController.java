@@ -31,6 +31,8 @@ import java.util.UUID;
 public class UploadController {
     @Value("${com.room.reservation.upload.path}")
     private String uploadPath;
+
+
     @PostMapping("/uploadAjax")
     public ResponseEntity<List<UploadResultDTO>> uploadFile(MultipartFile[] uploadFiles){
 

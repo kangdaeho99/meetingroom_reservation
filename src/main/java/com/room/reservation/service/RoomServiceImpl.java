@@ -20,10 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
@@ -99,9 +96,18 @@ public class RoomServiceImpl implements RoomService{
     @Override
     public PageResultDTO<RoomDTO, Object[]> getList(PageRequestDTO pageRequestDTO){
         log.info(pageRequestDTO);
-        Function<Object[], RoomDTO> fn = (en -> entityToDto( (Room) en[0], (Member) en[1], (Long) en[2]));
+        Function<Object[], RoomDTO> fn = (en -> entitiesToDTO(
+                (Room) en[0],
+                (Member) en[1],
+                (List<RoomImage>)Arrays.asList((RoomImage) en[2]),
+                (Long) en[3],
+                (Double) en[4],
+                (Long) en[5]));
+
 //        Page<Object[]> result = roomRepository.getBoardWithReplyCount(pageRequestDTO.getPageable(Sort.by("rno").descending()));
-        Page<Object[]> result = roomRepository.searchPage(
+
+
+        Page<Object[]> result = roomRepository.searchPageWithImageReplyReview(
                 pageRequestDTO.getType(),
                 pageRequestDTO.getKeyword(),
                 pageRequestDTO.getPageable(Sort.by("rno").descending()));
