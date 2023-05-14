@@ -37,7 +37,12 @@
           <div class="col" th:each="dto : ${result.dtoList}">
             <a th:href="@{/room/read(rno = ${dto.rno}, page= ${result.page}, type=${pageRequestDTO.type}, keyword = ${pageRequestDTO.keyword})}">
               <div class="card shadow-sm">
-                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">[[${dto.title}]]</text></svg>
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                  <title>Placeholder</title>
+                  <rect width="100%" height="100%" fill="#55595c"/>
+                  <text x="50%" y="50%" z-index="99" fill="#eceeef" dy=".3em">[[${dto.title}]]</text>
+                    <image th:if="${dto.roomImageDTOList.size() > 0 && dto.roomImageDTOList[0].path != null }" th:href="@{|/display?fileName=${dto.roomImageDTOList[0].getThumbnailURL()}|}" width="100%" height="100%" />
+                </svg>
                 <div class="card-body">
                   <p class="card-text">[[${dto.content}]]</p>
   <!--                <p class="card-text">123</p>-->
@@ -69,7 +74,6 @@
 <!--              </div>-->
 <!--            </div>-->
 <!--          </div>-->
-
 
         </div>
       </div>
