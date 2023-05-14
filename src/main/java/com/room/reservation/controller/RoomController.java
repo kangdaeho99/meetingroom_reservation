@@ -43,7 +43,7 @@ public class RoomController {
     @GetMapping({"/read", "/modify"})
     public void read(long rno, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model){
         log.info("rno: "+rno);
-        RoomDTO dto = roomService.get(rno);
+        RoomDTO dto = roomService.getRoomWithMemberImageReview(rno);
         log.info("DTO: "+dto);
         model.addAttribute("dto", dto);
     }

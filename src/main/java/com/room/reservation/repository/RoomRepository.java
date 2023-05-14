@@ -17,8 +17,9 @@ public interface RoomRepository extends JpaRepository<Room, Long>, RoomQueryDslR
      */
 //    Page<Object[]> getListPage(Pageable pageable);
 
-    @Query("SELECT r, ri, avg(coalesce(rv.grade,0)), count(distinct rv)" +
+    @Query("SELECT r, m, ri, avg(coalesce(rv.grade,0)), count(distinct rv)" +
             " from Room r " +
+            " left outer join Member m on m = r.writer" +
             " left outer join RoomImage ri on ri.room = r" +
             " left outer join Review rv on rv.room = r" +
             " where r.rno = :rno" +

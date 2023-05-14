@@ -24,6 +24,8 @@ public interface RoomService {
 
     RoomDTO get(Long rno);
 
+    RoomDTO getRoomWithMemberImageReview(Long rno);
+
     void remove(Long rno);
 
     void removeWithReplies(Long rno);

@@ -54,7 +54,7 @@ public class RoomServiceImpl implements RoomService{
                         .imgName("test"+j+".jpg")
                         .room(room)
                         .build();
-            roomImageRepository.save(roomImage);
+                roomImageRepository.save(roomImage);
             }
         });
     }
@@ -124,6 +124,24 @@ public class RoomServiceImpl implements RoomService{
         Object result = roomRepository.getRoomByRno(rno);
         Object[] arr = (Object[]) result;
         return entityToDto((Room)arr[0], (Member) arr[1], (Long) arr[2]);
+    }
+
+    @Override
+    public RoomDTO getRoomWithMemberImageReview(Long rno) {
+        List<Object[]> result = roomRepository.getRoomWithAll(rno);
+        Room room = (Room) result.get(0)[0]; //Room Entity는 가장 앞에 존재 - 모든 Row가 동일한 값
+
+        Member member = (Member) result.get(0)[1];
+
+        List<RoomImage> roomImageList = new ArrayList<>(); //영화의 이미지 개수만큼 RoomImage객체 필요
+        result.forEach(arr -> {
+            RoomImage roomImage = (RoomImage) arr[2];
+            roomImageList.add(roomImage);
+        });
+
+        Double avg = (Double) result.get(0)[3]; //평균 평점 - 모든 Row가 동일한 값
+        Long reviewCount = (Long) result.get(0)[4]; //리뷰 개수 - 모든 Row가 동일한 값
+        return entitiesToDTO(room, member, roomImageList, (long) 0, avg, reviewCount);
     }
 
     /**

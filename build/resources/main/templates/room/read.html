@@ -22,6 +22,14 @@
                     <textarea class="form-control" rows="5" name="content" readonly>[[${dto.content}]]</textarea>
                 </div>
 
+                <div class="uploadResult">
+                    <ul>
+                        <li th:each = "roomImage : ${dto.roomImageDTOList}">
+                            <img th:if="${roomImage.path != null}" th:src="|/display?fileName=${roomImage.getImageURL()}|">
+                        </li>
+                    </ul>
+                </div>
+
                 <div class="form-group mt-3">
                     <label>Writer</label>
                     <input type="text" class="form-control" name="writer" placeholder="Enter Writer" th:value = "${dto.writerEmail}" readonly>
@@ -100,6 +108,8 @@
         </div>
     </div>
 
+
+
     <script th:inline="javascript">
 
 
@@ -137,7 +147,13 @@ $(document).ready(function() {
         $.getJSON('/replies/room/' + rno, function(arr){
             console.log(arr);
             var str = "";
+
             $('.replyCount').html(" Reply Count " + arr.length);
+            str += '<div class="mb-4">';
+            str += '    <button class="btn btn-primary">';
+            str += '        <span class="replyCount">Reply Count ' + `${arr.length}` + '</span>';
+            str += '    </button>';
+            str += '</div>';
 
             $.each(arr, function(idx, reply){
                 console.log(reply);
@@ -151,6 +167,7 @@ $(document).ready(function() {
             }); // <--- 닫히는 괄호 추가
 
             replyList.html(str);
+
         });
     }
 
@@ -260,6 +277,33 @@ $(document).ready(function() {
 
 });
 </script>
+
+<style>
+.uploadResult{
+  width:100%;
+  background-color:#eeeeee;
+  margin-top:10px;
+}
+
+.uploadResult ul{
+  display:flex;
+  flex-flow:row;
+  justify-content: center;
+  align-items: center;
+  vertical-align: top;
+  overflow:auto;
+}
+
+.uploadResult ul li{
+  list-style : none;
+  padding: 10px;
+  margin-left:2em;
+}
+
+.uploadResult ul li img{
+<!--  width: 100px;-->
+}
+</style>
 
 </th:block>
 
