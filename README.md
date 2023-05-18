@@ -16,8 +16,11 @@ Spring Boot를 통해 회의실 예약 사이트입니다. -->
 - 백엔드 기술스택 : Spring Boot ( JPA & QueryDSL)
 - 개발목표 : Spring Boot, Spring Security, Spring Batch(Batch), JPA & Query(ORM), Redis (Cache), Rabbit MQ(Message Broker), AWS(Infra), Docker(Infra), Jenkins & CodeDeploy(CI/CD) 에 대해 알아보는것
 
+<br/>
+<br/>
+
 ## 📒DB구조
-> DB 제 1NF, 2NF, 3NF 정규화 규칙을 지켰습니다. 아직 프로젝트 진행중인 상태라 미완성상태입니다.
+> DB 제 1NF, 2NF, 3NF 정규화 규칙을 지켰습니다. 현재 프로젝트 진행중입니다.
 
 ![DB ERD](https://user-images.githubusercontent.com/48047377/239389773-24ae798e-cba5-4a1f-a4b4-0e55688afea4.PNG)
 
