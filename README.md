@@ -38,28 +38,34 @@ Spring Boot를 통해 회의실 예약 사이트입니다. -->
 
 ![Untitled](https://user-images.githubusercontent.com/48047377/239265587-520b27ce-4718-489d-9762-6b6ff83b94ed.PNG)
 
-##  4.회의실 댓글목록화면
+##  4.회의실 수정화면
+
+> 회의실 수정화면입니다. 삭제와 수정 둘다 할 수 있습니다.
+
+![Untitled](https://user-images.githubusercontent.com/48047377/239271775-d50e8f8d-2617-474d-a804-f287f58bea67.PNG)
+
+##  5.회의실 댓글목록화면
 
 > 회의실 댓글목록화면입니다. 
 
 ![Untitled](https://user-images.githubusercontent.com/48047377/239265632-b953bcaa-3728-40f5-9a4b-906cfc46056c.PNG)
 
 
-##  5.회의실 댓글등록모달
+##  6.회의실 댓글등록모달
 
 > 회의실 댓글목록모달입니다. 
 
 ![Untitled](https://user-images.githubusercontent.com/48047377/239265638-7d7556ed-2fad-437f-a66b-927f05d8ee46.PNG)
 
 
-##  6.회의실 댓글삭제모달
+##  7.회의실 댓글삭제모달
 
 > 회의실 댓글삭제모달입니다. 
 
 ![Untitled](https://user-images.githubusercontent.com/48047377/239265647-bf061d55-5f76-4b4d-8f27-b9aecef0f788.PNG)
 
 
-## 7.회의실 로그인화면
+## 8.회의실 로그인화면
 
 > 회의실 로그인화면입니다. 
 
