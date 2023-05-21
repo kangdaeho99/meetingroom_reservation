@@ -37,6 +37,15 @@ dependencies {
     implementation 'javax.persistence:javax.persistence-api:2.2'
     implementation 'com.h2database:h2';
     implementation 'org.mariadb.jdbc:mariadb-java-client:'
+
+
+
+    //spring security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+
     //Querydsl 추가
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
     annotationProcessor(
@@ -50,6 +59,8 @@ dependencies {
     implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-java8time', version: '3.0.4.RELEASE'
     implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '3.2.0'
     implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.12'
+
+
 
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
