@@ -27,9 +27,9 @@ public class ApplicationStartUpRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        memberService.initDataBase();
-        roomService.initDataBase();
-        reviewService.initDataBase();
-        replyService.initDataBase();
+//        memberService.initDataBase();
+//        roomService.initDataBase();
+//        reviewService.initDataBase();
+//        replyService.initDataBase();
     }
 }
