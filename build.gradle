@@ -35,7 +35,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'javax.persistence:javax.persistence-api:2.2'
-    implementation 'com.h2database:h2';
     implementation 'org.mariadb.jdbc:mariadb-java-client:'
 
 
@@ -59,12 +58,9 @@ dependencies {
 
     testImplementation 'junit:junit:4.13.1'
 
-
     implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-java8time', version: '3.0.4.RELEASE'
     implementation group: 'nz.net.ultraq.thymeleaf', name: 'thymeleaf-layout-dialect', version: '3.2.0'
     implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.12'
-
-
 
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'

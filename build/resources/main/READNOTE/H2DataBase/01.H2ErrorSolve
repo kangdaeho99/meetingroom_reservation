@@ -31,3 +31,63 @@ Unable to resolve name [org.hibernate.dialect.MySQL5InnoDBDialect] as strategy [
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect 와 같이 변경해주었다.
 
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect XXXXXXXXXXX
+
+
+
+----------------------------------------
+H2 DataBAse에서 Maria DB로 migration 함. H2 사용할떄 남겨둔 설정파일
+
+[C:\Users\user\IdeaProjects\room_reservation\src\main\resources\application.properties]
+spring.profiles.include = oauth
+
+#Show Sql, Table Settings
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.show-sql=true
+#spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect
+#localhost:8080/h2-console
+#spring.h2.console.enabled=true
+#spring.h2.hikari.jdbc-url=jdbc:h2:mem:testdb;MODE=MYSQL
+#spring.datasource.url=jdbc:h2:mem:testdb
+
+#jdbc
+spring.session.store-type=jdbc
+
+#FileUpload By Servlet 3.0
+spring.servlet.multipart.enabled = true
+spring.servlet.multipart.location = C:\\upload
+spring.servlet.multipart.max-request-size = 30MB
+spring.servlet.multipart.max-file-size = 10MB
+com.room.reservation.upload.path = C:\\upload
+
+#Front Templates
+spring.mustache.expose-session-attributes=true
+spring.thymeleaf.cache=false
+
+# 정적 리소스에 변화가 있을 때 바로 반영한다.
+spring.devtools.livereload.enabled=true
+spring.devtools.restart.enabled=true
+# thymeleaf 참조 경로
+spring.thymeleaf.prefix=classpath:/templates/
+spring.thymeleaf.suffix=.html
+
+logging.level.org.springframework.security=trace
+logging.level.com.room.reservation=debug
+
+
+
+
+#spring.jpa.defer-datasource-initialization=true
+#spring.sql.init.data-locations=classpath:/data_notuse.sql;   //데이터 관련
+#spring.sql.init.schema-locations=classpath:schema.sql; // 테이블 생성 관련
+
+#ignore room
+
+
+
+[C:\Users\user\IdeaProjects\room_reservation\src\main\resources\application-real.properties\]
+spring.profiles.include=oauth,real-db
+#spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+spring.session.store-type=jdbc
