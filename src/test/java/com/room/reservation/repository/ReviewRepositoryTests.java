@@ -4,6 +4,7 @@ package com.room.reservation.repository;
 import com.room.reservation.entity.Member;
 import com.room.reservation.entity.Review;
 import com.room.reservation.entity.Room;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,15 +17,16 @@ public class ReviewRepositoryTests {
     @Autowired
     private ReviewRepository reviewRepository;
 
+    @DisplayName("Review 테스트데이터 삽입")
     @Test
     public void insertRoomReviews(){
         //23개 리뷰 등록
-        IntStream.rangeClosed(1, 23).forEach( i ->{
+        IntStream.rangeClosed(1, 20).forEach( i ->{
             //회의실 번호
-            Long rno = (long)(Math.random()*15) + 1;
+            Long rno = (long)(Math.random()*20) + 1;
 
             //리뷰어 번호
-            Long mno = ((long)(Math.random() * 15) + 1);
+            Long mno = ((long)(Math.random() * 20) + 1);
             Member member = Member.builder().mno(mno).build();
 
             Review roomReview = Review.builder()

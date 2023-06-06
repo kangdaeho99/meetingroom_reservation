@@ -16,8 +16,8 @@ public class ReplyRepositoryTests {
 
     @Test
     public void insertReply(){
-        IntStream.rangeClosed(1, 15).forEach(i -> {
-            long rno = (long)(Math.random() * 15) + 1;
+        IntStream.rangeClosed(1, 20).forEach(i -> {
+            long rno = (long)(Math.random() * 20) + 1;
             Room room = Room.builder().rno(rno).build();
 
             Reply reply = Reply.builder()

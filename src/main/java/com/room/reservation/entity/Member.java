@@ -30,7 +30,7 @@ public class Member extends BaseEntity{
     /**
      * ElementCollection을 활용하여 Member 객체의 일부로만 사용합니다.
      */
-    @ElementCollection(fetch = FetchType.LAZY)
+    @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private Set<MemberRole> roleSet = new HashSet<MemberRole>();
 

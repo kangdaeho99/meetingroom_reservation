@@ -4,19 +4,18 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableWebSecurity
 @Log4j2
 public class SecurityConfig {
 
     @Bean
-    PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
@@ -24,20 +23,21 @@ public class SecurityConfig {
      * 메모리상에 있는 데이터를 이용하는 인증매니저인 InMemoryUserDetailsManager 생성합니다.
      * 이를 통해 DB없이 메모리에 저장시켜서, 로그인할 수 있습니다. 임시의 아이디와 패스워드를 사용하기 위해 생성하는 함수입니다.
      * @return InMemoryUserDetailsManager(user); 메모리에 UserDetailsManager를 저장해주는 객체
+     * UserDetailsService 등록시 삭제처리
      */
-    @Bean
-    public InMemoryUserDetailsManager userDetailsService(){
-        UserDetails user = User.builder()
-                .username("user1")
-                .password(passwordEncoder().encode("1111"))
-                .roles("USER")
-                .build();
-
-        log.info("userDetailsService......................");
-        log.info(user);
-
-        return new InMemoryUserDetailsManager(user);
-    }
+//    @Bean
+//    public InMemoryUserDetailsManager userDetailsService(){
+//        UserDetails user = User.builder()
+//                .username("user1")
+//                .password(passwordEncoder().encode("1111"))
+//                .roles("USER")
+//                .build();
+//
+//        log.info("userDetailsService......................");
+//        log.info(user);
+//
+//        return new InMemoryUserDetailsManager(user);
+//    }
 
     /**
      * SecurityFilterChain을 생성하여 Filter를 설정해줍니다.
@@ -58,7 +58,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.authorizeHttpRequests()
-                .requestMatchers("/**").permitAll()
+                .requestMatchers("/**").hasRole("USER")
                 .requestMatchers("/room/register").hasRole("USER");
         http.formLogin();
         http.csrf().disable();

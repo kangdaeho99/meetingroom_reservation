@@ -7,6 +7,7 @@ import com.room.reservation.entity.QRoom;
 import com.room.reservation.entity.Room;
 import com.room.reservation.entity.RoomImage;
 import jakarta.transaction.Transactional;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,12 +32,12 @@ public class RoomRepositoryTests {
     @Autowired
     private RoomImageRepository roomImageRepository;
 
-
+    @DisplayName("Room, RoomImage 테스트데이터 삽입")
     @Commit
     @Transactional
     @Test
     public void insertRooms(){
-        IntStream.rangeClosed(1, 15).forEach(i -> {
+        IntStream.rangeClosed(1, 20).forEach(i -> {
             Member member = Member.builder().mno((long) i).build();
 
             Room room = Room.builder()
@@ -214,7 +215,7 @@ public class RoomRepositoryTests {
     @Test
     public void testSearchPageWithImageReplyReview(){
         Pageable pageable = PageRequest.of(0, 10, Sort.by("rno").descending());
-        Page<Object[]> result = roomRepository.searchPageWithImageReplyReview("t", "1", pageable);
+        Page<Object[]> result = roomRepository.searchPageWithImageReplyReview("", "", pageable);
 
         result.stream().forEach(room -> {
             System.out.println(room);

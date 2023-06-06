@@ -241,7 +241,7 @@ public class RoomQueryDslRepositoryImpl extends QuerydslRepositorySupport implem
         jpqlQuery.where(roomImage.inum.eq(
                 select(roomImage2.inum.min()).from(roomImage2).where(room.eq(roomImage2.room))
                 ).or(roomImage.isNull())
-        ).groupBy(room, roomImage);
+        ).groupBy(room);
 
         JPQLQuery<Tuple> tuple = jpqlQuery.select(room,
                 member,
