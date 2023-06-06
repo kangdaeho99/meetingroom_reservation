@@ -380,7 +380,9 @@ new CaseBuilder()
 
 --------------------------------------------
 
-자 갑자기 이유는 모르겠으나 원래
+자 갑자기 이유는 모르겠으나 원래 안됫는데 이유는 mysql 버전떄문이다. 이전에는 h2로 진행했고
+AWS에서는 mariadb를 사용해서 문제없었으나 mysql로 migration을 진행했기에 바로 오류가 발생했다.
+mariadb로 변경하니 잘작동한다.
 
 @Override
     public Page<Object[]> searchPageWithImageReplyReview(String type, String keyword, Pageable pageable) {

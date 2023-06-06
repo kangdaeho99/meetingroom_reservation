@@ -20,7 +20,7 @@ public class MemberServiceImpl implements MemberService{
         IntStream.rangeClosed(1, 15).forEach(i ->{
             Member member = Member.builder()
                     .email("r"+i+"@hello.com")
-                    .pw("1111")
+                    .password("1111")
                     .nickname("reviewer"+i)
                     .build();
             memberRepository.save(member);

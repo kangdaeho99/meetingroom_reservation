@@ -1,11 +1,11 @@
 package com.room.reservation.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Builder
@@ -21,9 +21,22 @@ public class Member extends BaseEntity{
 
     private String email;
 
-    private String pw;
+    private String password;
 
     private String nickname;
+
+    private boolean fromSocial;
+
+    /**
+     * ElementCollection을 활용하여 Member 객체의 일부로만 사용합니다.
+     */
+    @ElementCollection(fetch = FetchType.LAZY)
+    @Builder.Default
+    private Set<MemberRole> roleSet = new HashSet<MemberRole>();
+
+    public void addMemberRole(MemberRole memberRole){
+        roleSet.add(memberRole);
+    }
 
 
 }
