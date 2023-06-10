@@ -1,19 +1,38 @@
 package com.room.reservation.config;
 
 import com.room.reservation.security.handler.MemberLoginSuccessHandler;
+import com.room.reservation.security.service.MemberUserDetailsService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * EnableMethodSecurity(prePostEnabled = true) : 어노테이션 기반의 접근 제한을 설정할 수 있도록 하는 설정입니다.
+ * SecurityConfig를 사용해서 지정된 URL에 접근제한을 거는것은 번거로운 작업이기에,
+ * EnableMethodSecurity의 적용, 접근 제한이 필요한 컨트롤러의 메서드에 @PreAuthorize 적용을 함으로써 적용합니다.
+ * PreAuthorize를 이용하기 위해서 prePostEnabled = true 로 설정합니다.
+ * PreAuthorized()의 value로는 문자열로 된 표현식을 넣을 수 있습니다.
+ * 예시 1. @PreAuthorize("hasRole('ADMIN')")
+ * 예시 2. @PreAuthorize("permitAll()")
+ * 예시 3. @PreAuthorize("#authMember != null && #authMember.username eq \"hello@hello.com\"")
+ * public String preauthorizeOnly(@AuthenticationPrincipal AuthMemberDTO authMember)
+ */
+
 @Configuration
 @EnableWebSecurity
 @Log4j2
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
+
+    @Autowired
+    private MemberUserDetailsService memberUserDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -58,14 +77,19 @@ public class SecurityConfig {
      */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        http.authorizeHttpRequests()
-                .requestMatchers("/**").permitAll()
-                .requestMatchers("/room/register").hasRole("USER");
+//        http.authorizeHttpRequests()
+//                .requestMatchers("/**").permitAll()
+//                .requestMatchers("/room/register").hasRole("USER");
+
         http.formLogin();
         http.csrf().disable();
         http.logout();
 
         http.oauth2Login().successHandler(successHandler());
+
+        http.rememberMe()
+                .tokenValiditySeconds(60*60*24*7)
+                .userDetailsService(memberUserDetailsService);
 
         return http.build();
     }
