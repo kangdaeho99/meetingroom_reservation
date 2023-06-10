@@ -1,5 +1,6 @@
 package com.room.reservation.config;
 
+import com.room.reservation.security.handler.MemberLoginSuccessHandler;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -58,12 +59,23 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.authorizeHttpRequests()
-                .requestMatchers("/**").hasRole("USER")
+                .requestMatchers("/**").permitAll()
                 .requestMatchers("/room/register").hasRole("USER");
         http.formLogin();
         http.csrf().disable();
         http.logout();
 
+        http.oauth2Login().successHandler(successHandler());
+
         return http.build();
+    }
+
+    /**
+     * OAuth2 소셜로그인이 성공한 이후에 이동할 페이지를 처리해줍니다.
+     * @return
+     */
+    @Bean
+    public MemberLoginSuccessHandler successHandler(){
+        return new MemberLoginSuccessHandler(passwordEncoder());
     }
 }

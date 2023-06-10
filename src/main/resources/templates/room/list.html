@@ -1,6 +1,6 @@
 <!--<link rel="stylesheet" href="css/Home.css">-->
 <html xmlns:th="http//www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
       layout:decorate="~{/../layout/index}">
 <head>
   <link rel="stylesheet" th:href="@{/css/Home.css}">
@@ -8,12 +8,24 @@
 <!-- Content -->
 <th:block layout:fragment="content">
 
+
   <main class="main_wrapper">
     <div class="main_main album py-5 bg-light">
       <section class="py-5 text-center container">
         <div class="row py-lg-5">
           <div class="col-lg-6 col-md-8 mx-auto">
             <h1 class="fw-light">Album example recompiletest</h1>
+
+<!--            <div sec:authorize="hasRole('USER')">Has User Role</div>-->
+<!--            <div sec:authorize="hasRole('ADMIN')">Has ADMIN Role</div>-->
+<!--            <div sec:authorize="isAuthenticated()">-->
+<!--              Only Authenticated user can see this Text-->
+<!--            </div>-->
+<!--            Authenticated username :-->
+<!--            <div sec:authentication="name"></div>-->
+<!--            Authenticated user roles:-->
+<!--            <div sec:authentication="principal.authorities"></div>-->
+
             <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
             <p>
               <a href="#" class="btn btn-primary my-2">Main call to action</a>
