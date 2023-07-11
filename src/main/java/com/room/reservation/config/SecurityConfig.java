@@ -1,17 +1,23 @@
 package com.room.reservation.config;
 
+import com.room.reservation.security.filter.ApiCheckFilter;
+import com.room.reservation.security.filter.ApiLoginFilter;
 import com.room.reservation.security.handler.MemberLoginSuccessHandler;
 import com.room.reservation.security.service.MemberUserDetailsService;
+import com.room.reservation.security.util.JWTUtil;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * EnableMethodSecurity(prePostEnabled = true) : 어노테이션 기반의 접근 제한을 설정할 수 있도록 하는 설정입니다.
@@ -77,6 +83,7 @@ public class SecurityConfig {
      */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+        log.info("----------------------filterChain------------------------");
 //        http.authorizeHttpRequests()
 //                .requestMatchers("/**").permitAll()
 //                .requestMatchers("/room/register").hasRole("USER");
@@ -84,12 +91,29 @@ public class SecurityConfig {
         http.formLogin();
         http.csrf().disable();
         http.logout();
-
         http.oauth2Login().successHandler(successHandler());
-
         http.rememberMe()
                 .tokenValiditySeconds(60*60*24*7)
                 .userDetailsService(memberUserDetailsService);
+
+        //Filter 순서 조절 (패스워드 체크 이전 apiCheckFilter()) 실행되도록 설정
+        http.addFilterBefore(apiCheckFilter(), UsernamePasswordAuthenticationFilter.class);
+
+        //AuthenticationManager 설정
+        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.userDetailsService(memberUserDetailsService).passwordEncoder(passwordEncoder());
+        //Get AuthenticationManager
+        AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
+
+        //반드시 필요
+        http.authenticationManager(authenticationManager);
+
+        //APILoginFilter
+        ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/api/login", jwtUtil());
+        apiLoginFilter.setAuthenticationManager(authenticationManager);
+        http.addFilterBefore(apiLoginFilter, UsernamePasswordAuthenticationFilter.class);
+//        http.addFilterBefore(apiCheckFilter(), UsernamePasswordAuthenticationFilter.class);
+//        http.addFilterBefore(apiLoginFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -102,4 +126,29 @@ public class SecurityConfig {
     public MemberLoginSuccessHandler successHandler(){
         return new MemberLoginSuccessHandler(passwordEncoder());
     }
+
+    @Bean
+    public JWTUtil jwtUtil(){
+        return new JWTUtil();
+    }
+    @Bean
+    public ApiCheckFilter apiCheckFilter(){
+        return new ApiCheckFilter("/room/**/*", jwtUtil());
+    }
+
+    /**
+     * '/URL'이라는 경로로 접근할때 동작하도록 지정하고, filterChain에서 UsernamePasswordAuthenticationFilter 전에 동작하도록 지정합니다.
+     * 프로젝트를 실행하고, '/URL' 을 email 파라미터 없이 전송하면 401 에러가 발생합니다ㅣ
+     * @param authenticationManager
+     * @return
+     * @throws Exception
+     */
+//    @Bean
+//    public ApiLoginFilter apiLoginFilter(AuthenticationManager authenticationManager) throws Exception{
+//        ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/api/login");
+//        apiLoginFilter.setAuthenticationManager(authenticationManager);
+//        apiLoginFilter.setAuthenticationFailureHandler(new ApiLoginFailHandler());
+//
+//        return apiLoginFilter;
+//    }
 }

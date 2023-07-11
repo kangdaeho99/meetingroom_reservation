@@ -52,6 +52,14 @@ dependencies {
     //oauth2
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
+    //jwt
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    implementation 'javax.xml.bind:jaxb-api:2.3.0'
+
+
+
+
     //Querydsl 추가
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
     annotationProcessor(

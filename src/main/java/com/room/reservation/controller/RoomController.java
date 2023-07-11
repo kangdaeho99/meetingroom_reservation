@@ -5,20 +5,71 @@ import com.room.reservation.dto.RoomDTO;
 import com.room.reservation.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@Controller
-@RequestMapping("/room")
+@RestController
+@RequestMapping("/room/")
 @Log4j2
 @RequiredArgsConstructor
 public class RoomController {
     private final RoomService roomService;
+
+
+    @PreAuthorize("permitAll()")
+    @PostMapping(value= "")
+    public ResponseEntity<Long> register(@ModelAttribute RoomDTO roomDTO){
+        log.info("-------------------register-------------------");
+        log.info(roomDTO);
+        Long rno = roomService.registerWithRoomImage(roomDTO);
+        return new ResponseEntity<>(rno, HttpStatus.OK);
+    }
+
+    @PreAuthorize("permitAll()")
+    @GetMapping(value="/{rno}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RoomDTO> read(@PathVariable("rno") long rno){
+        log.info("---------------read------------------");
+        log.info(rno);
+        return new ResponseEntity<>(roomService.get(rno), HttpStatus.OK);
+    }
+
+    @DeleteMapping(value="/{rno}", produces = MediaType.TEXT_PLAIN_VALUE)
+    public ResponseEntity<String> remove(@PathVariable("rno") Long rno){
+        log.info("-----------------remove-------------------");
+        log.info(rno);
+        roomService.remove(rno);
+        return new ResponseEntity<>("removed", HttpStatus.OK);
+    }
+
+    @PutMapping(value="/{rno}", produces=MediaType.TEXT_PLAIN_VALUE)
+    public ResponseEntity<String> modify(@RequestBody RoomDTO roomDTO){
+        log.info("---------------modify------------------");
+        log.info(roomDTO);
+        roomService.modify(roomDTO);
+        return new ResponseEntity<>("modified", HttpStatus.OK);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @GetMapping({"/","/list"})
     public void list(PageRequestDTO pageRequestDTO, Model model){
@@ -69,7 +120,6 @@ public class RoomController {
         redirectAttributes.addAttribute("rno", dto.getRno());
 
         return "redirect:/room/read";
-
     }
 
 
